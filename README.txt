@@ -12,5 +12,6 @@ Files:
   defensive-rifle.html, defensive-shotgun.html, defensive-handgun.html
   assets/site.css            shared styles (colors are tokens at the top)
   assets/sim.js              shared animation engine
+  assets/ballistics.js       G1 trajectory solver and load calculator (load data at the top)
 
 Fonts load from Google Fonts; offline, pages fall back to system fonts.

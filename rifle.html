@@ -17,23 +17,25 @@
   <div class="eyebrow">Professional shooting · Rifle</div>
   <h1>Professional Rifle Shooting</h1>
   <p class="lede">Precision fundamentals for the rifle and carbine: the shot process, positions, natural point of aim, trigger control, zeroing, MOA and mils, wind, and reading your groups. The animations show what the shooter controls and what changes on the target.</p>
-  <p class="note">Built on U.S. Army TC 3-22.9 <i>Rifle and Carbine</i> and standard known-distance marksmanship practice. Trajectory and wind figures are illustrative for a 5.56 mm, 55-grain load from a 20-inch barrel with a 2.6-inch sight height. Use your own load's data.</p>
+  <p class="note">Built on U.S. Army TC 3-22.9 <i>Rifle and Carbine</i> and standard known-distance marksmanship practice. Trajectory and wind figures come from a G1 drag-model solver for a 5.56 mm, 55-grain load from a 20-inch barrel with a 2.6-inch sight height. The ballistic calculator runs the same solver for any load you pick.</p>
   <nav class="toc" aria-label="Contents">
     <a href="#safety"><span>01</span>Safety</a>
     <a href="#process"><span>02</span>The shot process</a>
-    <a href="#positions"><span>03</span>Positions</a>
-    <a href="#npa"><span>04</span>Natural point of aim and breathing</a>
-    <a href="#sights"><span>05</span>Sights and optics</a>
-    <a href="#trigger"><span>06</span>Trigger control</a>
-    <a href="#zero"><span>07</span>Zeroing and trajectory</a>
-    <a href="#angles"><span>08</span>MOA, mils, and range</a>
-    <a href="#wind"><span>09</span>Wind</a>
-    <a href="#groups"><span>10</span>Reading your groups</a>
-    <a href="#dope"><span>11</span>The data book</a>
-    <a href="#drills"><span>12</span>Drills and standards</a>
-    <a href="#maint"><span>13</span>Maintenance</a>
-    <a href="#errors"><span>14</span>Common errors</a>
-    <a href="#src"><span>15</span>Sources</a>
+    <a href="#ammo"><span>03</span>Ammunition</a>
+    <a href="#positions"><span>04</span>Positions</a>
+    <a href="#npa"><span>05</span>Natural point of aim and breathing</a>
+    <a href="#sights"><span>06</span>Sights and optics</a>
+    <a href="#trigger"><span>07</span>Trigger control and follow-through</a>
+    <a href="#zero"><span>08</span>Zeroing and trajectory</a>
+    <a href="#calc"><span>09</span>Ballistic calculator</a>
+    <a href="#angles"><span>10</span>MOA, mils, and range</a>
+    <a href="#wind"><span>11</span>Wind</a>
+    <a href="#groups"><span>12</span>Reading your groups</a>
+    <a href="#dope"><span>13</span>The data book</a>
+    <a href="#drills"><span>14</span>Drills and standards</a>
+    <a href="#maint"><span>15</span>Maintenance</a>
+    <a href="#errors"><span>16</span>Common errors</a>
+    <a href="#src"><span>17</span>Sources</a>
   </nav>
 </header>
 
@@ -73,42 +75,79 @@
   </div>
 </section>
 
+<section id="ammo">
+  <h2><span class="n">03</span>Ammunition</h2>
+  <p>Bullet weight is measured in grains; there are 7,000 grains in a pound. For a given cartridge, lighter bullets leave faster and shoot flatter up close; heavier bullets carry velocity and resist wind better at distance, and usually penetrate deeper. Changing weight or type moves your point of impact, so re-confirm your zero when you change loads.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Cartridge</th><th>Common weights</th><th>Common types</th><th>Typical velocity</th><th>Typical use</th></tr></thead>
+    <tbody>
+      <tr><td><b>.223 Rem / 5.56×45 NATO</b></td><td class="num">40–77 gr<br>55 · 62 · 69 · 75 · 77</td><td>55 gr FMJ (M193), 62 gr steel-core FMJ (M855), bonded soft point, open-tip match (OTM), polymer tip</td><td class="num">2,750–3,250 ft/s<br>(16–20" barrel)</td><td>Training, defense, varmint, match to 600 yd</td></tr>
+      <tr><td><b>.308 Win / 7.62×51 NATO</b></td><td class="num">110–180 gr<br>147 · 150 · 165 · 168 · 175</td><td>147 gr FMJ (M80), soft point, bonded, hollow-point boat-tail match (M118LR 175 gr)</td><td class="num">2,550–2,850 ft/s<br>(20–24" barrel)</td><td>Medium and large game, precision to 1,000 yd</td></tr>
+      <tr><td><b>9mm Luger (9×19)</b></td><td class="num">115 · 124 · 147 gr</td><td>FMJ, jacketed hollow point (JHP), +P JHP, frangible</td><td class="num">950–1,250 ft/s (4")<br>+100–200 from a 16" carbine</td><td>Carry, duty, training, pistol-caliber carbine</td></tr>
+      <tr><td><b>.45 ACP</b></td><td class="num">185 · 200 · 230 gr</td><td>230 gr FMJ ("ball"), JHP, +P JHP</td><td class="num">830–1,000 ft/s (5")</td><td>Carry, duty, competition</td></tr>
+    </tbody>
+  </table></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Bullet type</th><th>What it is</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td><b>FMJ</b> (full metal jacket, "ball")</td><td>Lead core fully covered by a copper jacket at the nose</td><td>Training, practice; penetrates deeply and expands little</td></tr>
+      <tr><td><b>JHP</b> (jacketed hollow point)</td><td>Cavity in the nose that opens on impact</td><td>Handgun defense; expands to a larger diameter and stays in the target more often</td></tr>
+      <tr><td><b>SP</b> (soft point)</td><td>Exposed lead tip on a jacketed bullet</td><td>Hunting; controlled expansion</td></tr>
+      <tr><td><b>Bonded</b></td><td>Core chemically bonded to the jacket so they don't separate</td><td>Defense and hunting through barriers such as glass</td></tr>
+      <tr><td><b>OTM / HPBT</b> (open-tip match / hollow-point boat-tail)</td><td>Small opening from manufacturing, tapered base; very consistent</td><td>Precision and match; the 75–77 gr 5.56 loads also fragment reliably</td></tr>
+      <tr><td><b>Polymer tip</b></td><td>Plastic tip on a hollow point; flatter trajectory, starts expansion</td><td>Hunting, varmint, some defense loads</td></tr>
+      <tr><td><b>Steel-core</b> (M855 "green tip")</td><td>Small steel penetrator ahead of a lead core</td><td>Military general purpose; not a hunting bullet, banned at some ranges</td></tr>
+      <tr><td><b>Frangible</b></td><td>Compressed copper powder that breaks apart on hard surfaces</td><td>Steel targets at close range, shoot houses</td></tr>
+      <tr><td><b>+P / +P+</b></td><td>Loaded to higher pressure for more velocity</td><td>Only in guns rated for it; more recoil and wear</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="box"><h3>.223 vs. 5.56</h3><p>The cases look the same, but 5.56 NATO is loaded to higher pressure and the 5.56 chamber has a longer throat. <b>.223 is safe in a 5.56 or .223 Wylde chamber. 5.56 in a chamber marked .223 Rem only</b> can produce excess pressure. Check the barrel marking.</p></div>
+    <div class="box"><h3>.308 vs. 7.62 NATO</h3><p>Close but not identical in chamber dimensions and pressure. Most modern .308 rifles handle 7.62 NATO; check the manufacturer's guidance, especially on older or surplus rifles.</p></div>
+  </div>
+</section>
+
+
 <section id="positions">
-  <h2><span class="n">03</span>Positions</h2>
+  <h2><span class="n">04</span>Positions</h2>
   <p>Stability comes from bone, not muscle. The lower and more supported the position, the smaller your wobble. Use the most stable position the terrain and time allow.</p>
   <figure>
-    <svg class="dia" viewBox="0 0 720 230" role="img" aria-label="Prone, sitting, kneeling, and standing positions">
-      <g stroke="var(--ink)" stroke-width="5" stroke-linecap="round" fill="none">
-        <path d="M20 170 H170 M190 170 H340 M370 170 H520 M550 170 H700" stroke="var(--line)" stroke-width="3"/>
-        <!-- prone -->
-        <circle cx="120" cy="150" r="9" fill="var(--ink)" stroke="none"/>
-        <path d="M110 160 L40 166 L28 168 M60 165 L34 158"/>
-        <path d="M118 160 L132 168 M108 160 L120 168"/>
-        <path d="M100 151 L168 147" stroke="var(--friend)" stroke-width="4"/>
-        <!-- sitting -->
-        <circle cx="262" cy="94" r="9" fill="var(--ink)" stroke="none"/>
-        <path d="M258 104 L248 150 L284 140 L310 168 M248 150 L282 156 L300 168"/>
-        <path d="M252 116 L280 138 M256 114 L292 132"/>
-        <path d="M244 104 L328 96" stroke="var(--friend)" stroke-width="4"/>
-        <!-- kneeling -->
-        <circle cx="436" cy="76" r="9" fill="var(--ink)" stroke="none"/>
-        <path d="M432 86 L424 130 L404 168 L384 168 M424 130 L462 132 L466 168"/>
-        <path d="M430 100 L462 128 M434 98 L470 112"/>
-        <path d="M420 86 L508 80" stroke="var(--friend)" stroke-width="4"/>
+    <svg class="dia" viewBox="0 0 720 240" role="img" aria-label="Prone, sitting, kneeling, and standing positions">
+      <path d="M10 172 H180 M190 172 H360 M370 172 H540 M550 172 H710" stroke="var(--line)" stroke-width="3"/>
+      <g stroke="var(--ink)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+        <!-- prone: body flat, firing knee drawn up -->
+        <path d="M112 156 L60 163 L18 166 M60 163 L40 150 L22 158"/>
+        <path d="M112 154 L104 168 L122 152"/>
+        <path d="M112 154 L146 168 L156 150"/>
+        <!-- sitting: crossed legs, elbows on knees -->
+        <path d="M262 112 L250 166 L296 136 L328 168 M250 166 L290 150 L318 168"/>
+        <path d="M262 114 L286 134 L282 110"/>
+        <path d="M262 114 L300 132 L312 106"/>
+        <!-- kneeling: right knee down, support elbow on left knee -->
+        <path d="M446 84 L438 130 L428 168 L398 168 M438 130 L478 132 L480 168"/>
+        <path d="M446 86 L434 96 L462 80"/>
+        <path d="M446 86 L476 126 L488 78"/>
         <!-- standing -->
-        <circle cx="612" cy="40" r="9" fill="var(--ink)" stroke="none"/>
-        <path d="M612 50 L614 112 L600 168 M614 112 L630 168"/>
-        <path d="M610 64 L632 74 M614 62 L640 58"/>
-        <path d="M600 52 L690 46" stroke="var(--friend)" stroke-width="4"/>
+        <path d="M622 56 L620 112 L606 168 M620 112 L636 168"/>
+        <path d="M622 58 L606 64 L638 54"/>
+        <path d="M622 58 L652 78 L662 50"/>
       </g>
+      <g stroke="var(--friend)" stroke-width="5" stroke-linecap="round">
+        <path d="M110 151 L190 145"/><path d="M262 110 L346 102"/><path d="M446 82 L530 74"/><path d="M622 54 L706 46"/>
+      </g>
+      <g stroke="var(--friend)" stroke-width="3" stroke-linecap="round">
+        <path d="M126 150 L128 158"/><path d="M280 108 L282 116"/><path d="M464 80 L466 88"/><path d="M640 52 L642 60"/>
+      </g>
+      <g fill="var(--ink)"><circle cx="122" cy="141" r="9"/><circle cx="274" cy="99" r="9"/><circle cx="458" cy="71" r="9"/><circle cx="634" cy="43" r="9"/></g>
+      <g fill="var(--accent)"><circle cx="122" cy="152" r="3.5"/><circle cx="156" cy="149" r="3.5"/><circle cx="282" cy="109" r="3.5"/><circle cx="312" cy="105" r="3.5"/><circle cx="462" cy="80" r="3.5"/><circle cx="488" cy="77" r="3.5"/><circle cx="638" cy="53" r="3.5"/><circle cx="662" cy="49" r="3.5"/></g>
       <g font-family="JetBrains Mono, monospace" font-size="13" fill="var(--ink)" text-anchor="middle">
-        <text x="95" y="200">PRONE</text><text x="265" y="200">SITTING</text><text x="445" y="200">KNEELING</text><text x="625" y="200">STANDING</text>
+        <text x="95" y="202">PRONE</text><text x="275" y="202">SITTING</text><text x="455" y="202">KNEELING</text><text x="630" y="202">STANDING</text>
       </g>
       <g font-family="JetBrains Mono, monospace" font-size="11" fill="var(--muted)" text-anchor="middle">
-        <text x="95" y="218">most stable</text><text x="265" y="218">elbows inside knees</text><text x="445" y="218">elbow ahead of knee</text><text x="625" y="218">least stable</text>
+        <text x="95" y="220">most stable</text><text x="275" y="220">elbows inside knees</text><text x="455" y="220">elbow ahead of knee</text><text x="630" y="220">least stable</text>
       </g>
     </svg>
-    <figcaption>Side views. The rifle line is blue. Stability drops from left to right while speed of getting into position goes up.</figcaption>
+    <figcaption>Side views, facing right. Blue is the rifle: butt in the shoulder pocket, cheek on the stock. Orange dots are the hands: firing hand on the pistol grip, support hand on the handguard. Stability drops from left to right while speed of getting into position goes up.</figcaption>
   </figure>
   <div class="tbl"><table>
     <thead><tr><th>Position</th><th>Key points</th><th>Typical use</th></tr></thead>
@@ -123,7 +162,7 @@
 </section>
 
 <section id="npa">
-  <h2><span class="n">04</span>Natural point of aim and breathing</h2>
+  <h2><span class="n">05</span>Natural point of aim and breathing</h2>
   <p>Natural point of aim (NPA) is where the rifle points when your body is relaxed in position. If you have to muscle the rifle onto the target, it drifts back toward NPA as the shot breaks. Adjust the position until the rifle rests on the target by itself.</p>
   <div class="grid2">
     <div class="box"><h3>Checking NPA</h3><ol>
@@ -138,7 +177,7 @@
 </section>
 
 <section id="sights">
-  <h2><span class="n">05</span>Sights and optics</h2>
+  <h2><span class="n">06</span>Sights and optics</h2>
   <figure>
     <svg class="dia" viewBox="0 0 720 260" role="img" aria-label="Iron sight picture, red dot, and mil reticle">
       <!-- iron -->
@@ -183,7 +222,7 @@
 </section>
 
 <section id="trigger">
-  <h2><span class="n">06</span>Trigger control and follow-through</h2>
+  <h2><span class="n">07</span>Trigger control and follow-through</h2>
   <p>The trigger press is the one moment where small errors become misses. Press straight to the rear with steadily increasing pressure, so the moment the shot breaks surprises you a little. Then hold it to the rear through recoil and let it out only to the reset.</p>
   <div class="sim" id="sim-trigger" data-label="Trigger pressure and resulting impact"><div class="simtitle">Trigger press, pressure, and the impact it produces</div></div>
   <div class="grid2">
@@ -193,18 +232,18 @@
 </section>
 
 <section id="zero">
-  <h2><span class="n">07</span>Zeroing and trajectory</h2>
+  <h2><span class="n">08</span>Zeroing and trajectory</h2>
   <p>The sights look along a straight line. The bullet leaves the bore below that line, climbs across it, and falls back across it. A zero sets the angle between the two so the bullet crosses the line of sight at the distances you choose.</p>
   <div class="sim" id="sim-traj" data-label="Bullet path compared with line of sight for different zeros"><div class="simtitle">Bullet path vs. line of sight</div></div>
   <div class="tbl"><table>
     <thead><tr><th>Zero</th><th class="num">25 yd</th><th class="num">50 yd</th><th class="num">100 yd</th><th class="num">200 yd</th><th class="num">300 yd</th><th class="num">400 yd</th></tr></thead>
     <tbody>
-      <tr><td><b>50 / 200 yd</b></td><td class="num">−1.2"</td><td class="num">0.0"</td><td class="num">+1.6"</td><td class="num">+0.9"</td><td class="num">−6.9"</td><td class="num">−24.6"</td></tr>
-      <tr><td><b>100 yd</b></td><td class="num">−1.6"</td><td class="num">−0.8"</td><td class="num">0.0"</td><td class="num">−2.3"</td><td class="num">−11.7"</td><td class="num">−30.9"</td></tr>
-      <tr><td><b>36 / 300 yd</b></td><td class="num">−0.6"</td><td class="num">+1.1"</td><td class="num">+3.9"</td><td class="num">+5.5"</td><td class="num">0.0"</td><td class="num">−15.4"</td></tr>
+      <tr><td><b>50 yd</b> (far zero ≈240)</td><td class="num">−1.2"</td><td class="num">0.0"</td><td class="num">+1.6"</td><td class="num">+1.5"</td><td class="num">−4.5"</td><td class="num">−18.3"</td></tr>
+      <tr><td><b>100 yd</b></td><td class="num">−1.6"</td><td class="num">−0.8"</td><td class="num">0.0"</td><td class="num">−1.8"</td><td class="num">−9.4"</td><td class="num">−24.9"</td></tr>
+      <tr><td><b>300 yd</b> (near zero ≈38)</td><td class="num">−0.8"</td><td class="num">+0.7"</td><td class="num">+3.1"</td><td class="num">+4.5"</td><td class="num">0.0"</td><td class="num">−12.3"</td></tr>
     </tbody>
   </table></div>
-  <p class="note">Illustrative values for 5.56 mm 55 gr at about 3,240 ft/s with a 2.6-inch sight height. Your rifle and ammunition will differ; confirm on paper.</p>
+  <p class="note">Computed with the G1 drag model for 55 gr M193 (BC 0.243) at 3,240 ft/s from a 20-inch barrel, 2.6-inch sight height, sea-level standard conditions. From a 14.5–16 inch carbine, the 50-yard zero's far zero moves in to roughly 200–225 yd, which is where the "50/200" name comes from. Run your own load in the calculator below.</p>
   <div class="grid2">
     <div class="box"><h3>Zeroing procedure</h3><ol>
       <li>Bore-sight or start close (25 yd) to get on paper.</li>
@@ -215,15 +254,21 @@
       <li>Fire another group. Repeat until the group center is on the point of aim, then confirm at the far zero distance.</li>
     </ol></div>
     <div class="box"><h3>Choosing a zero</h3><ul>
-      <li><b>50/200 yd</b>: bullet stays within about 2 inches of the line of sight from 25 to 225 yd. Common general-purpose carbine zero.</li>
+      <li><b>50 yd ("50/200")</b>: bullet stays within about 2.2 inches of the line of sight from 25 yd out past 250 yd. Common general-purpose carbine zero.</li>
       <li><b>100 yd</b>: standard for magnified optics and dialing. Simplest to use with a ballistic table.</li>
-      <li><b>36/300 yd</b>: maximum point-blank reach on a man-size target; up to 5–6 inches high in the middle.</li>
+      <li><b>300 yd ("36/300")</b>: maximum point-blank reach on a man-size target; up to about 4.5 inches high around 175–200 yd.</li>
     </ul></div>
   </div>
 </section>
 
+<section id="calc">
+  <h2><span class="n">09</span>Ballistic calculator</h2>
+  <p>Pick a cartridge and load, or type your own chronographed velocity and the bullet's published G1 ballistic coefficient. The table and chart update as you change anything. Set "Hold at" to a distance to get the exact elevation and wind hold.</p>
+  <div id="bal-rifle" data-cartridges="556,308,9mm,45"></div>
+</section>
+
 <section id="angles">
-  <h2><span class="n">08</span>MOA, mils, and range</h2>
+  <h2><span class="n">10</span>MOA, mils, and range</h2>
   <p>Both are angles. An angle covers more inches the farther away the target is, which is why scope adjustments and holds are expressed as angles instead of inches.</p>
   <figure>
     <svg class="dia" viewBox="0 0 720 240" role="img" aria-label="An angle subtends more inches at longer distance">
@@ -255,19 +300,20 @@
       <label for="rc-unit">Unit<select id="rc-unit"><option value="mil">mils</option><option value="moa">MOA</option></select></label>
       <label>Range<output id="rc-out" for="rc-size rc-read rc-unit">333 yd</output></label>
     </form>
+    <p id="rc-hold" class="note" aria-live="polite"></p>
   </div>
 </section>
 
 <section id="wind">
-  <h2><span class="n">09</span>Wind</h2>
+  <h2><span class="n">11</span>Wind</h2>
   <p>Wind pushes the bullet sideways for its whole time of flight, so drift grows faster than distance. Only the crosswind component matters for drift. The wind clock tells you how much of the wind's speed counts.</p>
   <div class="sim" id="sim-wind" data-label="Wind clock and bullet drift"><div class="simtitle">Wind clock: direction, value, and drift</div></div>
   <div class="tbl"><table>
-    <thead><tr><th>Clock direction</th><th>Value</th><th>Drift at 300 yd, 10 mph wind (illustrative)</th></tr></thead>
+    <thead><tr><th>Clock direction</th><th>Value</th><th>Drift at 300 yd, 10 mph, 55 gr M193</th></tr></thead>
     <tbody>
-      <tr><td>3 or 9 o'clock</td><td>Full (100%)</td><td class="num">≈ 11"</td></tr>
-      <tr><td>2, 4, 8, or 10 o'clock</td><td>≈ 87%</td><td class="num">≈ 9.5"</td></tr>
-      <tr><td>1, 5, 7, or 11 o'clock</td><td>Half (50%)</td><td class="num">≈ 5.5"</td></tr>
+      <tr><td>3 or 9 o'clock</td><td>Full (100%)</td><td class="num">≈ 11.9"</td></tr>
+      <tr><td>2, 4, 8, or 10 o'clock</td><td>≈ 87%</td><td class="num">≈ 10.3"</td></tr>
+      <tr><td>1, 5, 7, or 11 o'clock</td><td>Half (50%)</td><td class="num">≈ 5.9"</td></tr>
       <tr><td>12 or 6 o'clock</td><td>No value</td><td class="num">≈ 0"</td></tr>
     </tbody>
   </table></div>
@@ -284,7 +330,7 @@
 </section>
 
 <section id="groups">
-  <h2><span class="n">10</span>Reading your groups</h2>
+  <h2><span class="n">12</span>Reading your groups</h2>
   <p>The shape of a group tells you more than any single shot. Shoot groups of five, then diagnose. These are starting points; confirm with your shot calls.</p>
   <figure>
     <svg class="dia" viewBox="0 0 720 300" role="img" aria-label="Six shot-group patterns and their likely causes">
@@ -324,7 +370,7 @@
 </section>
 
 <section id="dope">
-  <h2><span class="n">11</span>The data book</h2>
+  <h2><span class="n">13</span>The data book</h2>
   <p>A data book (DOPE, for "data on previous engagements") records what the rifle actually did. Over time it becomes the most accurate ballistic table you have, because it's built from your rifle, ammunition, and conditions.</p>
   <div class="tbl"><table>
     <thead><tr><th>Field</th><th>Example entry</th></tr></thead>
@@ -342,7 +388,7 @@
 </section>
 
 <section id="drills">
-  <h2><span class="n">12</span>Drills and standards</h2>
+  <h2><span class="n">14</span>Drills and standards</h2>
   <div class="tbl"><table>
     <thead><tr><th>Drill</th><th>Setup</th><th>Standard</th><th>Builds</th></tr></thead>
     <tbody>
@@ -357,7 +403,7 @@
 </section>
 
 <section id="maint">
-  <h2><span class="n">13</span>Maintenance</h2>
+  <h2><span class="n">15</span>Maintenance</h2>
   <div class="grid2">
     <div class="box"><h3>Routine</h3><ul>
       <li>Clear the rifle and verify empty before you start.</li>
@@ -376,7 +422,7 @@
 </section>
 
 <section id="errors">
-  <h2><span class="n">14</span>Common errors</h2>
+  <h2><span class="n">16</span>Common errors</h2>
   <div class="tbl"><table>
     <thead><tr><th>Error</th><th>What it does</th><th>Fix</th></tr></thead>
     <tbody>
@@ -392,7 +438,7 @@
 </section>
 
 <section id="src">
-  <h2><span class="n">15</span>Sources</h2>
+  <h2><span class="n">17</span>Sources</h2>
   <ul>
     <li><a href="https://irp.fas.org/doddir/army/tc3-22-9.pdf" target="_blank" rel="noopener">TC 3-22.9, Rifle and Carbine (PDF, FAS)</a></li>
     <li><a href="https://www.army.mil/article/168953/mcoe_publishes_tc_3_22_9_rifle_and_carbine" target="_blank" rel="noopener">Army.mil: MCoE publishes TC 3-22.9, Rifle and Carbine</a></li>
@@ -405,12 +451,15 @@
 </main>
 <script src="assets/sim.js"></script>
 
+<script src="assets/ballistics.js"></script>
 <script>
 (function(){
 /* range calculator */
+window.BAL=Ballistics.mount(document.getElementById("bal-rifle"));
 const f=document.getElementById("rangecalc");
 function rc(){const s=+document.getElementById("rc-size").value,r=+document.getElementById("rc-read").value,u=document.getElementById("rc-unit").value;
-  const o=document.getElementById("rc-out");if(!(s>0&&r>0)){o.textContent="—";return}o.textContent=Math.round(u==="mil"?s*27.78/r:s*95.5/r)+" yd"}
+  const o=document.getElementById("rc-out"),hd=document.getElementById("rc-hold");if(!(s>0&&r>0)){o.textContent="—";hd.textContent="";return}const yd=Math.round(u==="mil"?s*27.78/r:s*95.5/r);o.textContent=yd+" yd";
+  if(window.BAL){const row=BAL.holdAt(Math.min(yd,1200));if(row)hd.innerHTML="Hold for <b>"+BAL.load+"</b> at "+yd+" yd: <b>"+Math.abs(row.mil).toFixed(1)+" mil "+(row.mil<0?"up":"down")+"</b> ("+Math.abs(row.moa).toFixed(1)+" MOA). Change the load in the ballistic calculator above."}}
 f.addEventListener("input",rc);rc();
 
 /* breathing helpers */
@@ -471,9 +520,8 @@ Sim("sim-trigger",[
 ]);
 
 /* trajectory */
-const v0=3240,k=0.000446,gg=32.17,hS=2.6/12;
-const tof=x=>(Math.exp(k*x)-1)/(k*v0);const drop=x=>.5*gg*tof(x)**2;
-function pathFor(z){const xz=z*3,th=(drop(xz)+hS)/xz;return yd=>{const x=yd*3;return(-drop(x)+x*th-hS)*12}}
+
+function pathFor(z){const r=Ballistics.solve({mv:3240,bc:.243,w:55,sh:2.6,zero:z,max:500,wind:0,clock:3,temp:59,alt:0});return yd=>r[Math.min(500,Math.max(0,Math.round(yd)))].din}
 function trajScene(tab,z,near,far,caps){const P=pathFor(z);return{tab,duration:5,aspect:.5,captions:caps,draw(g,t){
   g.clear(false);const X=yd=>8+yd/500*88,Y=inch=>18-inch*1.0;
   for(let yd=0;yd<=500;yd+=50){g.line(X(yd),4,X(yd),46,{c:"line",w:yd%100?.08:.15});if(yd%100===0)g.text(yd+"",X(yd),49,{size:2})}
@@ -487,9 +535,9 @@ function trajScene(tab,z,near,far,caps){const P=pathFor(z);return{tab,duration:5
   g.text("YARDS",52,53,{size:1.9});
 }}}
 Sim("sim-traj",[
-  trajScene("50 / 200 yd",50,50,215,[[0,"Fire","The bore sits below the sights, angled slightly up."],[1,"Near zero","The bullet climbs through the line of sight at 50 yd."],[2,"Peak","It peaks about 2\" high around 125–150 yd."],[3,"Far zero","It falls back through the line of sight near 210 yd, then drops faster and faster."]]),
+  trajScene("50 yd zero",50,50,239,[[0,"Fire","The bore sits below the sights, angled slightly up."],[1,"Near zero","The bullet climbs through the line of sight at 50 yd."],[2,"Peak","It peaks about 2.2\" high near 150 yd."],[3,"Far zero","It falls back through the line of sight near 240 yd from a 20\" barrel (about 200–225 yd from a carbine), then drops faster and faster."]]),
   trajScene("100 yd",100,null,100,[[0,"Fire","Flatter launch angle than a 50-yd zero."],[1.5,"Zero","The bullet only just reaches the line of sight at 100 yd, so there's no separate near zero."],[3,"Drop","Beyond 100 yd it's always low. Pair this zero with a ballistic table or reticle holds."]]),
-  trajScene("36 / 300 yd",300,34,300,[[0,"Fire","Steepest launch angle of the three."],[1,"Near zero","Crosses at about 35 yd."],[2,"Peak","Rides 5–6\" high from 150 to 200 yd. Fine for a torso, too much for a small target."],[3.3,"Far zero","Back on the line of sight at 300 yd."]])
+  trajScene("300 yd zero",300,38,300,[[0,"Fire","Steepest launch angle of the three."],[1,"Near zero","Crosses at about 38 yd."],[2,"Peak","Rides about 4.5\" high from 150 to 200 yd. Fine for a torso, too much for a small target."],[3.3,"Far zero","Back on the line of sight at 300 yd."]])
 ]);
 
 /* wind */
@@ -497,7 +545,7 @@ Sim("sim-wind",{duration:12,aspect:.75,captions:[[0,"12 o'clock","Headwind. No c
   g.clear();const cx=50,cy=38,R=22;const hr=Math.floor(t)%12;const a=(hr*30-90)*Math.PI/180;
   g.circle(cx,cy,R,{c:"line",w:.3});for(let h=0;h<12;h++){const b=(h*30-90)*Math.PI/180;g.text(String(h||12),cx+Math.cos(b)*(R+3),cy+Math.sin(b)*(R+3)+.8,{size:2.2,c:h===hr?"accent":"muted"})}
   g.circle(cx,70,2,{fill:"friend"});g.text("SHOOTER",cx,74,{size:1.9});g.rect(cx-3,4,6,1.4,{fill:"wall"});g.text("TARGET 300 YD",cx,3,{size:1.9});
-  const val=Math.sin(hr*30*Math.PI/180);const drift=-val*11; /* inches; + right */
+  const val=Math.sin(hr*30*Math.PI/180);const drift=-val*11.9; /* inches; + right */
   const sx=drift*.55;const pts=[];for(let u=0;u<=1;u+=.02)pts.push([cx+sx*u*u,68-u*62]);g.path(pts,{c:"friend",w:.45});g.line(cx,68,cx,5.4,{c:"muted",w:.2,dash:[.6,.6]});
   const sxa=cx+Math.cos(a)*(R+.5),sya=cy+Math.sin(a)*(R+.5),exa=cx+Math.cos(a)*7,eya=cy+Math.sin(a)*7;
   const pulse=(t%1);for(let i=0;i<3;i++){const u=(pulse+i/3)%1;g.circle(sxa+(exa-sxa)*u,sya+(eya-sya)*u,.5,{fill:"accent",alpha:1-u})}

@@ -22,17 +22,19 @@
     <a href="#safety"><span>01</span>Safety</a>
     <a href="#actions"><span>02</span>Actions and gauges</a>
     <a href="#shells"><span>03</span>Shells and shot</a>
-    <a href="#chokes"><span>04</span>Chokes and patterns</a>
-    <a href="#patterning"><span>05</span>Patterning your gun</a>
-    <a href="#fit"><span>06</span>Gun fit and eye dominance</a>
-    <a href="#mount"><span>07</span>Mount and stance</a>
-    <a href="#lead"><span>08</span>Lead methods</a>
-    <a href="#string"><span>09</span>The shot string</a>
-    <a href="#disciplines"><span>10</span>Trap, skeet, sporting clays</a>
-    <a href="#handling"><span>11</span>Gun handling</a>
-    <a href="#maint"><span>12</span>Maintenance</a>
-    <a href="#errors"><span>13</span>Common errors</a>
-    <a href="#src"><span>14</span>Sources</a>
+    <a href="#gauges"><span>04</span>Loads by gauge</a>
+    <a href="#chokes"><span>05</span>Chokes and patterns</a>
+    <a href="#slugs"><span>06</span>Slug trajectory</a>
+    <a href="#patterning"><span>07</span>Patterning your gun</a>
+    <a href="#fit"><span>08</span>Gun fit and eye dominance</a>
+    <a href="#mount"><span>09</span>Mount and stance</a>
+    <a href="#lead"><span>10</span>Lead methods</a>
+    <a href="#string"><span>11</span>The shot string</a>
+    <a href="#disciplines"><span>12</span>Trap, skeet, sporting clays</a>
+    <a href="#handling"><span>13</span>Gun handling</a>
+    <a href="#maint"><span>14</span>Maintenance</a>
+    <a href="#errors"><span>15</span>Common errors</a>
+    <a href="#src"><span>16</span>Sources</a>
   </nav>
 </header>
 
@@ -70,11 +72,11 @@
   <figure>
     <svg class="dia" viewBox="0 0 720 220" role="img" aria-label="Bore diameters of common gauges, to scale">
       <g fill="var(--floor)" stroke="var(--wall)" stroke-width="3">
-        <circle cx="130" cy="100" r="72.9"/><circle cx="320" cy="100" r="61.5"/><circle cx="480" cy="100" r="55"/><circle cx="620" cy="100" r="41"/>
+        <circle cx="88" cy="100" r="72.9"/><circle cx="248" cy="100" r="66.2"/><circle cx="398" cy="100" r="61.5"/><circle cx="530" cy="100" r="55"/><circle cx="648" cy="100" r="41"/>
       </g>
       <g font-family="JetBrains Mono, monospace" text-anchor="middle">
-        <text x="130" y="105" font-size="20" font-weight="600" fill="var(--ink)">12</text><text x="320" y="105" font-size="20" font-weight="600" fill="var(--ink)">20</text><text x="480" y="105" font-size="20" font-weight="600" fill="var(--ink)">28</text><text x="620" y="105" font-size="18" font-weight="600" fill="var(--ink)">.410</text>
-        <g font-size="12" fill="var(--muted)"><text x="130" y="200">0.729" bore</text><text x="320" y="200">0.615"</text><text x="480" y="200">0.550"</text><text x="620" y="200">0.410"</text></g>
+        <g font-size="20" font-weight="600" fill="var(--ink)"><text x="88" y="107">12</text><text x="248" y="107">16</text><text x="398" y="107">20</text><text x="530" y="107">28</text><text x="648" y="106" font-size="17">.410</text></g>
+        <g font-size="12" fill="var(--muted)"><text x="88" y="200">0.729" bore</text><text x="248" y="200">0.662"</text><text x="398" y="200">0.615"</text><text x="530" y="200">0.550"</text><text x="648" y="200">0.410"</text></g>
       </g>
     </svg>
     <figcaption>Bore diameters drawn to scale. Gauge is the number of lead balls of bore diameter that weigh a pound, so a smaller number means a larger bore. The .410 is measured in inches.</figcaption>
@@ -103,15 +105,15 @@
     <figcaption>The wad seals gas behind the shot and cushions it, then separates from the shot cup a few feet past the muzzle.</figcaption>
   </figure>
   <div class="tbl"><table>
-    <thead><tr><th>Shot size</th><th class="num">Diameter</th><th class="num">Pellets per oz (lead)</th><th>Typical use</th></tr></thead>
+    <thead><tr><th>Shot size</th><th class="num">Diameter</th><th class="num">Pellet weight</th><th class="num">Pellets per oz (lead)</th><th>Typical use</th></tr></thead>
     <tbody>
-      <tr><td><b>#9</b></td><td class="num">0.080"</td><td class="num">≈585</td><td>Skeet, close sporting targets</td></tr>
-      <tr><td><b>#8</b></td><td class="num">0.090"</td><td class="num">≈410</td><td>Skeet, trap (16 yd), sporting</td></tr>
-      <tr><td><b>#7½</b></td><td class="num">0.095"</td><td class="num">≈350</td><td>Trap handicap, longer sporting, dove</td></tr>
-      <tr><td><b>#6</b></td><td class="num">0.110"</td><td class="num">≈225</td><td>Pheasant, squirrel, rabbit</td></tr>
-      <tr><td><b>#4</b></td><td class="num">0.130"</td><td class="num">≈135</td><td>Turkey, ducks (non-toxic shot required for waterfowl)</td></tr>
-      <tr><td><b>00 buck</b></td><td class="num">0.330"</td><td class="num">9 per 2¾" shell</td><td>Deer where legal, defensive use</td></tr>
-      <tr><td><b>Slug</b></td><td class="num">bore size</td><td class="num">1 (≈1 oz)</td><td>Deer, single projectile out to about 100 yd</td></tr>
+      <tr><td><b>#9</b></td><td class="num">0.080"</td><td class="num">0.75 gr</td><td class="num">≈585</td><td>Skeet, close sporting targets</td></tr>
+      <tr><td><b>#8</b></td><td class="num">0.090"</td><td class="num">1.07 gr</td><td class="num">≈410</td><td>Skeet, trap (16 yd), sporting</td></tr>
+      <tr><td><b>#7½</b></td><td class="num">0.095"</td><td class="num">1.25 gr</td><td class="num">≈350</td><td>Trap handicap, longer sporting, dove</td></tr>
+      <tr><td><b>#6</b></td><td class="num">0.110"</td><td class="num">1.95 gr</td><td class="num">≈225</td><td>Pheasant, squirrel, rabbit</td></tr>
+      <tr><td><b>#4</b></td><td class="num">0.130"</td><td class="num">3.24 gr</td><td class="num">≈135</td><td>Turkey, ducks (non-toxic shot required for waterfowl)</td></tr>
+      <tr><td><b>00 buck</b></td><td class="num">0.330"</td><td class="num">53.8 gr</td><td class="num">9 per 2¾" shell</td><td>Deer where legal, defensive use</td></tr>
+      <tr><td><b>Slug</b></td><td class="num">bore size</td><td class="num">437 gr (1 oz)</td><td class="num">1 (≈1 oz)</td><td>Deer, single projectile out to about 100 yd</td></tr>
     </tbody>
   </table></div>
   <div class="grid2">
@@ -125,8 +127,32 @@
   </div>
 </section>
 
+<section id="gauges">
+  <h2><span class="n">04</span>Loads by gauge</h2>
+  <p>Shot charges are listed in ounces; 1 ounce is 437.5 grains. Smaller gauges throw lighter charges, so they put fewer pellets in the air even with the same choke. The 16 gauge sits between the 12 and 20: nearly 12-gauge payloads in a lighter gun.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Gauge</th><th>Target loads</th><th>Field loads</th><th>Buckshot</th><th>Slugs</th></tr></thead>
+    <tbody>
+      <tr><td><b>12</b></td><td>⅞–1⅛ oz (383–492 gr), #7½–#9, 1,145–1,250 ft/s</td><td>1¼–1⅝ oz, #4–#6</td><td>00 buck: 8–9 pellets of 53.8 gr<br>#1 buck: 16 of 40 gr<br>#4 buck: 27 of 20.7 gr</td><td>1 oz (437 gr) Foster, 1,600 ft/s<br>300 gr sabot, 2,000 ft/s</td></tr>
+      <tr><td><b>16</b></td><td>⅞–1 oz (383–437 gr), #7½–#8, 1,165–1,200 ft/s</td><td>1–1⅛ oz, #5–#7½</td><td>#1 buck: 12 pellets of 40 gr, 1,225 ft/s</td><td>⅘ oz (350 gr) Foster, 1,600 ft/s<br>1 oz Brenneke-style, 1,450 ft/s</td></tr>
+      <tr><td><b>20</b></td><td>⅞ oz (383 gr), #7½–#9, 1,200 ft/s</td><td>1–1¼ oz, #4–#6</td><td>#3 buck: 20 pellets of 23.4 gr</td><td>¾ oz (328 gr) Foster, 1,600 ft/s<br>250 gr sabot, 1,800 ft/s</td></tr>
+      <tr><td><b>28</b></td><td>¾ oz (328 gr), #8–#9, 1,200 ft/s</td><td>¾–1 oz, #6–#7½</td><td>rare</td><td>rare</td></tr>
+      <tr><td><b>.410</b></td><td>½ oz (219 gr), #8–#9, 1,200–1,250 ft/s</td><td>11/16 oz, #6–#7½</td><td>000 buck: 3–5 pellets (3")</td><td>¼ oz (109 gr), 1,800 ft/s</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box">
+    <h3>Load explorer</h3>
+    <p>Pick a gauge and load to see the payload, pellet count, and energy per pellet at the muzzle.</p>
+    <form class="calc" id="sgx" onsubmit="return false">
+      <label for="sgx-g">Gauge<select id="sgx-g"><option>12</option><option>16</option><option>20</option><option>28</option><option>.410</option></select></label>
+      <label for="sgx-l">Load<select id="sgx-l" style="width:16em"></select></label>
+    </form>
+    <div class="grid3" id="sgx-out"></div>
+  </div>
+</section>
+
 <section id="chokes">
-  <h2><span class="n">04</span>Chokes and patterns</h2>
+  <h2><span class="n">05</span>Chokes and patterns</h2>
   <p>A choke is a slight constriction at the muzzle that controls how quickly the pattern spreads. Tighter chokes keep more pellets in a 30-inch circle at 40 yards. They also leave less room for error up close.</p>
   <div class="sim" id="sim-pattern" data-label="Shot pattern spreading with distance for different chokes"><div class="simtitle">Pattern spread to 40 yards</div></div>
   <div class="tbl"><table>
@@ -144,8 +170,14 @@
   <p class="note">Steel shot patterns tighter than lead through the same choke. Use improved cylinder or modified with steel, and never fire steel through a choke marked lead-only or tighter than the maker allows.</p>
 </section>
 
+<section id="slugs">
+  <h2><span class="n">06</span>Slug trajectory</h2>
+  <p>Slugs are heavy and slow and lose velocity quickly. Most smoothbore Foster slugs are practical to about 75–100 yards; sabot slugs from a rifled barrel reach 150 yards or more. Pick a gauge and slug to see drop and holds.</p>
+  <div id="bal-sg" data-cartridges="12slug,16slug,20slug"></div>
+</section>
+
 <section id="patterning">
-  <h2><span class="n">05</span>Patterning your gun</h2>
+  <h2><span class="n">07</span>Patterning your gun</h2>
   <div class="grid2">
     <div class="box"><h3>Procedure</h3><ol>
       <li>Hang paper at least 40 inches square at 40 yards (25 yards for skeet chokes).</li>
@@ -163,7 +195,7 @@
 </section>
 
 <section id="fit">
-  <h2><span class="n">06</span>Gun fit and eye dominance</h2>
+  <h2><span class="n">08</span>Gun fit and eye dominance</h2>
   <p>With a shotgun your eye is the rear sight. If the gun doesn't put your eye in the same spot over the rib every time, the pattern goes somewhere else. Fit is what makes a good mount produce a good sight picture.</p>
   <figure>
     <svg class="dia" viewBox="0 0 720 240" role="img" aria-label="Shotgun fit dimensions">
@@ -198,7 +230,7 @@
 </section>
 
 <section id="mount">
-  <h2><span class="n">07</span>Mount and stance</h2>
+  <h2><span class="n">09</span>Mount and stance</h2>
   <div class="grid2">
     <div class="box"><h3>Mount</h3><ol>
       <li>Start with the muzzle at the hold point and your eyes on the visual pickup point.</li>
@@ -233,7 +265,7 @@
 </section>
 
 <section id="lead">
-  <h2><span class="n">08</span>Lead methods</h2>
+  <h2><span class="n">10</span>Lead methods</h2>
   <p>Shot takes time to reach the target, so you shoot where the target will be. All three methods get the muzzle ahead of the target; they differ in where the muzzle starts and how it gets there. Keep the swing going after the shot (follow-through) with every method.</p>
   <div class="sim" id="sim-lead" data-label="Swing-through, pull-away, and maintained lead on a crossing target"><div class="simtitle">Muzzle path relative to a crossing target</div></div>
   <div class="tbl"><table>
@@ -247,13 +279,13 @@
 </section>
 
 <section id="string">
-  <h2><span class="n">09</span>The shot string</h2>
+  <h2><span class="n">11</span>The shot string</h2>
   <p>Pellets don't arrive as a flat disc. Slower and deformed pellets lag behind, stretching the charge into a column several feet long by 40 yards. A crossing target moving through that column can be hit by trailing pellets even if the lead was slightly long, which is one reason a little extra lead often works better than too little.</p>
   <div class="sim" id="sim-string" data-label="Shot column stretching as it travels"><div class="simtitle">Shot string from above</div></div>
 </section>
 
 <section id="disciplines">
-  <h2><span class="n">10</span>Trap, skeet, sporting clays</h2>
+  <h2><span class="n">12</span>Trap, skeet, sporting clays</h2>
   <div class="sim" id="sim-skeet" data-label="Skeet field stations and target flights"><div class="simtitle">Skeet: eight stations, two houses</div></div>
   <div class="tbl"><table>
     <thead><tr><th>Discipline</th><th>Layout</th><th>Targets</th><th>Typical choke and load</th></tr></thead>
@@ -281,7 +313,7 @@
 </section>
 
 <section id="handling">
-  <h2><span class="n">11</span>Gun handling</h2>
+  <h2><span class="n">13</span>Gun handling</h2>
   <div class="grid2">
     <div class="box"><h3>On the station</h3><ul>
       <li>Load only when it's your turn and you're on the station.</li>
@@ -297,7 +329,7 @@
 </section>
 
 <section id="maint">
-  <h2><span class="n">12</span>Maintenance</h2>
+  <h2><span class="n">14</span>Maintenance</h2>
   <div class="grid2">
     <div class="box"><h3>After each session</h3><ul>
       <li>Wipe the bores; plastic fouling from wads builds up in the choke area.</li>
@@ -313,7 +345,7 @@
 </section>
 
 <section id="errors">
-  <h2><span class="n">13</span>Common errors</h2>
+  <h2><span class="n">15</span>Common errors</h2>
   <div class="tbl"><table>
     <thead><tr><th>Error</th><th>What it does</th><th>Fix</th></tr></thead>
     <tbody>
@@ -329,7 +361,7 @@
 </section>
 
 <section id="src">
-  <h2><span class="n">14</span>Sources</h2>
+  <h2><span class="n">16</span>Sources</h2>
   <ul>
     <li><a href="https://nsca.nssa-nsca.org/sporting-clays-basics/" target="_blank" rel="noopener">NSCA: Sporting clays basics</a></li>
     <li><a href="https://nssa-nsca.org/about-us/" target="_blank" rel="noopener">NSSA-NSCA: About the National Skeet Shooting and Sporting Clays Associations</a></li>
@@ -343,8 +375,22 @@
 </main>
 <script src="assets/sim.js"></script>
 
+<script src="assets/ballistics.js"></script>
 <script>
 (function(){
+Ballistics.mount(document.getElementById("bal-sg"));
+/* load explorer: [name, payload gr, pellet gr, pellets, fps, use] */
+const SG={"12":[["1 oz #8 target",437.5,1.07,410,1200,"Skeet, trap, sporting"],["1⅛ oz #7½ target",492,1.25,394,1200,"Trap, longer sporting"],["1¼ oz #6 field",547,1.95,281,1330,"Pheasant, rabbit"],["1⅛ oz #4 steel",492,2.0,216,1400,"Ducks (non-toxic required)"],["2¾\" 00 buck",484,53.8,9,1325,"Deer where legal, defense"],["2¾\" #1 buck",640,40,16,1250,"Defense"],["2¾\" #4 buck",559,20.7,27,1325,"Short-range defense, coyote"],["1 oz Foster slug",437.5,437.5,1,1600,"Deer to about 100 yd"]],
+ "16":[["1 oz #8 target",437.5,1.07,410,1165,"Skeet, trap, sporting"],["1 oz #7½ field",437.5,1.25,350,1200,"Dove, quail"],["1⅛ oz #6 field",492,1.95,253,1295,"Pheasant, grouse"],["2¾\" #1 buck",480,40,12,1225,"Deer where legal, defense"],["⅘ oz Foster slug",350,350,1,1600,"Deer to about 75–100 yd"]],
+ "20":[["⅞ oz #8 target",383,1.07,359,1200,"Skeet, sporting"],["1 oz #6 field",437.5,1.95,225,1220,"Pheasant, rabbit"],["3\" #3 buck",468,23.4,20,1200,"Short-range defense"],["¾ oz Foster slug",328,328,1,1600,"Deer to about 75 yd"]],
+ "28":[["¾ oz #8 target",328,1.07,308,1200,"Skeet"],["¾ oz #9 target",328,.75,439,1200,"Close skeet stations"]],
+ ".410":[["½ oz #8 target",219,1.07,205,1250,"Skeet"],["11/16 oz #7½ field",301,1.25,241,1135,"Squirrel, close upland"],["¼ oz slug",109,109,1,1800,"Small game, short range"]]};
+const gS=document.getElementById("sgx-g"),lS=document.getElementById("sgx-l"),out=document.getElementById("sgx-out");
+function loads(){lS.innerHTML=SG[gS.value].map((l,i)=>`<option value="${i}">${l[0]}</option>`).join("");show()}
+function show(){const l=SG[gS.value][+lS.value];const ep=l[2]*l[4]*l[4]/450436,et=l[1]*l[4]*l[4]/450436;
+  const cell=(k,v)=>`<div class="box"><h4>${k}</h4><p style="font:700 22px var(--display);color:var(--ink)">${v}</p></div>`;
+  out.innerHTML=cell("Payload",(l[1]/437.5).toFixed(2).replace(/\.?0+$/,"")+" oz · "+(l[1]%1?l[1].toFixed(1):l[1])+" gr")+cell(l[3]>1?"Pellets":"Projectile",l[3]>1?l[3]+" × "+l[2]+" gr":"1 × "+l[2]+" gr")+cell("Velocity",l[4].toLocaleString()+" ft/s")+cell(l[3]>1?"Energy per pellet":"Energy",Math.round(ep*10)/10+" ft-lb")+cell("Total energy",Math.round(et).toLocaleString()+" ft-lb")+cell("Typical use",l[5])}
+gS.addEventListener("change",loads);lS.addEventListener("change",show);loads();
 /* choke patterns */
 function patScene(tab,pct,caps){const sig=15/Math.sqrt(-2*Math.log(1-pct));const r=rng(7);const N=140;const P=[];for(let i=0;i<N;i++){P.push([gauss(r),gauss(r),r()])}
   function rng(seed){let a=seed;return()=>{a=(a*1664525+1013904223)%4294967296;return a/4294967296}}

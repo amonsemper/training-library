@@ -20,20 +20,22 @@
   <p class="note">Built on U.S. Army TC 3-23.35 <i>Pistol</i>, the FBI pistol qualification, and USPSA, IDPA, and NRA practice. Times are typical standards, not hard limits. Right-handed shooter assumed; mirror for left-handed.</p>
   <nav class="toc" aria-label="Contents">
     <a href="#safety"><span>01</span>Safety</a>
-    <a href="#grip"><span>02</span>Grip</a>
-    <a href="#stance"><span>03</span>Stance</a>
-    <a href="#sights"><span>04</span>Sight alignment and picture</a>
-    <a href="#trigger"><span>05</span>Trigger control</a>
-    <a href="#diagnose"><span>06</span>Diagnosing errors</a>
-    <a href="#recoil"><span>07</span>Recoil and follow-through</a>
-    <a href="#draw"><span>08</span>The draw</a>
-    <a href="#reloads"><span>09</span>Reloads</a>
-    <a href="#mal"><span>10</span>Malfunctions</a>
-    <a href="#dry"><span>11</span>Dry practice</a>
-    <a href="#comp"><span>12</span>Competition formats</a>
-    <a href="#drills"><span>13</span>Drills and standards</a>
-    <a href="#errors"><span>14</span>Common errors</a>
-    <a href="#src"><span>15</span>Sources</a>
+    <a href="#ammo"><span>02</span>Ammunition</a>
+    <a href="#calc"><span>03</span>Ballistic calculator</a>
+    <a href="#grip"><span>04</span>Grip</a>
+    <a href="#stance"><span>05</span>Stance</a>
+    <a href="#sights"><span>06</span>Sight alignment and sight picture</a>
+    <a href="#trigger"><span>07</span>Trigger control</a>
+    <a href="#diagnose"><span>08</span>Diagnosing errors</a>
+    <a href="#recoil"><span>09</span>Recoil and follow-through</a>
+    <a href="#draw"><span>10</span>The draw</a>
+    <a href="#reloads"><span>11</span>Reloads</a>
+    <a href="#mal"><span>12</span>Malfunctions</a>
+    <a href="#dry"><span>13</span>Dry practice</a>
+    <a href="#comp"><span>14</span>Competition formats</a>
+    <a href="#drills"><span>15</span>Drills and standards</a>
+    <a href="#errors"><span>16</span>Common errors</a>
+    <a href="#src"><span>17</span>Sources</a>
   </nav>
 </header>
 
@@ -56,8 +58,47 @@
   </div>
 </section>
 
+<section id="ammo">
+  <h2><span class="n">02</span>Ammunition</h2>
+  <p>Bullet weight is measured in grains; there are 7,000 grains in a pound. For a given cartridge, lighter bullets leave faster and shoot flatter up close; heavier bullets carry velocity and resist wind better at distance, and usually penetrate deeper. Changing weight or type moves your point of impact, so re-confirm your zero when you change loads.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Cartridge</th><th>Common weights</th><th>Common types</th><th>Typical velocity</th><th>Typical use</th></tr></thead>
+    <tbody>
+      <tr><td><b>.223 Rem / 5.56×45 NATO</b></td><td class="num">40–77 gr<br>55 · 62 · 69 · 75 · 77</td><td>55 gr FMJ (M193), 62 gr steel-core FMJ (M855), bonded soft point, open-tip match (OTM), polymer tip</td><td class="num">2,750–3,250 ft/s<br>(16–20" barrel)</td><td>Training, defense, varmint, match to 600 yd</td></tr>
+      <tr><td><b>.308 Win / 7.62×51 NATO</b></td><td class="num">110–180 gr<br>147 · 150 · 165 · 168 · 175</td><td>147 gr FMJ (M80), soft point, bonded, hollow-point boat-tail match (M118LR 175 gr)</td><td class="num">2,550–2,850 ft/s<br>(20–24" barrel)</td><td>Medium and large game, precision to 1,000 yd</td></tr>
+      <tr><td><b>9mm Luger (9×19)</b></td><td class="num">115 · 124 · 147 gr</td><td>FMJ, jacketed hollow point (JHP), +P JHP, frangible</td><td class="num">950–1,250 ft/s (4")<br>+100–200 from a 16" carbine</td><td>Carry, duty, training, pistol-caliber carbine</td></tr>
+      <tr><td><b>.45 ACP</b></td><td class="num">185 · 200 · 230 gr</td><td>230 gr FMJ ("ball"), JHP, +P JHP</td><td class="num">830–1,000 ft/s (5")</td><td>Carry, duty, competition</td></tr>
+    </tbody>
+  </table></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Bullet type</th><th>What it is</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td><b>FMJ</b> (full metal jacket, "ball")</td><td>Lead core fully covered by a copper jacket at the nose</td><td>Training, practice; penetrates deeply and expands little</td></tr>
+      <tr><td><b>JHP</b> (jacketed hollow point)</td><td>Cavity in the nose that opens on impact</td><td>Handgun defense; expands to a larger diameter and stays in the target more often</td></tr>
+      <tr><td><b>SP</b> (soft point)</td><td>Exposed lead tip on a jacketed bullet</td><td>Hunting; controlled expansion</td></tr>
+      <tr><td><b>Bonded</b></td><td>Core chemically bonded to the jacket so they don't separate</td><td>Defense and hunting through barriers such as glass</td></tr>
+      <tr><td><b>OTM / HPBT</b> (open-tip match / hollow-point boat-tail)</td><td>Small opening from manufacturing, tapered base; very consistent</td><td>Precision and match; the 75–77 gr 5.56 loads also fragment reliably</td></tr>
+      <tr><td><b>Polymer tip</b></td><td>Plastic tip on a hollow point; flatter trajectory, starts expansion</td><td>Hunting, varmint, some defense loads</td></tr>
+      <tr><td><b>Steel-core</b> (M855 "green tip")</td><td>Small steel penetrator ahead of a lead core</td><td>Military general purpose; not a hunting bullet, banned at some ranges</td></tr>
+      <tr><td><b>Frangible</b></td><td>Compressed copper powder that breaks apart on hard surfaces</td><td>Steel targets at close range, shoot houses</td></tr>
+      <tr><td><b>+P / +P+</b></td><td>Loaded to higher pressure for more velocity</td><td>Only in guns rated for it; more recoil and wear</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="box"><h3>.223 vs. 5.56</h3><p>The cases look the same, but 5.56 NATO is loaded to higher pressure and the 5.56 chamber has a longer throat. <b>.223 is safe in a 5.56 or .223 Wylde chamber. 5.56 in a chamber marked .223 Rem only</b> can produce excess pressure. Check the barrel marking.</p></div>
+    <div class="box"><h3>.308 vs. 7.62 NATO</h3><p>Close but not identical in chamber dimensions and pressure. Most modern .308 rifles handle 7.62 NATO; check the manufacturer's guidance, especially on older or surplus rifles.</p></div>
+  </div>
+</section>
+
+
+<section id="calc">
+  <h2><span class="n">03</span>Ballistic calculator</h2>
+  <p>Handgun bullets are slow and drop quickly past 25 yards. Pick a load, set your zero and sight height (about 0.6" for iron sights, 0.9–1.2" for a slide-mounted red dot), and see the hold at any distance. Choose a carbine load to compare a 16-inch pistol-caliber carbine.</p>
+  <div id="bal-hg" data-cartridges="9mm,45,556,308"></div>
+</section>
+
 <section id="grip">
-  <h2><span class="n">02</span>Grip</h2>
+  <h2><span class="n">04</span>Grip</h2>
   <p>The grip controls where the muzzle goes during recoil and how much the trigger finger moves the gun. Get it right on the draw; there's no time to fix it after.</p>
   <figure>
     <svg class="dia" viewBox="0 0 720 260" role="img" aria-label="Two-handed pistol grip regions">
@@ -92,7 +133,7 @@
 </section>
 
 <section id="stance">
-  <h2><span class="n">03</span>Stance</h2>
+  <h2><span class="n">05</span>Stance</h2>
   <figure>
     <svg class="dia" viewBox="0 0 720 240" role="img" aria-label="Isosceles and Weaver stances from above">
       <g fill="none" stroke="var(--ink)" stroke-width="4" stroke-linecap="round">
@@ -117,7 +158,7 @@
 </section>
 
 <section id="sights">
-  <h2><span class="n">04</span>Sight alignment and sight picture</h2>
+  <h2><span class="n">06</span>Sight alignment and sight picture</h2>
   <p><b>Sight alignment</b> is the front sight centered in the rear notch, tops level, equal light on each side. <b>Sight picture</b> is that alignment placed on the target. The eye can focus on only one distance at a time; for precision, it belongs on the front sight.</p>
   <div class="sim" id="sim-sights" data-label="Sight focus and angular error"><div class="simtitle">Focus and alignment</div></div>
   <div class="tbl"><table>
@@ -135,7 +176,7 @@
 </section>
 
 <section id="trigger">
-  <h2><span class="n">05</span>Trigger control</h2>
+  <h2><span class="n">07</span>Trigger control</h2>
   <p>A handgun trigger has phases you can feel: slack (take-up), the wall, the break, overtravel, and the reset. Take up the slack, press smoothly through the wall, hold to the rear after the break, and let it out only to the reset.</p>
   <div class="sim" id="sim-dry" data-label="Trigger phases and where the shot goes"><div class="simtitle">Trigger phases and the muzzle</div></div>
   <div class="grid2">
@@ -145,7 +186,7 @@
 </section>
 
 <section id="diagnose">
-  <h2><span class="n">06</span>Diagnosing errors</h2>
+  <h2><span class="n">08</span>Diagnosing errors</h2>
   <p>Shots that consistently miss in one direction usually come from a specific habit. This chart is for a right-handed shooter; mirror it left to right for a left-handed shooter. Treat it as a starting point and confirm with dry fire and shot calls.</p>
   <figure>
     <svg class="dia" viewBox="0 0 720 360" role="img" aria-label="Error diagnosis chart for a right-handed shooter">
@@ -169,7 +210,7 @@
 </section>
 
 <section id="recoil">
-  <h2><span class="n">07</span>Recoil and follow-through</h2>
+  <h2><span class="n">09</span>Recoil and follow-through</h2>
   <p>The gun will move in recoil. What matters is that it moves the same way every time and returns to the same place. A firm grip and forward-leaning stance shorten the time the sights are off target, which sets how fast you can accurately fire the next shot.</p>
   <div class="sim" id="sim-recoil" data-label="Muzzle rise and return with locked and loose grips"><div class="simtitle">Muzzle rise, slide cycle, and sight tracking</div></div>
   <ul>
@@ -180,7 +221,7 @@
 </section>
 
 <section id="draw">
-  <h2><span class="n">08</span>The draw</h2>
+  <h2><span class="n">10</span>The draw</h2>
   <p>A draw is a series of positions the gun passes through every time. Practicing it as steps first makes it consistent, then smooth, then fast.</p>
   <div class="sim" id="sim-draw" data-label="Four-step draw stroke from the holster"><div class="simtitle">Four-step draw from an outside-the-waistband holster</div></div>
   <div class="tbl"><table>
@@ -196,7 +237,7 @@
 </section>
 
 <section id="reloads">
-  <h2><span class="n">09</span>Reloads</h2>
+  <h2><span class="n">11</span>Reloads</h2>
   <div class="tbl"><table>
     <thead><tr><th>Reload</th><th>When</th><th>Steps</th><th>Typical time</th></tr></thead>
     <tbody>
@@ -214,7 +255,7 @@
 </section>
 
 <section id="mal">
-  <h2><span class="n">10</span>Malfunctions</h2>
+  <h2><span class="n">12</span>Malfunctions</h2>
   <figure>
     <svg class="dia" viewBox="0 0 720 210" role="img" aria-label="Failure to fire, stovepipe, and double feed">
       <g fill="var(--floor)" stroke="var(--wall)" stroke-width="3">
@@ -244,7 +285,7 @@
 </section>
 
 <section id="dry">
-  <h2><span class="n">11</span>Dry practice</h2>
+  <h2><span class="n">13</span>Dry practice</h2>
   <p class="warn"><b>Dry-fire safety:</b> no ammunition in the room. Unload, put all ammunition in another room, check the gun and magazines twice, pick a target with a backstop that would stop a round, and say aloud "dry practice begins." When you finish, say "dry practice is over" before reloading, and don't take "one more."</p>
   <div class="tbl"><table>
     <thead><tr><th>Drill</th><th>How</th><th>Reps</th></tr></thead>
@@ -260,7 +301,7 @@
 </section>
 
 <section id="comp">
-  <h2><span class="n">12</span>Competition formats</h2>
+  <h2><span class="n">14</span>Competition formats</h2>
   <div class="tbl"><table>
     <thead><tr><th>Format</th><th>What it tests</th><th>Scoring</th><th>Distances</th></tr></thead>
     <tbody>
@@ -274,7 +315,7 @@
 </section>
 
 <section id="drills">
-  <h2><span class="n">13</span>Drills and standards</h2>
+  <h2><span class="n">15</span>Drills and standards</h2>
   <div class="tbl"><table>
     <thead><tr><th>Drill</th><th>Setup</th><th>Good / advanced</th></tr></thead>
     <tbody>
@@ -290,7 +331,7 @@
 </section>
 
 <section id="errors">
-  <h2><span class="n">14</span>Common errors</h2>
+  <h2><span class="n">16</span>Common errors</h2>
   <div class="tbl"><table>
     <thead><tr><th>Error</th><th>What it does</th><th>Fix</th></tr></thead>
     <tbody>
@@ -306,7 +347,7 @@
 </section>
 
 <section id="src">
-  <h2><span class="n">15</span>Sources</h2>
+  <h2><span class="n">17</span>Sources</h2>
   <ul>
     <li><a href="https://irp.fas.org/doddir/army/tc3-23-35.pdf" target="_blank" rel="noopener">TC 3-23.35, Pistol (PDF, FAS)</a></li>
     <li><a href="https://archive.org/download/MManuals/Fm3-23.35CombatTrainingWithPistols.pdf" target="_blank" rel="noopener">FM 3-23.35, Combat Training with Pistols (PDF, Internet Archive)</a></li>
@@ -321,8 +362,10 @@
 </main>
 <script src="assets/sim.js"></script>
 
+<script src="assets/ballistics.js"></script>
 <script>
 (function(){
+Ballistics.mount(document.getElementById("bal-hg"));
 /* soft blur by stamping a shape several times */
 function blurred(g,amt,fn){if(amt<.05){fn(0,0,1);return}const n=8;for(let i=0;i<n;i++){const a=i/n*Math.PI*2;fn(Math.cos(a)*amt,Math.sin(a)*amt,.22)}}
 function sightPic(g,cx,cy,focus,off){/* focus: 0 target,1 rear,2 front */

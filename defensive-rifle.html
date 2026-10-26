@@ -284,11 +284,10 @@
 </main>
 <script src="assets/sim.js"></script>
 
+<script src="assets/ballistics.js"></script>
 <script>
 (function(){
-const v0=3240,k=0.000446,gg=32.17,hS=2.6/12;
-const tof=x=>(Math.exp(k*x)-1)/(k*v0);const drop=x=>.5*gg*tof(x)**2;
-const xz=150,th=(drop(xz)+hS)/xz;const P=yd=>{const x=yd*3;return(-drop(x)+x*th-hS)*12};
+const R50=Ballistics.solve({mv:3240,bc:.243,w:55,sh:2.6,zero:50,max:60,wind:0,clock:3,temp:59,alt:0});const P=yd=>{const i=Math.floor(yd),f=yd-i;return R50[i].din*(1-f)+R50[Math.min(60,i+1)].din*f};
 function offScene(tab,yd){const off=P(yd);return{tab,duration:4,aspect:.55,captions:[[0,"Aim","Dot on the 1-inch aiming point at "+yd+" yd."],[1.2,"Fire","The bullet leaves the bore 2.6\" below the dot and climbs."],[2.2,"Impact",yd>=50?"At 50 yd it has risen to the line of sight: impact on the dot.":"It hasn't reached the line of sight yet. Impact is "+Math.abs(off).toFixed(1)+"\" low."]],draw(g,t){
   g.clear();const X=u=>8+u/yd*48,Y=inch=>24-inch*3.2;
   g.line(6,Y(0),58,Y(0),{c:"accent",w:.3});g.text("LINE OF SIGHT",8,Y(0)-1.4,{size:1.8,align:"left",c:"accent"});
