@@ -71,12 +71,11 @@ window.Sim=function(id,scenes){
   requestAnimationFrame(frame);
 };
 })();
-/* menu button for the library nav on narrow screens */
-(function(){const nav=document.querySelector("nav.site"),b=nav&&nav.querySelector(".menu-btn");if(!b)return;
-  const set=o=>{nav.classList.toggle("open",o);b.setAttribute("aria-expanded",o?"true":"false")};
-  b.addEventListener("click",e=>{e.stopPropagation();set(!nav.classList.contains("open"))});
-  nav.querySelectorAll(".links a").forEach(a=>a.addEventListener("click",()=>set(false)));
-  document.addEventListener("click",e=>{if(!nav.contains(e.target))set(false)});
-  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&nav.classList.contains("open")){set(false);b.focus()}});
-  matchMedia("(min-width:1181px)").addEventListener("change",e=>{if(e.matches)set(false)});
+/* library nav drop-downs: click or tap toggles, hover opens on desktop, Esc or an outside click closes */
+(function(){const nav=document.querySelector("nav.site");if(!nav)return;const dds=[...nav.querySelectorAll(".dd")];
+  const close=x=>dds.forEach(d=>{if(d!==x){d.classList.remove("open");d.querySelector(".dt").setAttribute("aria-expanded","false")}});
+  dds.forEach(d=>{const b=d.querySelector(".dt");b.addEventListener("click",e=>{e.stopPropagation();const o=!d.classList.contains("open");close(d);d.classList.toggle("open",o);b.setAttribute("aria-expanded",o?"true":"false")});
+    d.addEventListener("mouseleave",()=>{if(matchMedia("(hover:hover)").matches){d.classList.remove("open");b.setAttribute("aria-expanded","false")}})});
+  document.addEventListener("click",e=>{if(!nav.contains(e.target))close()});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"){const o=nav.querySelector(".dd.open");close();if(o)o.querySelector(".dt").focus()}});
 })();
