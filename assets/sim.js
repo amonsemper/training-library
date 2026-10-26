@@ -71,5 +71,12 @@ window.Sim=function(id,scenes){
   requestAnimationFrame(frame);
 };
 })();
-/* keep the current page's nav link in view on narrow screens */
-(function(){const a=document.querySelector('nav.site .links a[aria-current="page"]');if(!a)return;const l=a.parentElement;l.scrollLeft=Math.max(0,a.offsetLeft-l.offsetLeft-(l.clientWidth-a.offsetWidth)/2)})();
+/* menu button for the library nav on narrow screens */
+(function(){const nav=document.querySelector("nav.site"),b=nav&&nav.querySelector(".menu-btn");if(!b)return;
+  const set=o=>{nav.classList.toggle("open",o);b.setAttribute("aria-expanded",o?"true":"false")};
+  b.addEventListener("click",e=>{e.stopPropagation();set(!nav.classList.contains("open"))});
+  nav.querySelectorAll(".links a").forEach(a=>a.addEventListener("click",()=>set(false)));
+  document.addEventListener("click",e=>{if(!nav.contains(e.target))set(false)});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&nav.classList.contains("open")){set(false);b.focus()}});
+  matchMedia("(min-width:1181px)").addEventListener("change",e=>{if(e.matches)set(false)});
+})();
