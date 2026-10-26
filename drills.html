@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Common Practice Drills</title>
+<meta name="description" content="Named practice drills for handgun, rifle, and shotgun: the Mozambique, the Dicken drill, the Bill drill, FAST, El Presidente, the Casino drill, and more, with setups, standards, and a par timer.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;700;800&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+.drill{display:flex;flex-direction:column;gap:10px}
+.drill .spec{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px 16px;font-family:var(--mono);font-size:12.5px}
+.drill .spec div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.drill .spec span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.drill .spec b{color:var(--ink);font-weight:600}
+.timer{display:flex;flex-direction:column;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:16px}
+.timer .read{font:800 clamp(56px,16vw,96px)/1 var(--display);letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.timer .row{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+.timer label{display:flex;flex-direction:column;gap:4px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.timer input{font:600 16px var(--mono);width:7em;padding:6px 8px;border:1px solid var(--line);border-radius:3px;background:var(--bg);color:var(--ink)}
+.timer button{font:700 18px var(--display);letter-spacing:.06em;text-transform:uppercase;padding:12px 26px;border-radius:3px;border:2px solid var(--accent);background:var(--accent);color:var(--panel);cursor:pointer}
+.timer button.sec{background:transparent;color:var(--ink);border-color:var(--line)}
+.timer button:focus-visible,.timer input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.timer .st{font-family:var(--mono);font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<nav class="site" aria-label="Library"><div class="in"><a class="brand" href="index.html">Training <span>Library</span></a><div class="links"><a href="cqb.html">CQB Primer</a><a href="scenarios.html">Scenarios</a><span class="sep" aria-hidden="true"></span><a href="rifle.html">Rifle</a><a href="shotgun.html">Shotgun</a><a href="handgun.html">Handgun</a><a href="bolt-rifle.html">Bolt Rifle</a><span class="sep" aria-hidden="true"></span><a href="defensive-rifle.html">Defensive Rifle</a><a href="defensive-shotgun.html">Defensive Shotgun</a><a href="defensive-handgun.html">Defensive Handgun</a><a href="defensive-bolt-rifle.html">Defensive Bolt Rifle</a><span class="sep" aria-hidden="true"></span><a href="modifications.html">Modifications</a><a href="drills.html" aria-current="page">Drills</a></div></div></nav>
+<main class="wrap">
+<header class="page">
+  <div class="eyebrow">Practice · Drills</div>
+  <h1>Common Practice Drills</h1>
+  <p class="lede">Named drills give you a fixed task and a standard, so you can measure progress across months instead of guessing. This page collects the well-known ones for the handgun, rifle, and shotgun, with the setup, round count, standard, and what each one builds. There's a par timer at the top you can run on your phone at the range.</p>
+  <p class="note">Run every drill on a range that allows it: drawing from a holster, moving, and shooting multiple targets aren't allowed everywhere. Standards are common published figures; where sources differ, the most widely used version is given. Start slow and clean, then speed up. A fast miss isn't progress.</p>
+  <nav class="toc" aria-label="Contents">
+    <a href="#timer"><span>00</span>Par timer</a>
+    <a href="#how"><span>01</span>How to use drills</a>
+    <a href="#hg"><span>02</span>Handgun drills</a>
+    <a href="#rf"><span>03</span>Rifle drills</a>
+    <a href="#sg"><span>04</span>Shotgun drills</a>
+    <a href="#plan"><span>05</span>Building a session</a>
+    <a href="#src"><span>06</span>Sources</a>
+  </nav>
+</header>
+
+<section id="timer">
+  <h2><span class="n">00</span>Par timer</h2>
+  <div class="timer" role="group" aria-label="Par timer">
+    <div class="read" id="pt-read" aria-live="off">0.00</div>
+    <div class="row">
+      <label for="pt-par">Par (s)<input id="pt-par" type="number" min="0.5" step="0.1" value="3.0"></label>
+      <label for="pt-min">Delay min (s)<input id="pt-min" type="number" min="0" step="0.5" value="2"></label>
+      <label for="pt-max">Delay max (s)<input id="pt-max" type="number" min="0" step="0.5" value="4"></label>
+    </div>
+    <div class="row"><button type="button" id="pt-go">Start</button><button type="button" class="sec" id="pt-stop">Stop</button></div>
+    <div class="st" id="pt-st" aria-live="polite">Press Start, then get ready. A beep after a random delay starts the string; a second beep marks the par time.</div>
+  </div>
+  <p class="note">The timer uses your phone's speaker. Turn the volume up and wear electronic hearing protection so you can hear it. It doesn't detect shots; it gives a start signal and a par signal.</p>
+</section>
+
+<section id="how">
+  <h2><span class="n">01</span>How to use drills</h2>
+  <ul>
+    <li><b>Shoot it cold.</b> The first run of the day, without warm-up, is the honest measure of what you can do on demand.</li>
+    <li><b>Write it down.</b> Date, gun, ammunition, time, hits, and what went wrong. Progress shows up in the log, not in memory.</li>
+    <li><b>Penalize misses.</b> Most standards add time for each miss. Don't let a fast time hide poor hits.</li>
+    <li><b>Change one thing at a time.</b> If you're working on the draw, keep the distance and target the same.</li>
+  </ul>
+</section>
+
+<section id="hg">
+  <h2><span class="n">02</span>Handgun drills</h2>
+
+  <div class="box drill"><h3>Mozambique (failure drill)</h3>
+    <div class="spec"><div><span>Distance</span><b>3–7 yd</b></div><div><span>Rounds</span><b>3</b></div><div><span>Target</span><b>8" chest, 3×5" head box</b></div><div><span>Standard</span><b>3.0 s from holster at 7 yd; 2.5 s advanced</b></div></div>
+    <p>Two shots to the chest, then one precise shot to the head. Named for an incident in the Mozambique war of independence that firearms instructor Jeff Cooper later taught as a drill. It trains changing from a fast pair to a precise shot, which means slowing down and refining the sight picture for the third round. Most modern classes teach assessing after the pair instead of firing the head shot automatically; run it both ways.</p>
+  </div>
+
+  <div class="box drill"><h3>Dicken drill</h3>
+    <div class="spec"><div><span>Distance</span><b>40 yd</b></div><div><span>Rounds</span><b>10</b></div><div><span>Target</span><b>USPSA or IDPA torso</b></div><div><span>Standard</span><b>From concealment, 8 of 10 hits in 15 s</b></div></div>
+    <p>Named after Elisjsha Dicken, who stopped an active shooter at the Greenwood Park Mall in Indiana in July 2022 with a pistol, firing from about 40 yards. It tests whether you can make hits at a distance most carry practice ignores. Some versions score it as a USPSA hit factor or allow a supported position with a time penalty. Shoot it slowly and accurately first; at 40 yards, the trigger press matters more than speed.</p>
+  </div>
+
+  <div class="box drill"><h3>Bill drill</h3>
+    <div class="spec"><div><span>Distance</span><b>7 yd</b></div><div><span>Rounds</span><b>6</b></div><div><span>Target</span><b>A-zone or 8" circle</b></div><div><span>Standard</span><b>3.0 s good, 2.0 s advanced</b></div></div>
+    <p>Draw and fire six shots as fast as you can keep them all in the A-zone. Named after Bill Wilson. It trains recoil control and seeing the sights lift and return between shots.</p>
+  </div>
+
+  <div class="box drill"><h3>FAST (Fundamentals, Accuracy and Speed Test)</h3>
+    <div class="spec"><div><span>Distance</span><b>7 yd</b></div><div><span>Rounds</span><b>6, with 2 in the gun</b></div><div><span>Target</span><b>3×5" card above an 8" circle</b></div><div><span>Standard</span><b>Under 10 s intermediate, under 7 s advanced, under 5 s twice for the coin</b></div></div>
+    <p>From concealment: two shots on the card, slide-lock reload, four shots on the circle. Add 2 seconds for each miss on the card and 1 for each miss on the circle. Designed by Todd Green of pistol-training.com to test the draw, a precise shot, a reload, and fast accurate shots in one short run.</p>
+  </div>
+
+  <div class="box drill"><h3>El Presidente</h3>
+    <div class="spec"><div><span>Distance</span><b>10 yd</b></div><div><span>Rounds</span><b>12</b></div><div><span>Target</span><b>3 targets, 1 yd apart</b></div><div><span>Standard</span><b>10 s good, 6 s advanced, all A's</b></div></div>
+    <p>Start facing away with hands above the shoulders. On the signal, turn, draw, fire two on each target, reload, and fire two on each again. Created by Jeff Cooper. It covers the turn, the draw, transitions between targets, and a reload under time.</p>
+  </div>
+
+  <div class="box drill"><h3>Casino drill</h3>
+    <div class="spec"><div><span>Distance</span><b>5 yd</b></div><div><span>Rounds</span><b>21, 7 per magazine</b></div><div><span>Target</span><b>Six numbered shapes</b></div><div><span>Standard</span><b>21 s, +1 s per miss or wrong target</b></div></div>
+    <p>One round on shape 1, two on shape 2, up to six on shape 6, with two forced reloads along the way. Adds thinking to the shooting: you have to count and pick the right target while running the gun.</p>
+  </div>
+
+  <div class="box drill"><h3>Dot Torture and 10-10-10</h3>
+    <div class="spec"><div><span>Distance</span><b>3 yd / 10 yd</b></div><div><span>Rounds</span><b>50 / 10</b></div><div><span>Target</span><b>2" dots / B-8 bullseye</b></div><div><span>Standard</span><b>50 of 50 / all in the black in 10 s</b></div></div>
+    <p>Dot Torture covers draws, pairs, one-handed shooting, and transitions on ten 2-inch dots at slow speed; it's untimed and shows trigger problems clearly. The 10-10-10 is ten shots at ten yards in ten seconds from the holster on a B-8 bullseye. Both reward a clean trigger press over speed.</p>
+  </div>
+  <p>The <a href="handgun.html#drills">Handgun</a> and <a href="defensive-handgun.html#drills">Defensive Handgun</a> pages have more, including the 5×5, doubles, the Blake drill, and the FBI qualification.</p>
+</section>
+
+<section id="rf">
+  <h2><span class="n">03</span>Rifle drills</h2>
+
+  <div class="box drill"><h3>Rifle Mozambique</h3>
+    <div class="spec"><div><span>Distance</span><b>7–25 yd</b></div><div><span>Rounds</span><b>3</b></div><div><span>Target</span><b>8" chest, 3×5" head</b></div><div><span>Standard</span><b>2.0 s from low ready at 7 yd; 3.0 s at 25 yd</b></div></div>
+    <p>The same two-and-one as the pistol drill, from low ready. With an optic and an AR, the head shot is where mechanical offset shows up: aim slightly high at close distances.</p>
+  </div>
+
+  <div class="box drill"><h3>Ready-up</h3>
+    <div class="spec"><div><span>Distance</span><b>25–50 yd</b></div><div><span>Rounds</span><b>1</b></div><div><span>Target</span><b>3×5" card</b></div><div><span>Standard</span><b>1.5 s at 25 yd, 2.0 s at 50 yd</b></div></div>
+    <p>From low ready, mount the rifle and fire one precise shot. The mount, cheek weld, and first sight picture decide almost every rifle engagement, and this drill isolates them.</p>
+  </div>
+
+  <div class="box drill"><h3>Rifle Bill drill</h3>
+    <div class="spec"><div><span>Distance</span><b>10–25 yd</b></div><div><span>Rounds</span><b>6</b></div><div><span>Target</span><b>8" circle</b></div><div><span>Standard</span><b>2.5 s at 25 yd</b></div></div>
+    <p>Six shots from low ready, as fast as you can keep them in the circle. Teaches you to drive the rifle with the support hand and keep the dot in the circle through recoil.</p>
+  </div>
+
+  <div class="box drill"><h3>Rifle to pistol transition</h3>
+    <div class="spec"><div><span>Distance</span><b>7 yd</b></div><div><span>Rounds</span><b>1 + 2</b></div><div><span>Target</span><b>8" circle</b></div><div><span>Standard</span><b>Under 3.0 s from the click</b></div></div>
+    <p>Load the rifle with one round. Fire it, get a click on the next trigger press, let the rifle hang on the sling, draw, and fire two pistol rounds. It only makes sense inside handgun distance; farther out, fixing the rifle is usually faster.</p>
+  </div>
+
+  <div class="box drill"><h3>9-hole barricade</h3>
+    <div class="spec"><div><span>Distance</span><b>50–100 yd</b></div><div><span>Rounds</span><b>9–18</b></div><div><span>Target</span><b>8–10" steel</b></div><div><span>Standard</span><b>One hit per hole, clean, then add time</b></div></div>
+    <p>Kyle Lamb's VTAC barricade has nine openings at different heights and angles. Fire one or two rounds through each, from the high standing hole down to prone. It builds stable improvised positions and teaches mechanical offset, because the bullet leaves below the optic and can hit the barricade edge.</p>
+  </div>
+
+  <div class="box drill"><h3>Positional and KD</h3>
+    <div class="spec"><div><span>Distance</span><b>100–500 yd</b></div><div><span>Rounds</span><b>8–20</b></div><div><span>Target</span><b>8–12" plates</b></div><div><span>Standard</span><b>First-round hits from your data</b></div></div>
+    <p>Two rounds each from prone, sitting, kneeling, and standing at 100 yd; then plates at known distances using your data book. See the <a href="rifle.html#drills">Rifle</a> and <a href="bolt-rifle.html#drills">Bolt Rifle</a> pages for full standards.</p>
+  </div>
+</section>
+
+<section id="sg">
+  <h2><span class="n">04</span>Shotgun drills</h2>
+
+  <div class="box drill"><h3>Pattern check</h3>
+    <div class="spec"><div><span>Distance</span><b>3, 7, 15, 25 yd</b></div><div><span>Rounds</span><b>4+</b></div><div><span>Target</span><b>Large paper</b></div><div><span>Standard</span><b>Know every pellet's landing</b></div></div>
+    <p>One round of your defensive load at each distance. Measure the spread. Every other shotgun drill depends on knowing at what distance your pattern stops fitting inside the target.</p>
+  </div>
+
+  <div class="box drill"><h3>Shoot one, load one</h3>
+    <div class="spec"><div><span>Distance</span><b>7 yd</b></div><div><span>Rounds</span><b>5+</b></div><div><span>Target</span><b>8" circle</b></div><div><span>Standard</span><b>Under 4 s per fire-load cycle</b></div></div>
+    <p>Fire one, load one shell from a sidesaddle or belt, fire again. Repeat. The gun never runs dry, and you learn to feed it in pauses rather than when it's empty.</p>
+  </div>
+
+  <div class="box drill"><h3>Shoot two, load two</h3>
+    <div class="spec"><div><span>Distance</span><b>7 yd</b></div><div><span>Rounds</span><b>4+</b></div><div><span>Target</span><b>8" circle</b></div><div><span>Standard</span><b>Under 6 s per cycle</b></div></div>
+    <p>Two rounds, running the pump hard between them, then two shells into the tube. Builds the rhythm of a pump gun: fire, pump, fire, feed.</p>
+  </div>
+
+  <div class="box drill"><h3>Emergency load</h3>
+    <div class="spec"><div><span>Distance</span><b>7 yd</b></div><div><span>Rounds</span><b>1</b></div><div><span>Target</span><b>8" circle</b></div><div><span>Standard</span><b>3.0 s from empty</b></div></div>
+    <p>Gun empty with the action open. Drop a shell through the ejection port (port load), close the action, and fire. This is how you get a pump shotgun back into action fastest when it runs dry.</p>
+  </div>
+
+  <div class="box drill"><h3>Slug select</h3>
+    <div class="spec"><div><span>Distance</span><b>25 yd</b></div><div><span>Rounds</span><b>1 slug</b></div><div><span>Target</span><b>6" plate</b></div><div><span>Standard</span><b>5.0 s</b></div></div>
+    <p>Buckshot chambered. Switch to a slug and hit the plate. Most methods put the slug in the chamber by ejecting the chambered shell or by port loading. Used when the pattern is too wide for the distance or the target needs precision.</p>
+  </div>
+
+  <div class="box drill"><h3>Kick the can</h3>
+    <div class="spec"><div><span>Distance</span><b>7 yd</b></div><div><span>Rounds</span><b>4–8</b></div><div><span>Target</span><b>2+ aluminum cans</b></div><div><span>Standard</span><b>Two hits on each can while it's still moving</b></div></div>
+    <p>Paper never moves. Hitting each can, then hitting it again as it tumbles, forces you to drive the gun onto a moving target and run the action fast. Use birdshot, and only on ranges that allow it.</p>
+  </div>
+  <p>More on the <a href="defensive-shotgun.html#drills">Defensive Shotgun</a> page.</p>
+</section>
+
+<section id="plan">
+  <h2><span class="n">05</span>Building a session</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Block</th><th>Time</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr><td><b>Cold test</b></td><td>2 min</td><td>One benchmark drill, first rounds of the day. Log it.</td></tr>
+      <tr><td><b>Fundamentals</b></td><td>15 min</td><td>Slow, precise work: Dot Torture, groups, or a ready-up at distance.</td></tr>
+      <tr><td><b>Skill block</b></td><td>20 min</td><td>One skill: draws, reloads, transitions, or movement. Short reps with a timer.</td></tr>
+      <tr><td><b>Stress test</b></td><td>10 min</td><td>A timed standard such as FAST, El Presidente, or the Casino drill.</td></tr>
+      <tr><td><b>Close</b></td><td>5 min</td><td>Repeat the cold test and compare. Write down one thing to fix next time.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="src">
+  <h2><span class="n">06</span>Sources</h2>
+  <ul>
+    <li><a href="https://pistol-training.com/fastest" target="_blank" rel="noopener">pistol-training.com: the FAST drill</a></li>
+    <li><a href="https://www.concealedcarry.com/training-2/eli-dickens-standards-shooting-drill/" target="_blank" rel="noopener">ConcealedCarry.com: the Dicken standards</a></li>
+    <li><a href="https://www.athlonoutdoors.com/article/the-elisjsha-dicken-drill/" target="_blank" rel="noopener">Athlon Outdoors: the Elisjsha Dicken drill</a></li>
+    <li><a href="https://www.luckygunner.com/lounge/the-casino-drill/" target="_blank" rel="noopener">Lucky Gunner: the Casino drill</a></li>
+    <li><a href="https://www.gunsandammo.com/editorial/firearms-training-the-9-hole-barricade/307337" target="_blank" rel="noopener">Guns &amp; Ammo: the 9-hole barricade</a></li>
+    <li><a href="https://shootingillustrated.com/content/useful-shotgun-drills" target="_blank" rel="noopener">Shooting Illustrated: useful shotgun drills</a></li>
+  </ul>
+</section>
+
+<footer class="page">Training reference. Run drills only where range rules allow them, under qualified supervision when you're learning them.</footer>
+</main>
+<script src="assets/sim.js"></script>
+<script>
+(function(){
+  const $=id=>document.getElementById(id),read=$("pt-read"),st=$("pt-st");
+  let ctx=null,timers=[],raf=0,t0=0;
+  function beep(f,d){if(!ctx)return;const o=ctx.createOscillator(),g=ctx.createGain();o.type="square";o.frequency.value=f;g.gain.value=.25;o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+d)}
+  function clear(){timers.forEach(clearTimeout);timers=[];cancelAnimationFrame(raf)}
+  function tick(){read.textContent=((performance.now()-t0)/1000).toFixed(2);raf=requestAnimationFrame(tick)}
+  $("pt-go").onclick=()=>{
+    try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();ctx.resume()}catch(e){ctx=null}
+    clear();read.textContent="0.00";
+    const lo=Math.max(0,+$("pt-min").value||0),hi=Math.max(lo,+$("pt-max").value||lo),par=Math.max(.1,+$("pt-par").value||3);
+    const delay=(lo+Math.random()*(hi-lo))*1000;
+    st.textContent="Stand by…";
+    timers.push(setTimeout(()=>{beep(1800,.25);t0=performance.now();tick();st.textContent="Go. Par "+par.toFixed(1)+" s."},delay));
+    timers.push(setTimeout(()=>{beep(1100,.4);cancelAnimationFrame(raf);read.textContent=par.toFixed(2);st.textContent="Par. Make the gun safe, then press Start for the next run."},delay+par*1000));
+  };
+  $("pt-stop").onclick=()=>{clear();st.textContent="Stopped."};
+})();
+</script>
+</body>
+</html>

@@ -123,3 +123,10 @@ a.card.wide{grid-column:1/-1}
 .bal-chart{width:100%;display:block;border:1px solid var(--line);border-radius:3px}
 .bal-table tr.zero td{background:var(--vis)}
 .bal .note{margin:0}
+
+/* platform photos */
+figure.profile{align-items:center}
+figure.profile img{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--line);border-radius:4px;padding:10px}
+figure.profile.narrow img{max-width:520px}
+figure.profile figcaption{align-self:stretch}
+figure.profile figcaption a{color:inherit}

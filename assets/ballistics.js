@@ -14,6 +14,12 @@ const LOADS={
   ["147 gr FMJ (M80), 22\"",147,.40,2750],["150 gr soft point, 22\"",150,.314,2820],
   ["165 gr bonded soft point, 22\"",165,.40,2700],["168 gr HPBT match, 24\"",168,.462,2650],
   ["175 gr HPBT (M118LR), 22\"",175,.505,2600],["178 gr low-drag match, 24\"",178,.547,2600]]},
+ "65cm":{label:"6.5 Creedmoor",sh:1.75,zero:100,max:1000,step:100,loads:[
+  ["140 gr ELD Match, 24\"",140,.646,2710],["143 gr ELD-X hunting, 24\"",143,.625,2700],["147 gr ELD Match, 24\"",147,.697,2695],["130 gr bonded soft point, 22\"",130,.47,2850]]},
+ "3006":{label:".30-06 Springfield",sh:1.75,zero:100,max:800,step:100,loads:[
+  ["150 gr soft point, 22\"",150,.314,2910],["165 gr bonded soft point, 22\"",165,.40,2800],["180 gr soft point, 22\"",180,.383,2700],["168 gr HPBT match, 24\"",168,.462,2750]]},
+ "300wm":{label:".300 Win Mag",sh:1.75,zero:100,max:1200,step:100,loads:[
+  ["180 gr bonded soft point, 24\"",180,.48,2960],["190 gr HPBT match, 24\"",190,.533,2900],["215 gr hybrid match, 26\"",215,.691,2850]]},
  "9mm":{label:"9mm Luger",sh:.6,zero:25,max:100,step:10,loads:[
   ["115 gr FMJ, 4\" pistol",115,.142,1150],["124 gr FMJ, 4\" pistol",124,.150,1110],["124 gr +P JHP, 4\" pistol",124,.150,1200],["147 gr JHP, 4\" pistol",147,.200,990],
   ["115 gr FMJ, 16\" carbine",115,.142,1350],["124 gr JHP, 16\" carbine",124,.150,1300],["147 gr JHP, 16\" carbine",147,.200,1120]]},
