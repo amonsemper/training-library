@@ -8,6 +8,7 @@ Open index.html in any browser, or upload this whole folder to any static host:
 Files:
   index.html                 library home and navigation
   cqb.html                   Recon & CQB Primer
+  scenarios.html             Scenario-Based Engagement Breakdowns
   rifle.html, shotgun.html, handgun.html
   defensive-rifle.html, defensive-shotgun.html, defensive-handgun.html
   assets/site.css            shared styles (colors are tokens at the top)
