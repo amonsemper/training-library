@@ -1,0 +1,1336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Recon & CQB Primer</title>
+<meta name="description" content="Reconnaissance, building and room clearing, and vehicle movement.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;700;800&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+/* Layout: single reading column on a planning-table ground with a numbered contents rail; each drill is a framed sand table with transport controls */
+:root{
+  --bg:#e9ebe4; --panel:#f6f7f2; --ink:#1d2420; --muted:#5b665e; --line:#c6ccc1;
+  --accent:#b9620c; --friend:#1f5fa8; --friend2:#2f7d5a; --threat:#b3261e; --wall:#2b332d; --floor:#dde1d6; --cone:rgba(31,95,168,.16); --vis:rgba(185,98,12,.22);
+  --display:"Saira Condensed","Arial Narrow",sans-serif; --body:"Barlow","Helvetica Neue",Arial,sans-serif; --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141a1d; --panel:#1b2327; --ink:#e3e1d6; --muted:#95a09a; --line:#2f3a3e;
+  --accent:#e59a3c; --friend:#6aa8ef; --friend2:#5cc398; --threat:#ef6a5e; --wall:#c9c6b8; --floor:#20292d; --cone:rgba(106,168,239,.18); --vis:rgba(229,154,60,.26); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141a1d; --panel:#1b2327; --ink:#e3e1d6; --muted:#95a09a; --line:#2f3a3e;
+  --accent:#e59a3c; --friend:#6aa8ef; --friend2:#5cc398; --threat:#ef6a5e; --wall:#c9c6b8; --floor:#20292d; --cone:rgba(106,168,239,.18); --vis:rgba(229,154,60,.26); color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding-block:40px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:60px}
+header.cqb{display:flex;flex-direction:column;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:22px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(44px,9vw,76px);line-height:.92;margin:0;letter-spacing:.01em;text-transform:uppercase;text-wrap:balance}
+h2{font-family:var(--display);font-weight:700;font-size:32px;line-height:1.05;margin:0;text-transform:uppercase;letter-spacing:.02em;text-wrap:balance;display:flex;gap:12px;align-items:baseline}
+h2 .n{font-family:var(--mono);font-size:14px;color:var(--accent);font-weight:600}
+h3{font-family:var(--display);font-weight:700;font-size:21px;margin:0;text-transform:uppercase;letter-spacing:.03em;text-wrap:balance}
+h4{font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:4px 0 0;font-weight:600}
+p{margin:0;max-width:68ch}
+.lede{font-size:18px;color:var(--muted);max-width:62ch}
+section{display:flex;flex-direction:column;gap:18px;scroll-margin-top:16px}
+ul,ol{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px;max-width:68ch}
+li::marker{color:var(--accent)}
+b{font-weight:600}
+a{color:var(--friend)}
+.note{font-size:14px;color:var(--muted);border-left:3px solid var(--accent);padding-left:12px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.grid2>*,.grid3>*{min-width:0}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.box p,.box li{font-size:15.5px}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.k{font-family:var(--display);font-weight:800;font-size:22px;color:var(--accent);width:2.2em}
+td.c{font-family:var(--mono);font-size:13.5px;font-weight:600;white-space:nowrap}
+figure{margin:0;display:flex;flex-direction:column;gap:8px}
+figcaption{font-size:13.5px;color:var(--muted);font-family:var(--mono)}
+svg.dia{width:100%;height:auto;max-width:100%;background:var(--panel);border:1px solid var(--line);border-radius:4px}
+.sim{background:var(--panel);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.sim canvas{display:block;width:100%;aspect-ratio:4/3;max-width:100%;background:var(--floor)}
+.ctrl{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:10px 12px;border-top:1px solid var(--line)}
+.ctrl button{font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:6px 10px;cursor:pointer}
+.ctrl button:hover{border-color:var(--accent);color:var(--accent)}
+.ctrl button:focus-visible,.ctrl input:focus-visible,.tabs button:focus-visible,nav a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ctrl input[type=range]{flex:1;min-width:120px;accent-color:var(--accent)}
+.ctrl .t{font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:4.5em;text-align:right}
+.cap{padding:12px 14px;font-size:15px;min-height:3.4em;border-top:1px solid var(--line);display:flex;gap:10px}
+.cap .ph{font-family:var(--mono);font-size:12px;color:var(--accent);padding-top:3px;white-space:nowrap}
+.simtitle{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:10px 14px;border-bottom:1px solid var(--line)}
+.tabs{display:flex;border-bottom:1px solid var(--line)}
+.tabs button{flex:1;font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:.04em;text-transform:uppercase;padding:10px;background:transparent;border:0;border-bottom:3px solid transparent;color:var(--muted);cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+nav.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:4px 18px;font-size:14.5px}
+nav.toc a{color:var(--ink);text-decoration:none;display:flex;gap:8px;padding:3px 0;border-bottom:1px dotted var(--line)}
+nav.toc a span{font-family:var(--mono);font-size:12px;color:var(--accent);padding-top:2px}
+nav.toc a:hover{color:var(--accent)}
+.part{display:flex;flex-direction:column;gap:6px;border-top:2px solid var(--ink);padding-top:18px}
+.part .eyebrow{font-size:12.5px}
+.part h2{font-size:clamp(34px,6vw,48px);font-weight:800}
+.rk{display:inline-block;font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.06em;padding:1px 7px;border-radius:3px;border:1px solid currentColor;white-space:nowrap}
+.rk.g{color:var(--friend2)}.rk.a{color:var(--accent)}.rk.r{color:var(--threat)}
+footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+</style><style>section{scroll-margin-top:70px}</style>
+</head>
+<body>
+<nav class="site" aria-label="Library"><div class="in"><a class="brand" href="index.html">Training <span>Library</span></a><div class="links"><a href="cqb.html" aria-current="page">CQB Primer</a><span class="sep" aria-hidden="true"></span><a href="rifle.html">Rifle</a><a href="shotgun.html">Shotgun</a><a href="handgun.html">Handgun</a><span class="sep" aria-hidden="true"></span><a href="defensive-rifle.html">Defensive Rifle</a><a href="defensive-shotgun.html">Defensive Shotgun</a><a href="defensive-handgun.html">Defensive Handgun</a></div></div></nav>
+<main class="wrap">
+
+
+
+<header class="cqb">
+  <div class="eyebrow">Training reference · small-unit urban movement</div>
+  <h1>Recon &amp; CQB Primer</h1>
+  <p class="lede">Reconnaissance, urban terrain analysis, building recon, movement between buildings, entry, room-to-room clearing, and vehicle route assessment, planning, avoidance, and engagements for a four-person team. Each drill has an animated sand table you can play, pause, slow down, and scrub.</p>
+  <p class="note">Drawn from U.S. Army doctrine (FM/ATTP 3-06.11, ATP 3-21.8, ATP 3-20.98). Distances are approximate and given in feet. Rehearse with qualified instructors, progress from walk-throughs to dry runs before anything live, and follow your range or facility's safety rules.</p>
+  <div class="legend"><span><i style="background:var(--friend)"></i>Team member (number = order)</span><span><i style="background:var(--friend2)"></i>Second pair</span><span><i style="background:var(--cone);border:1px solid var(--friend)"></i>Sector of observation</span><span><i style="background:var(--threat)"></i>Threat / unknown</span><span><i style="background:var(--muted);border-radius:1px;height:3px;width:12px;vertical-align:3px"></i>Muzzle off: a teammate is in front, so no sector</span></div>
+  <div class="box"><h3>Muzzle discipline: no crossing fields of fire</h3><p>No member's sector or muzzle ever covers a teammate. Sectors point outward and away from each other. When a teammate moves into your sector, your muzzle comes off them until they're clear. Every animation follows this rule. A member shown with a short gray muzzle line and no sector has their muzzle off a teammate.</p></div>
+  <nav class="toc" aria-label="Contents">
+    <a href="#recon"><span>01</span>Recon fundamentals</a>
+    <a href="#planning"><span>02</span>Planning the recon</a>
+    <a href="#terrain"><span>03</span>Urban terrain</a>
+    <a href="#bldg"><span>04</span>Building recon</a>
+    <a href="#move"><span>05</span>Building to building</a>
+    <a href="#entry"><span>06</span>Entry and the stack</a>
+    <a href="#pie"><span>07</span>Slicing the pie</a>
+    <a href="#two"><span>08</span>Two-person entry</a>
+    <a href="#four"><span>09</span>Four-person entry</a>
+    <a href="#hall"><span>10</span>Hallways and intersections</a>
+    <a href="#stairs"><span>11</span>Stairs and multi-floor</a>
+    <a href="#consol"><span>12</span>Consolidation and commands</a>
+    <a href="#vassess"><span>13</span>Vehicle route assessment</a>
+    <a href="#vplan"><span>14</span>Vehicle route planning</a>
+    <a href="#vcrew"><span>15</span>In-vehicle movement and team placement</a>
+    <a href="#vavoid"><span>16</span>Avoidance</a>
+    <a href="#vengage"><span>17</span>Vehicle route engagements</a>
+    <a href="#errors"><span>18</span>Common errors</a>
+    <a href="#train"><span>19</span>Training progression</a>
+    <a href="#src"><span>20</span>Sources</a>
+  </nav>
+</header>
+
+<!-- 01 -->
+<section id="recon">
+  <h2><span class="n">01</span>Recon fundamentals</h2>
+  <p>Recon answers the leader's questions before the team commits. You go to see the ground, the structures, and the people, and you report what you find quickly and accurately. Recon elements avoid a decisive fight. Once they're pinned down, they stop collecting.</p>
+  <div class="grid2">
+    <div class="box"><h3>Seven fundamentals</h3>
+      <ol>
+        <li><b>Ensure continuous reconnaissance</b> before, during, and after the operation</li>
+        <li><b>Don't keep recon assets in reserve</b>; idle recon gathers nothing</li>
+        <li><b>Orient on the recon objective</b>: the terrain, the building, or the threat you were sent for</li>
+        <li><b>Report rapidly and accurately</b>; old information loses value fast</li>
+        <li><b>Retain freedom of maneuver</b>; always have a way out</li>
+        <li><b>Gain and maintain contact</b> once found, by eyes or sensors</li>
+        <li><b>Develop the situation rapidly</b> so the leader can decide</li>
+      </ol>
+    </div>
+    <div class="box"><h3>SLLS at every halt</h3>
+      <ul>
+        <li><b>Stop</b> in cover, weapons oriented outward</li>
+        <li><b>Look</b> near to far, scanning in overlapping strips about 150 feet deep</li>
+        <li><b>Listen</b> for engines, voices, doors, dogs, generators</li>
+        <li><b>Smell</b> for cooking, fuel, smoke, tobacco, fresh paint</li>
+      </ul>
+      <p style="color:var(--muted)">Hold 1–5 minutes so your senses adjust and the area settles after your arrival. Longer at night.</p>
+    </div>
+  </div>
+
+  <figure>
+    <svg class="dia" viewBox="0 0 720 230" role="img" aria-label="Route, zone, and area reconnaissance compared">
+      <g font-family="JetBrains Mono, monospace" font-size="12" fill="var(--muted)">
+        <text x="20" y="26" fill="var(--ink)" font-family="Saira Condensed, sans-serif" font-weight="700" font-size="19">ROUTE</text>
+        <path d="M30 200 C 80 160, 70 110, 130 90 S 200 50, 210 40" fill="none" stroke="var(--vis)" stroke-width="34" stroke-linecap="round"/>
+        <path d="M30 200 C 80 160, 70 110, 130 90 S 200 50, 210 40" fill="none" stroke="var(--wall)" stroke-width="3"/>
+        <circle cx="98" cy="128" r="6" fill="var(--threat)"/><circle cx="168" cy="66" r="5" fill="none" stroke="var(--accent)" stroke-width="2"/>
+        <text x="20" y="222">One route + terrain that affects it</text>
+        <text x="260" y="26" fill="var(--ink)" font-family="Saira Condensed, sans-serif" font-weight="700" font-size="19">ZONE</text>
+        <rect x="262" y="40" width="190" height="160" fill="var(--vis)" stroke="var(--accent)" stroke-width="2" stroke-dasharray="6 4"/>
+        <path d="M290 200 V60 M340 200 V60 M390 200 V60 M430 200 V60" stroke="var(--friend)" stroke-width="2" stroke-dasharray="3 5"/>
+        <rect x="300" y="110" width="22" height="18" fill="var(--wall)"/><rect x="400" y="80" width="18" height="24" fill="var(--wall)"/>
+        <text x="262" y="222">Everything inside set boundaries</text>
+        <text x="500" y="26" fill="var(--ink)" font-family="Saira Condensed, sans-serif" font-weight="700" font-size="19">AREA</text>
+        <circle cx="605" cy="120" r="72" fill="var(--vis)" stroke="var(--accent)" stroke-width="2" stroke-dasharray="6 4"/>
+        <rect x="586" y="102" width="38" height="36" fill="var(--wall)"/>
+        <circle cx="533" cy="120" r="6" fill="var(--friend)"/><circle cx="677" cy="120" r="6" fill="var(--friend)"/><circle cx="605" cy="48" r="6" fill="var(--friend)"/>
+        <text x="500" y="222">One objective: a building, block, crossing</text>
+      </g>
+    </svg>
+    <figcaption>Three forms of recon used most at team level. Urban recon is usually an area recon of a target building and its approaches.</figcaption>
+  </figure>
+
+  <h3>SALUTE report</h3>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>Element</th><th>What to send</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td class="k">S</td><td>Size</td><td>Number of people or vehicles</td><td>4 personnel, 1 pickup</td></tr>
+      <tr><td class="k">A</td><td>Activity</td><td>What they're doing</td><td>Loading crates, 2 on overwatch</td></tr>
+      <tr><td class="k">L</td><td>Location</td><td>Grid or clear reference point</td><td>Gray two-story, NE corner of 3rd &amp; Elm</td></tr>
+      <tr><td class="k">U</td><td>Unit / uniform</td><td>Markings, clothing, identifiers</td><td>Dark work clothes, no markings</td></tr>
+      <tr><td class="k">T</td><td>Time</td><td>When observed, not when sent</td><td>1415 local</td></tr>
+      <tr><td class="k">E</td><td>Equipment</td><td>Weapons, radios, vehicles, tools</td><td>2 long guns, handheld radios</td></tr>
+    </tbody>
+  </table></div>
+  <p>Send what you saw, not what you think it means. If you add an assessment, label it as one ("assess they are preparing to leave"). Report negative information too. "No movement on sides 2 and 3 for 40 minutes" is useful.</p>
+</section>
+
+<!-- 02 -->
+<section id="planning">
+  <h2><span class="n">02</span>Planning the recon</h2>
+  <p>A recon without clear questions comes back with a lot of observations and few answers. Start from what the leader needs to know, then plan routes, observation points, and timings to answer it.</p>
+  <div class="grid2">
+    <div class="box"><h3>Information requirements</h3>
+      <p>Write the specific questions the recon must answer. Each one should be answerable by observation.</p>
+      <ul>
+        <li>Which entry point has the shortest covered approach?</li>
+        <li>How many people are in the building, and on which floors?</li>
+        <li>Do adjacent buildings overlook the approach?</li>
+        <li>Which way do the exterior doors swing?</li>
+      </ul>
+    </div>
+    <div class="box"><h3>METT-TC check</h3>
+      <ul>
+        <li><b>Mission</b>: what the recon is for and when the answers are due</li>
+        <li><b>Enemy</b> or threat: what's known, what's likely</li>
+        <li><b>Terrain and weather</b>: routes, cover, light, noise</li>
+        <li><b>Troops</b>: who goes, who provides security</li>
+        <li><b>Time</b>: hard time to be back or to report</li>
+        <li><b>Civilian considerations</b>: who else is in the area</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Leader's recon and the contingency plan</h3>
+  <p>When the leader leaves the team to look at the objective, they issue a five-point contingency plan before departing. The acronym is <b>GOTWA</b>.</p>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>Element</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td class="k">G</td><td>Where the leader is <b>going</b></td><td>"Moving to the hedge line at the NW corner of the objective."</td></tr>
+      <tr><td class="k">O</td><td><b>Others</b> going along</td><td>"Taking #3 for security."</td></tr>
+      <tr><td class="k">T</td><td><b>Time</b> the leader will be gone</td><td>"Back in 30 minutes."</td></tr>
+      <tr><td class="k">W</td><td><b>What</b> to do if the leader doesn't return</td><td>"After 45 minutes, move to the alternate rally point and report."</td></tr>
+      <tr><td class="k">A</td><td><b>Actions</b> on contact, for both elements</td><td>"If we're hit, we break contact east. If you're hit, move to the alternate rally point."</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Actions at the objective: the fan method</h3>
+  <p>The team halts at an <b>objective rally point (ORP)</b> out of sight and sound of the objective. A security element holds the ORP while a recon pair moves out on a series of routes, like the ribs of a fan, to observation points (OPs) that see different faces of the objective. They return to the ORP between legs to report and update the plan.</p>
+  <div class="sim" id="sim-fan"><div class="simtitle">Fan method area recon</div></div>
+  <div class="grid3">
+    <div class="box"><h3>Fan</h3><p>One pair, several legs from the ORP. Slow, but security stays concentrated. Good when the team is small.</p></div>
+    <div class="box"><h3>Converging routes</h3><p>Separate pairs move on different routes and link up at a point past the objective. Faster, but control and fratricide risk go up.</p></div>
+    <div class="box"><h3>Box</h3><p>Pairs move around the objective's perimeter and link up at a far point. Covers the whole outer edge. Needs more people.</p></div>
+  </div>
+
+  <h3>Observation posts and hide sites</h3>
+  <ul>
+    <li>Pick a spot that sees the objective but isn't the obvious place to look from. Avoid isolated landmarks, rooftops with nothing else on them, and the only window that faces the target.</li>
+    <li>In buildings, observe from back in the room, away from the window, so your silhouette and any light stay inside. A gap in a curtain or a broken pane is better than an open window.</li>
+    <li>Two people minimum: one observes, one records and provides security. Rotate every 20–30 minutes to keep attention sharp.</li>
+    <li>Keep a running log with times, then build the range card and building sketch from it.</li>
+  </ul>
+</section>
+
+<!-- 03 -->
+<section id="terrain">
+  <h2><span class="n">03</span>Urban terrain</h2>
+  <p>Cities are three-dimensional. Threats and observation can come from below the street, at street level, from inside upper floors, and from rooftops. Plan sectors for every level, not just the one you're standing on.</p>
+  <figure>
+    <svg class="dia" viewBox="0 0 720 300" role="img" aria-label="Urban levels in cross section">
+      <rect x="0" y="0" width="720" height="210" fill="var(--panel)"/>
+      <rect x="0" y="210" width="720" height="90" fill="var(--floor)"/>
+      <g fill="none" stroke="var(--wall)" stroke-width="3">
+        <rect x="70" y="60" width="150" height="150"/><path d="M70 110 H220 M70 160 H220"/>
+        <rect x="430" y="90" width="120" height="120"/><path d="M430 150 H550"/>
+        <rect x="70" y="210" width="150" height="45"/>
+        <ellipse cx="330" cy="262" rx="38" ry="18"/>
+      </g>
+      <path d="M0 210 H720" stroke="var(--wall)" stroke-width="4"/>
+      <g fill="var(--wall)" opacity=".7"><rect x="95" y="75" width="22" height="22"/><rect x="170" y="75" width="22" height="22"/><rect x="95" y="125" width="22" height="22"/><rect x="170" y="125" width="22" height="22"/><rect x="455" y="105" width="22" height="22"/><rect x="505" y="105" width="22" height="22"/></g>
+      <circle cx="320" cy="200" r="8" fill="var(--friend)"/><circle cx="345" cy="200" r="8" fill="var(--friend)"/>
+      <circle cx="105" cy="50" r="7" fill="var(--threat)"/><circle cx="180" cy="136" r="7" fill="var(--threat)"/><circle cx="330" cy="262" r="7" fill="var(--threat)"/><circle cx="110" cy="240" r="7" fill="var(--threat)"/>
+      <path d="M105 50 L320 200 M180 136 L320 200 M330 262 L332 208 M110 240 L318 204" stroke="var(--threat)" stroke-dasharray="5 4" stroke-width="1.5"/>
+      <g font-family="JetBrains Mono, monospace" font-size="12.5" fill="var(--ink)">
+        <text x="590" y="30">AIRSPACE</text>
+        <text x="590" y="70">SUPERSURFACE</text><text x="590" y="86" fill="var(--muted)">roofs, upper floors</text>
+        <text x="590" y="190">SURFACE</text><text x="590" y="206" fill="var(--muted)">streets, ground floors</text>
+        <text x="590" y="260">SUBSURFACE</text><text x="590" y="276" fill="var(--muted)">basements, sewers</text>
+        <text x="300" y="180" fill="var(--muted)">team</text>
+      </g>
+    </svg>
+    <figcaption>A team on the street can be observed or engaged from four levels at once. Assign someone to look high and someone to look low.</figcaption>
+  </figure>
+
+  <h3>OAKOC, applied to a city block</h3>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>Factor</th><th>Urban questions to answer</th></tr></thead>
+    <tbody>
+      <tr><td class="k">O</td><td>Observation and fields of fire</td><td>Which windows and roofs see your route? How far can you see down each street? Where are the long, straight lanes a threat could cover?</td></tr>
+      <tr><td class="k">A</td><td>Avenues of approach</td><td>Streets, alleys, back yards, through-wall routes, rooftops, and tunnels. Which one keeps you out of the open longest?</td></tr>
+      <tr><td class="k">K</td><td>Key terrain</td><td>Tall buildings that overlook the area, intersections, bridges, the building next to the objective.</td></tr>
+      <tr><td class="k">O</td><td>Obstacles</td><td>Fences, walls, locked gates, vehicles, rubble, dogs, lighting that exposes you.</td></tr>
+      <tr><td class="k">C</td><td>Cover and concealment</td><td>What stops rounds versus what only hides you. Engine blocks and masonry are cover. Car doors, hedges, and drywall are concealment.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Construction and protection</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Type</th><th>Common examples</th><th>What it means for you</th></tr></thead>
+    <tbody>
+      <tr><td><b>Wood frame</b></td><td>Most U.S. houses, apartments up to ~4 floors</td><td>Interior walls are concealment only. Rounds pass through several rooms. Watch your backstop and know where teammates are.</td></tr>
+      <tr><td><b>Brick / block masonry</b></td><td>Older downtowns, small commercial</td><td>Exterior walls stop a few hits from small arms but break up under repeated fire. Interior walls vary.</td></tr>
+      <tr><td><b>Reinforced concrete</b></td><td>Parking garages, schools, offices</td><td>Best protection. Windows and doors become the main openings. Radio signals degrade inside.</td></tr>
+      <tr><td><b>Steel frame / curtain wall</b></td><td>High-rise, big-box retail</td><td>Glass skin gives no protection. Large open floors with long sightlines and few hard corners.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 04 -->
+<section id="bldg">
+  <h2><span class="n">04</span>Building recon</h2>
+  <p>Observe the target building from stand-off before anyone approaches it. Build a sketch from at least two angles, ideally all four sides. What you note here drives the entry point, the route in, and the clearing order.</p>
+
+  <figure>
+    <svg class="dia" viewBox="0 0 720 340" role="img" aria-label="Building side and opening numbering convention">
+      <rect x="230" y="70" width="260" height="190" fill="var(--floor)" stroke="var(--wall)" stroke-width="5"/>
+      <g fill="var(--accent)">
+        <rect x="262" y="255" width="26" height="10"/><rect x="347" y="255" width="26" height="10"/><rect x="432" y="255" width="26" height="10"/>
+        <rect x="485" y="110" width="10" height="26"/><rect x="485" y="190" width="10" height="26"/>
+        <rect x="300" y="65" width="26" height="10"/><rect x="395" y="65" width="26" height="10"/>
+        <rect x="225" y="150" width="10" height="26"/>
+      </g>
+      <g font-family="JetBrains Mono, monospace" font-size="12" fill="var(--ink)">
+        <text x="360" y="300" text-anchor="middle" font-family="Saira Condensed, sans-serif" font-size="22" font-weight="700">SIDE 1 · FRONT / ADDRESS</text>
+        <text x="360" y="50" text-anchor="middle" font-family="Saira Condensed, sans-serif" font-size="22" font-weight="700">SIDE 3 · REAR</text>
+        <text x="190" y="170" text-anchor="middle" font-family="Saira Condensed, sans-serif" font-size="22" font-weight="700">SIDE 2</text>
+        <text x="535" y="170" text-anchor="middle" font-family="Saira Condensed, sans-serif" font-size="22" font-weight="700">SIDE 4</text>
+        <text x="275" y="245" text-anchor="middle">1</text><text x="360" y="245" text-anchor="middle">2</text><text x="445" y="245" text-anchor="middle">3</text>
+        <text x="470" y="128" text-anchor="end">2</text><text x="470" y="208" text-anchor="end">1</text>
+        <text x="408" y="92" text-anchor="middle">1</text><text x="313" y="92" text-anchor="middle">2</text>
+        <text x="248" y="168">1</text>
+        <text x="360" y="160" text-anchor="middle" fill="var(--muted)">Openings numbered left to right</text>
+        <text x="360" y="178" text-anchor="middle" fill="var(--muted)">as seen facing that side</text>
+      </g>
+      <g font-family="JetBrains Mono, monospace" font-size="12.5" fill="var(--muted)"><text x="20" y="328">Example: "1-B-2" = side 1, floor B (second floor), opening 2</text></g>
+    </svg>
+    <figcaption>A common building reference: sides numbered clockwise from the front, floors lettered from the ground up, openings numbered left to right as you face that side. Use your unit's SOP if it differs; everyone on the net has to use the same one.</figcaption>
+  </figure>
+
+  <div class="grid2">
+    <div class="box"><h3>Structure</h3><ul>
+      <li>Construction type (see section 03)</li>
+      <li>Number of floors, basement windows, roof access, fire escapes</li>
+      <li>Door swing direction, hinge side, locks, bars, screen doors</li>
+      <li>Likely floor plan from window spacing, chimneys, plumbing vents, meters</li>
+      <li>Where stairs are likely, from stairwell windows offset between floors</li>
+    </ul></div>
+    <div class="box"><h3>Surroundings</h3><ul>
+      <li>Covered and concealed approaches; dead space you can't see into</li>
+      <li>Windows and rooftops in adjacent buildings that overlook your route</li>
+      <li>Danger areas: streets, alleys, parking lots, open yards</li>
+      <li>Fences, gates, dogs, motion lights, cameras</li>
+      <li>Pattern of life: who comes and goes, when lights change, vehicles present</li>
+    </ul></div>
+  </div>
+
+  <h3>Choosing the entry point</h3>
+  <ul>
+    <li><b>Top down when possible.</b> Entering at the roof or upper floor and clearing down puts gravity and stairs on your side. Threats pushed down tend to leave the building, where an outer cordon can deal with them.</li>
+    <li><b>Avoid the obvious door</b> when another option exists. Front doors are the opening most likely to be watched or blocked.</li>
+    <li><b>Shortest covered approach</b> wins at ground level, with an overwatch position that can see the entry point and the windows above it.</li>
+    <li><b>Have an alternate.</b> If the primary is locked, blocked, or compromised, the team moves to the alternate on a known signal without stopping in the open to discuss it.</li>
+  </ul>
+</section>
+
+<!-- 05 -->
+<section id="move">
+  <h2><span class="n">05</span>Building to building</h2>
+  <p>Open ground between buildings is where a team is most exposed. Split into two buddy pairs: one pair covers while the other moves. Every bound ends in cover with a new overwatch set before the other pair leaves. Plan the routes so the moving pair never passes through the covering pair's sectors.</p>
+  <div class="sim" id="sim-bound"><div class="simtitle">Bounding overwatch across a danger area</div></div>
+
+  <div class="grid2">
+    <div class="box"><h3>Moving along buildings</h3><ul>
+      <li>Stay 12–18 inches off the wall. Rounds that strike a wall tend to travel along it.</li>
+      <li>Use the shadow side of the street. Avoid silhouetting against lit walls.</li>
+      <li>Keep a low profile at corners and openings; let the lead set the pace.</li>
+      <li>Assign one person high (windows, roofs) and one low (basements, vehicles).</li>
+    </ul></div>
+    <div class="box"><h3>Danger areas</h3><ul>
+      <li><b>Linear</b>: streets, alleys, rail lines. Cross at the narrowest point, ideally not at an intersection.</li>
+      <li><b>Open areas</b>: lots, parks, yards. Bound across, or go around if time allows.</li>
+      <li><b>Intersections</b>: exposed from four directions. Avoid if possible.</li>
+      <li>Check the far side visually before anyone crosses; cross fast, then set security on the far side.</li>
+    </ul></div>
+  </div>
+
+  <figure>
+    <svg class="dia" viewBox="0 0 720 250" role="img" aria-label="Passing windows: duck below ground floor windows, step over basement windows">
+      <rect x="0" y="200" width="720" height="50" fill="var(--floor)"/>
+      <path d="M0 200 H720" stroke="var(--wall)" stroke-width="3"/>
+      <rect x="20" y="20" width="680" height="180" fill="none" stroke="var(--wall)" stroke-width="3"/>
+      <rect x="180" y="70" width="90" height="70" fill="var(--panel)" stroke="var(--wall)" stroke-width="3"/>
+      <rect x="470" y="188" width="80" height="24" fill="var(--panel)" stroke="var(--wall)" stroke-width="3"/>
+      <path d="M40 120 H150 Q170 120 175 160 H275 Q282 120 300 120 H440 Q460 120 470 175 Q510 172 550 175 Q560 120 580 120 H690" fill="none" stroke="var(--friend)" stroke-width="3" stroke-dasharray="8 6"/>
+      <g font-family="JetBrains Mono, monospace" font-size="12.5" fill="var(--ink)">
+        <text x="225" y="62" text-anchor="middle">GROUND-FLOOR WINDOW</text>
+        <text x="225" y="182" text-anchor="middle" fill="var(--muted)">duck below the sill</text>
+        <text x="510" y="232" text-anchor="middle">BASEMENT WINDOW</text>
+        <text x="510" y="150" text-anchor="middle" fill="var(--muted)">step over, don't pass in front</text>
+        <text x="40" y="110" fill="var(--muted)">head height</text>
+      </g>
+    </svg>
+    <figcaption>Side view of a wall. Pass under ground-floor windows and step over or around basement windows so nobody inside sees a head or legs go by.</figcaption>
+  </figure>
+
+  <h3>Corners</h3>
+  <p>Round a corner the same way you slice a doorway (section 07): back off the corner, then step out in small increments so you see a thin wedge at a time. When two people take a corner together, one can work low (kneeling) and one high (standing) so both can see without one masking the other. Agree on who goes low before you get there.</p>
+</section>
+
+<!-- 06 -->
+<section id="entry">
+  <h2><span class="n">06</span>Entry and the stack</h2>
+  <p>The team lines up against the wall beside the entry, on the same side, in the order they'll go in. #1 owns the door. The doorway itself is the <b>fatal funnel</b>: anyone inside watching that opening has it covered, so nobody stops in it, stands in front of it, or waits in line inside it.</p>
+  <div class="sim" id="sim-funnel">
+    <div class="tabs" role="tablist" aria-label="Doorway technique">
+      <button role="tab" id="tab-bad" aria-selected="true">Stops in the door</button>
+      <button role="tab" id="tab-good" aria-selected="false">Flows through</button>
+    </div>
+  </div>
+  <p class="note">Red wedges are what the two corners inside can see through the doorway. Where they overlap is the fatal funnel. The timer counts how long #1 spends in it.</p>
+
+  <div class="grid2">
+    <div class="box"><h3>Center-fed door</h3><p>Door near the middle of the wall. The room opens to both sides on entry, so #1 and #2 split left and right.</p></div>
+    <div class="box"><h3>Corner-fed door</h3><p>Door within a few feet of a corner. One side is a short wall and a hard corner; the other is the full length of the room. #1 takes the long side, #2 the corner.</p></div>
+  </div>
+
+  <h3>Doors</h3>
+  <ul>
+    <li><b>Hinge side and swing</b> decide where you stack. Stack on the knob side when you can, so the door opens away from the stack and doesn't block #1.</li>
+    <li><b>Inward-opening doors</b> are pushed open and followed through. <b>Outward-opening doors</b> need someone to pull and hold them, which slows the entry and leaves that person in a bad spot.</li>
+    <li>Try the handle quietly before anything else. An unlocked door is the fastest and quietest option.</li>
+    <li>Locked doors call for a breach. Breaching methods are grouped as <b>mechanical</b> (tools, rams), <b>ballistic</b>, <b>thermal</b>, and <b>explosive</b>; the last three are specialist tasks that need specific training and authorization.</li>
+  </ul>
+
+  <h3>Entry techniques</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Technique</th><th>When</th><th>How it differs</th></tr></thead>
+    <tbody>
+      <tr><td><b>Dynamic</b></td><td>High threat, speed and surprise available, little need to discriminate</td><td>Team flows in without pausing at the door. Each member takes a point of domination. Relies on speed, surprise, and violence of action.</td></tr>
+      <tr><td><b>Deliberate / limited penetration</b></td><td>Threat likely, but noncombatants may be present or the room is unknown</td><td>Clear as much as possible from outside by slicing the pie, then enter only to clear what can't be seen. Slower, more control.</td></tr>
+      <tr><td><b>Stealth / methodical</b></td><td>Surprise is still intact and worth keeping</td><td>Quiet, slow movement with no talking. Clear by observation, move only when necessary. Speed comes only after compromise.</td></tr>
+    </tbody>
+  </table></div>
+
+  <p><b>Signals in the stack.</b> Keep them silent and physical: a squeeze on the shoulder or thigh passed forward means "ready." #1 moves when #2 signals ready, or #1 can initiate. Agree on the system before the first rehearsal and use it every time.</p>
+</section>
+
+<!-- 07 -->
+<section id="pie">
+  <h2><span class="n">07</span>Slicing the pie</h2>
+  <p>When a single operator or a deliberate team needs to see into a room before entering, they clear it from outside in thin slices. Stand back from the opening and step laterally in a curve. The door frame limits what you see, and it also limits who can see you.</p>
+  <div class="sim" id="sim-pie"><div class="simtitle">Slicing a doorway from the hall</div></div>
+  <ul>
+    <li>Distance from the opening gives you time and narrows your exposure. Stay 6–10 feet off it when the space allows.</li>
+    <li>Eyes, muzzle, and feet move together. Small lateral steps, not leaning.</li>
+    <li>Corners nearest the door wall show up last, if at all. Those are the spots you can't clear from outside, and the reason a team still enters.</li>
+    <li>If you see a threat, you've also been exposed to it. Decide in advance whether you engage, step back, or call it.</li>
+  </ul>
+</section>
+
+<!-- 08 -->
+<section id="two">
+  <h2><span class="n">08</span>Two-person entry</h2>
+  <p>A pair can clear a small room when the rest of the team is holding security elsewhere, or when that's all there is. The pattern is the same as the first half of a four-person entry: #1 goes one way, #2 goes the other, and both work along the walls to points of domination.</p>
+  <div class="sim" id="sim-two"><div class="simtitle">Two-person entry, center-fed</div></div>
+  <div class="grid2">
+    <div class="box"><h3>Strengths</h3><ul><li>Fast, simple, leaves two people for security</li><li>Good for small rooms, closets, bathrooms</li></ul></div>
+    <div class="box"><h3>Limits</h3><ul><li>No one follows to cover the center of a large room</li><li>A casualty leaves one person alone in the room</li><li>Rooms over about 15 by 15 feet favor a four-person entry</li></ul></div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section id="four">
+  <h2><span class="n">09</span>Four-person entry</h2>
+  <p>A dynamic entry relies on speed, surprise, and controlled violence of action. Each member flows through the door and takes the direction opposite the person ahead of them, moving along the wall to a <b>point of domination</b>. Sectors overlap and nobody crosses in front of a teammate's muzzle.</p>
+  <div class="sim" id="sim-room">
+    <div class="tabs" role="tablist" aria-label="Door type">
+      <button role="tab" id="tab-center" aria-selected="true">Center-fed</button>
+      <button role="tab" id="tab-corner" aria-selected="false">Corner-fed</button>
+    </div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Position</th><th>Moves</th><th>Immediate threat area</th><th>Ends at</th></tr></thead>
+    <tbody>
+      <tr><td class="c">#1</td><td>Through the door, direction of least resistance or as rehearsed</td><td>The corner on their side of the entry wall</td><td>Deep along the wall, about 3 feet short of the far corner</td></tr>
+      <tr><td class="c">#2</td><td>Opposite of #1</td><td>The near corner on their side</td><td>Along the wall on the opposite side from #1</td></tr>
+      <tr><td class="c">#3</td><td>Opposite of #2 (same side as #1)</td><td>Center of the room, then their sector</td><td>Short of #1, about 3 feet in from the entry wall</td></tr>
+      <tr><td class="c">#4</td><td>Opposite of #3 (same side as #2)</td><td>Center of the room, then their sector</td><td>Short of #2, mirroring #3</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="box"><h3>Rules that hold every time</h3><ul>
+      <li>Don't stop in the doorway. Clear it in one motion.</li>
+      <li>Clear your immediate threat area first, then move along the wall.</li>
+      <li>#3 and #4 stop short so they don't mask #1 and #2.</li>
+      <li>If #1 has to go the "wrong" way, #2 adapts and goes opposite.</li>
+      <li>If the room is too small for everyone ("short room"), the last members hold outside.</li>
+    </ul></div>
+    <div class="box"><h3>Sectors</h3><ul>
+      <li>Each member's sector runs from their own wall across the room, ending about one arm's length short of the next teammate.</li>
+      <li>Sectors overlap in the room's depth, but no sector ever points at a teammate. #3 and #4 cover the center.</li>
+      <li>Weapons drop or lift off teammates as they enter a sector, and come back once they're past.</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section id="hall">
+  <h2><span class="n">10</span>Hallways and intersections</h2>
+  <p>Hallways are long, narrow danger areas with doors along both sides. Keep spacing, keep every opening covered, and move steadily rather than fast.</p>
+  <div class="sim" id="sim-hall"><div class="simtitle">Hallway: post an open door, then clear it</div></div>
+  <div class="grid2">
+    <div class="box"><h3>Hallway formations</h3>
+      <p><b>Serpentine</b> (single file, staggered): narrow halls. #1 covers forward, #2 high and forward, #3 and #4 alternate sides, last man covers rear.</p>
+      <p><b>Two-by-two</b>: wide halls. Lead pair on opposite walls, staggered, both covering forward. #3 follows with muzzle off the lead; #4 covers the rear. Nobody covers across a teammate's lane.</p>
+    </div>
+    <div class="box"><h3>Doors in the hall</h3><ul>
+      <li>The member on the <b>same wall</b> as an open door posts at the door edge and covers into the room. That sector points into the room, so teammates can pass in the hall without crossing it.</li>
+      <li>Don't cover a door from across the hall. Anyone who walks past ends up in that sector.</li>
+      <li>Clear the room or leave a member posted on it. Closed doors you aren't clearing get marked and reported.</li>
+      <li>Don't leave uncleared, uncovered doors behind the team.</li>
+    </ul></div>
+  </div>
+  <div class="sim" id="sim-t"><div class="simtitle">T-intersection</div></div>
+  <div class="grid2">
+    <div class="box"><h3>T-intersections</h3><p>#1 and #2 each take the branch on their own side and end back to back, so their sectors point away from each other. Don't cross over: crossing puts each lead's sector through the other's path. #3 moves up behind with muzzle down, #4 stays on rear security. The leader picks the direction; the other branch stays covered until the team has passed.</p></div>
+    <div class="box"><h3>L-turns</h3><p>Slice the corner from the outside wall. The lead uses the corner as cover and the team follows on the same side. Avoid bunching up at the corner while the lead works it.</p></div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section id="stairs">
+  <h2><span class="n">11</span>Stairs and multi-floor</h2>
+  <figure>
+    <svg class="dia" viewBox="0 0 720 280" role="img" aria-label="Stairwell side view with sectors up and across the landing">
+      <rect x="0" y="0" width="720" height="280" fill="var(--panel)"/>
+      <path d="M80 250 H200 L360 140 H440 L600 30 H700" fill="none" stroke="var(--wall)" stroke-width="4"/>
+      <path d="M200 250 H700" stroke="var(--wall)" stroke-width="2" opacity=".4"/>
+      <path d="M360 140 H700" stroke="var(--wall)" stroke-width="2" opacity=".25"/>
+      <polygon points="250,200 430,110 600,30 440,140" fill="var(--cone)"/>
+      <polygon points="160,240 360,140 360,90 160,220" fill="var(--vis)" opacity=".8"/>
+      <circle cx="250" cy="208" r="9" fill="var(--friend)"/><circle cx="200" cy="238" r="9" fill="var(--friend)"/><circle cx="150" cy="238" r="9" fill="var(--friend2)"/>
+      <circle cx="560" cy="45" r="8" fill="var(--threat)"/>
+      <g font-family="JetBrains Mono, monospace" font-size="12.5" fill="var(--ink)">
+        <text x="252" y="190" text-anchor="middle">1</text><text x="200" y="222" text-anchor="middle">2</text>
+        <text x="460" y="128">landing</text><text x="610" y="22">next floor</text>
+        <text x="40" y="272" fill="var(--muted)">#1 covers up the run; #2 covers the landing and the open side above</text>
+      </g>
+    </svg>
+    <figcaption>Stairs are a funnel in three dimensions. Someone is always covering up the stairwell while others climb.</figcaption>
+  </figure>
+  <ul>
+    <li>Move up in a file with the lead covering the next landing and the member behind covering higher, across the open side of the stairwell.</li>
+    <li>Treat each landing as a corner: slice it before committing.</li>
+    <li>Clear stairs going up whenever possible. Coming down, your feet are exposed before your eyes can see the floor below.</li>
+    <li>Secure the top of the stairs as a foothold before the team spreads out on the new floor, and leave someone holding the stairwell.</li>
+    <li>On each floor, clear outward from the foothold room by room and report the floor clear before moving up.</li>
+  </ul>
+</section>
+
+<!-- 12 -->
+<section id="consol">
+  <h2><span class="n">12</span>Consolidation and commands</h2>
+  <div class="grid2">
+    <div class="box"><h3>After each room</h3><ul>
+      <li>Each member calls their sector; #1 or the leader calls "room clear."</li>
+      <li>Search for hidden spaces, closets, other doors, and connecting openings.</li>
+      <li>Mark the room per SOP: chalk, tape, chem light, or marker panel. Mark the door, not the inside wall.</li>
+      <li>Report to the leader: room cleared, casualties, anything found.</li>
+    </ul></div>
+    <div class="box"><h3>After the building</h3><ul>
+      <li>Establish security on likely approaches and overlooking positions.</li>
+      <li>Redistribute ammunition and equipment; account for every member.</li>
+      <li>Treat casualties and request evacuation.</li>
+      <li>Report building clear and mark it so other elements can see it from the street.</li>
+      <li>Prepare to continue to the next building or hold.</li>
+    </ul></div>
+  </div>
+
+  <h3>Verbal commands</h3>
+  <p>Short, loud, and identical every time. Repeat a command back so the sender knows it was heard. These are common examples; your SOP sets the exact words.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Command</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td class="c">"Up"</td><td>I'm in position and ready to move</td></tr>
+      <tr><td class="c">"Clear"</td><td>My sector is clear</td></tr>
+      <tr><td class="c">"Room clear"</td><td>All sectors in this room are clear</td></tr>
+      <tr><td class="c">"Short room"</td><td>Room is too small for the full team; remaining members hold outside</td></tr>
+      <tr><td class="c">"Door left / right"</td><td>An uncleared opening in my sector</td></tr>
+      <tr><td class="c">"Coming out"</td><td>I'm about to exit through a covered door. Wait for the reply</td></tr>
+      <tr><td class="c">"Come out"</td><td>Exit is clear, you're recognized</td></tr>
+      <tr><td class="c">"Coming in"</td><td>I'm entering a room friendlies hold</td></tr>
+      <tr><td class="c">"Man down"</td><td>Casualty; the nearest member takes over that sector</td></tr>
+      <tr><td class="c">"Reloading" / "Cover"</td><td>My weapon is out of action; someone take my sector</td></tr>
+      <tr><td class="c">"Last man"</td><td>Called by the trail member so the team knows the rear is with them</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<div class="part">
+  <div class="eyebrow">Part II</div>
+  <h2>Vehicle movement</h2>
+  <p class="lede">Assessing a route, planning the move, placing the team in the vehicle, avoiding trouble, and reacting when you can't avoid it. The same rule as on foot applies: no sector covers a teammate or a friendly vehicle.</p>
+</div>
+
+<!-- 13 -->
+<section id="vassess">
+  <h2><span class="n">13</span>Vehicle route assessment</h2>
+  <p>A route assessment breaks the drive into segments and rates each one for how much it restricts you. You're looking for the places where you'll be forced to slow down, stop, or follow a single predictable path, since those are where trouble is easiest to set up.</p>
+
+  <figure>
+    <svg class="dia" viewBox="0 0 720 280" role="img" aria-label="Route strip map with segments rated low, moderate, and high risk">
+      <g fill="none" stroke-linecap="round" stroke-width="10">
+        <path d="M40 170 H160" stroke="var(--friend2)"/>
+        <path d="M160 170 L250 110" stroke="var(--accent)"/>
+        <path d="M250 110 H400" stroke="var(--threat)"/>
+        <path d="M400 110 L480 170" stroke="var(--accent)"/>
+        <path d="M480 170 H680" stroke="var(--friend2)"/>
+      </g>
+      <path d="M160 170 Q 320 260 480 170" fill="none" stroke="var(--muted)" stroke-width="3" stroke-dasharray="8 6"/>
+      <g stroke="var(--wall)" stroke-width="3"><path d="M196 128 L216 156 M214 118 L234 146"/><path d="M310 84 V136"/><path d="M370 90 V130 M350 110 H390"/></g>
+      <rect x="560" y="120" width="30" height="30" fill="var(--panel)" stroke="var(--friend2)" stroke-width="3"/><path d="M575 127 V143 M567 135 H583" stroke="var(--friend2)" stroke-width="3"/>
+      <g fill="var(--accent)"><circle cx="40" cy="170" r="8"/><circle cx="160" cy="170" r="7"/><circle cx="480" cy="170" r="7"/><circle cx="680" cy="170" r="8"/><path d="M620 150 v-24 l14 6 l-14 6" /></g>
+      <g font-family="JetBrains Mono, monospace" font-size="12" fill="var(--ink)">
+        <text x="40" y="200" text-anchor="middle">SP</text><text x="160" y="200" text-anchor="middle">CP1</text><text x="480" y="200" text-anchor="middle">CP2</text><text x="680" y="200" text-anchor="middle">RP</text>
+        <text x="200" y="102" text-anchor="middle" fill="var(--muted)">bridge</text>
+        <text x="310" y="76" text-anchor="middle" fill="var(--muted)">overpass</text>
+        <text x="372" y="146" text-anchor="middle" fill="var(--muted)">signal light</text>
+        <text x="575" y="112" text-anchor="middle" fill="var(--muted)">safe haven</text>
+        <text x="620" y="116" text-anchor="middle" fill="var(--muted)">rally</text>
+        <text x="320" y="240" text-anchor="middle" fill="var(--muted)">alternate route</text>
+      </g>
+      <g font-family="JetBrains Mono, monospace" font-size="12"><text x="40" y="266" fill="var(--friend2)">LOW</text><text x="100" y="266" fill="var(--accent)">MODERATE</text><text x="200" y="266" fill="var(--threat)">HIGH</text><text x="270" y="266" fill="var(--muted)">SP start point · CP checkpoint · RP release point</text></g>
+    </svg>
+    <figcaption>A strip map: segments rated by risk, hazards marked, checkpoints for reporting, and an alternate route that bypasses the high-risk stretch.</figcaption>
+  </figure>
+
+  <h3>What to look for</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Factor</th><th>What to note</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td><b>Choke points</b></td><td>Bridges, tunnels, narrow streets, construction, rail crossings, gated entrances</td><td>Single path, no way around, often forced to slow</td></tr>
+      <tr><td><b>Forced stops</b></td><td>Signal lights, stop signs, toll booths, checkpoints, school zones</td><td>Predictable location where a vehicle sits still</td></tr>
+      <tr><td><b>Overlooking terrain</b></td><td>Overpasses, high ground, buildings with a view of the road, wood lines close to the shoulder</td><td>Places someone can observe or act from with an advantage</td></tr>
+      <tr><td><b>Canalizing terrain</b></td><td>Road cuts, embankments, walls, guard rails, medians</td><td>Can't leave the road to turn around or go around</td></tr>
+      <tr><td><b>Limited visibility</b></td><td>Blind curves, hill crests, heavy vegetation, poor lighting</td><td>Less warning; shorter decision time</td></tr>
+      <tr><td><b>Roadside clutter</b></td><td>Debris, parked vehicles, culverts, trash piles, new objects</td><td>Hides things and people; changes are an indicator</td></tr>
+      <tr><td><b>Turnaround points</b></td><td>Wide shoulders, parking lots, side streets, median crossings</td><td>Where you can get out if the road ahead is blocked</td></tr>
+      <tr><td><b>Safe havens</b></td><td>Police and fire stations, hospitals, military facilities, busy guarded lots</td><td>Where you go if you're followed or hurt</td></tr>
+      <tr><td><b>Communications</b></td><td>Cell and radio dead spots</td><td>Where you can't report or call for help</td></tr>
+      <tr><td><b>Traffic by time</b></td><td>Rush hour, school release, events, market days</td><td>Gridlock removes your options</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="grid2">
+    <div class="box"><h3>Running the assessment</h3><ul>
+      <li>Drive the route at the same time of day and day of week you'll use it, in a vehicle that blends in.</li>
+      <li>Record mileage and drive time for each segment, and mark each hazard by mile marker or landmark.</li>
+      <li>Photograph or video choke points and turnaround options.</li>
+      <li>Rate each segment <span class="rk g">LOW</span> <span class="rk a">MODERATE</span> <span class="rk r">HIGH</span> and plan an alternate around every high-risk segment.</li>
+    </ul></div>
+    <div class="box"><h3>Establish the baseline</h3><p>Know what normal looks like on this route so you notice changes.</p><ul>
+      <li><b>Absence of the normal</b>: an empty street that's usually busy, closed shops at midday, no kids at a school bus stop.</li>
+      <li><b>Presence of the abnormal</b>: new debris or a parked vehicle where there never is one, people watching traffic instead of going about their business, signals between people.</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- 14 -->
+<section id="vplan">
+  <h2><span class="n">14</span>Vehicle route planning</h2>
+  <p>The plan turns the assessment into a route set, timings, reporting points, and actions everyone has rehearsed before the wheels turn.</p>
+
+  <h3>PACE routes</h3>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>Route</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td class="k">P</td><td>Primary</td><td>Best balance of time and risk under normal conditions</td></tr>
+      <tr><td class="k">A</td><td>Alternate</td><td>Bypasses the primary's high-risk segments; used if the primary is blocked or compromised</td></tr>
+      <tr><td class="k">C</td><td>Contingency</td><td>Different direction of approach entirely; used if both primary and alternate are unusable</td></tr>
+      <tr><td class="k">E</td><td>Emergency</td><td>Shortest path to the nearest safe haven or medical facility from any point on the route</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="grid2">
+    <div class="box"><h3>Control measures</h3><ul>
+      <li><b>Start point / release point</b> where the move begins and ends</li>
+      <li><b>Checkpoints</b> at known landmarks for position reports</li>
+      <li><b>Rally points</b> along the route where separated vehicles regroup</li>
+      <li><b>Decision points</b> before each high-risk segment, where you choose primary or alternate</li>
+      <li><b>Safe havens</b> marked with the route to each</li>
+    </ul></div>
+    <div class="box"><h3>Timing and pattern</h3><ul>
+      <li>Vary departure times and routes. Predictability is the biggest vulnerability on a recurring move.</li>
+      <li>Plan to arrive with daylight to spare when possible.</li>
+      <li>Avoid peak traffic through high-risk segments.</li>
+      <li>Set a "no later than" time at each checkpoint. A missed report triggers the lost-contact plan.</li>
+    </ul></div>
+  </div>
+
+  <h3>Interval and order of march</h3>
+  <ul>
+    <li><b>In towns</b>, keep vehicles close enough that outside traffic can't cut between them, typically a few car lengths.</li>
+    <li><b>On open road</b>, open the interval so one ambush or one blast can't catch two vehicles at once, while staying in sight and radio range.</li>
+    <li>Put the vehicle with the best observation and communications in the lead. The leader rides where they can see and control, usually not in the lead vehicle.</li>
+    <li>The trail vehicle watches the rear and reports anything that follows.</li>
+  </ul>
+
+  <h3>Movement brief checklist</h3>
+  <div class="grid3">
+    <div class="box"><h4>Route</h4><p>Strip map, PACE routes, checkpoints, rally points, safe havens, decision points, timings.</p></div>
+    <div class="box"><h4>Actions</h4><p>Halts, breakdowns, disabled vehicle, separation, contact front/left/right/rear, blocked route, bail-out.</p></div>
+    <div class="box"><h4>Comms</h4><p>Frequencies or channels, call signs, check-in times, lost-comms plan, code words.</p></div>
+    <div class="box"><h4>Medical</h4><p>Who carries the kit, casualty collection point, nearest hospitals on each route.</p></div>
+    <div class="box"><h4>Vehicles</h4><p>Order of march, seat assignments, sectors, load plan, fuel, spares, recovery gear.</p></div>
+    <div class="box"><h4>Contingency</h4><p>Who takes over if the leader is down, what triggers a route change, where to go if followed.</p></div>
+  </div>
+
+  <div class="box"><h3>Vehicle prep</h3><ul>
+    <li>Fuel tank full at the start; refuel before it gets to half.</li>
+    <li>Tires, spare, jack, recovery strap, and jumper cables checked.</li>
+    <li>Medical kit within reach of the seats, not buried in cargo.</li>
+    <li>Paper map of the route as a backup to phones and GPS.</li>
+    <li>Loose gear secured so it doesn't become a projectile in a crash or hard turn.</li>
+  </ul></div>
+</section>
+
+<!-- 15 -->
+<section id="vcrew">
+  <h2><span class="n">15</span>In-vehicle movement and team placement</h2>
+  <p>Every seat has a job and a sector. Sectors divide the space around the vehicle so every direction is watched and no one's sector runs across another occupant.</p>
+  <figure>
+    <svg class="dia" viewBox="0 0 720 340" role="img" aria-label="Top view of a vehicle with seat assignments and observation sectors">
+      <polygon points="330,105 170,0 352,0" fill="var(--cone)"/>
+      <polygon points="390,105 368,0 550,0" fill="var(--cone)"/>
+      <polygon points="320,195 130,95 130,295" fill="var(--vis)"/>
+      <polygon points="400,195 590,95 590,295" fill="var(--vis)"/>
+      <polygon points="360,282 300,340 420,340" fill="var(--cone)"/>
+      <rect x="300" y="60" width="120" height="225" rx="18" fill="var(--panel)" stroke="var(--wall)" stroke-width="4"/>
+      <rect x="312" y="80" width="96" height="16" rx="4" fill="var(--floor)" stroke="var(--wall)" stroke-width="2"/>
+      <g fill="var(--friend)"><circle cx="330" cy="130" r="14"/><circle cx="390" cy="130" r="14"/></g>
+      <g fill="var(--friend2)"><circle cx="330" cy="200" r="14"/><circle cx="390" cy="200" r="14"/></g>
+      <g font-family="JetBrains Mono, monospace" font-size="12" font-weight="600" fill="var(--panel)" text-anchor="middle"><text x="330" y="134">D</text><text x="390" y="134">VC</text><text x="330" y="204">RL</text><text x="390" y="204">RR</text></g>
+      <g font-family="JetBrains Mono, monospace" font-size="12" fill="var(--ink)">
+        <text x="20" y="40">DRIVER</text><text x="20" y="56" fill="var(--muted)">front, front-left</text>
+        <text x="560" y="40">VEHICLE CMDR</text><text x="560" y="56" fill="var(--muted)">front, front-right</text>
+        <text x="20" y="320">REAR LEFT</text><text x="20" y="336" fill="var(--muted)">left side, left rear</text>
+        <text x="560" y="320">REAR RIGHT</text><text x="560" y="336" fill="var(--muted)">right side, right rear</text>
+        <text x="440" y="330" fill="var(--muted)">rear: mirrors + RL/RR</text>
+      </g>
+    </svg>
+    <figcaption>Four-seat sedan or SUV. Each sector points outward from its seat; none crosses the cab. With a third row or cargo seat, that seat takes the rear.</figcaption>
+  </figure>
+
+  <div class="tbl"><table>
+    <thead><tr><th>Seat</th><th>Primary job</th><th>Sector</th><th>On contact</th></tr></thead>
+    <tbody>
+      <tr><td class="c">Driver</td><td>Drive. Nothing else.</td><td>Front, front-left, mirrors</td><td>Keeps the vehicle moving and out of the kill zone; follows the VC's direction</td></tr>
+      <tr><td class="c">Vehicle cmdr</td><td>Navigation, comms, decisions</td><td>Front, front-right</td><td>Calls direction, distance, and action ("contact left, push through" or "bail right")</td></tr>
+      <tr><td class="c">Rear left</td><td>Observation</td><td>Left side to left rear</td><td>Reports, then exits away from contact on the bail-out call</td></tr>
+      <tr><td class="c">Rear right</td><td>Observation, often medic or comms backup</td><td>Right side to right rear</td><td>Same as rear left; first out on a right-side bail</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="grid2">
+    <div class="box"><h3>Riding</h3><ul>
+      <li>Seatbelts on. A crash is the most likely way to get hurt in a vehicle.</li>
+      <li>Weapons, if carried, stay muzzle down toward the floor or outboard, never toward another seat.</li>
+      <li>Doors locked. Bags, kits, and radios secured so they don't fly.</li>
+      <li>Talk is short and about the route. Call what you see by clock direction: "Vehicle stopped, two o'clock, 200 feet."</li>
+    </ul></div>
+    <div class="box"><h3>In traffic</h3><ul>
+      <li><b>Tires and pavement.</b> At a stop, leave enough space that you can see the rear tires of the vehicle ahead touching the road. That leaves room to pull out around it.</li>
+      <li>Take the lane with the most escape options, usually not the curb lane in town.</li>
+      <li>At lights, time your approach to keep rolling when you can.</li>
+      <li>In a multi-vehicle move, the trail vehicle can take the lane beside the lead at a stop to prevent a box-in.</li>
+    </ul></div>
+  </div>
+
+  <h3>Bail-out drill</h3>
+  <ol>
+    <li>The vehicle commander calls direction and exit side: "Contact left, bail right."</li>
+    <li>Unbuckle, open the door away from contact, exit low.</li>
+    <li>Occupants on the contact side cross the cab and exit with the others. Nobody steps out into the fire.</li>
+    <li>Go to the engine block and wheels, not the doors (section 17).</li>
+    <li>Sound off by seat or number so the commander knows everyone is out.</li>
+  </ol>
+</section>
+
+<!-- 16 -->
+<section id="vavoid">
+  <h2><span class="n">16</span>Avoidance</h2>
+  <p>Most bad outcomes on a route are avoidable by not being predictable, noticing early, keeping space, and acting decisively. Turning around early is almost always cheaper than reacting late.</p>
+  <div class="sim" id="sim-avoid"><div class="simtitle">Recognizing a blocked route and turning away</div></div>
+
+  <h3>Indicators</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>What you see</th><th>Possible meaning</th></tr></thead>
+    <tbody>
+      <tr><td>Road blocked with no one working the scene</td><td>The block is the point, not an accident</td></tr>
+      <tr><td>People standing off the road watching traffic, with no reason to be there</td><td>Observers or a trigger team</td></tr>
+      <tr><td>Normal activity suddenly stops or the area empties</td><td>Locals know something is about to happen</td></tr>
+      <tr><td>The same vehicle behind you across several turns</td><td>Surveillance</td></tr>
+      <tr><td>A vehicle slows in front of you while another closes behind</td><td>Box-in</td></tr>
+      <tr><td>New objects on the shoulder or in a culvert on a road you drive regularly</td><td>Something placed for your route</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="grid2">
+    <div class="box"><h3>At choke points</h3><ul>
+      <li>Scan the choke point and the far side before you enter it.</li>
+      <li>Slow early rather than stop late. A rolling vehicle has more options than a stopped one.</li>
+      <li>Leave an escape gap ahead and to one side.</li>
+      <li>In a multi-vehicle move, the trail vehicle holds short until the lead is through.</li>
+      <li>Know your turnaround point before you commit to the segment.</li>
+    </ul></div>
+    <div class="box"><h3>If you think you're followed</h3><ul>
+      <li>Don't go home or to your destination.</li>
+      <li>Confirm with a few deliberate, normal-looking turns. A vehicle that stays with you through all of them is a strong indicator.</li>
+      <li>Report it, then drive to a safe haven: a police or fire station, or a busy staffed location.</li>
+      <li>Note plate, make, model, color, occupants, and time. Don't confront.</li>
+    </ul></div>
+  </div>
+  <div class="box"><h3>Turning away</h3><p>Pick your decision points and turnaround options during planning, so the choice on the road is just which one to use. In a two-vehicle move, the trail vehicle turns first and becomes the lead. Report what you saw and where as soon as you're clear.</p></div>
+</section>
+
+<!-- 17 -->
+<section id="vengage">
+  <h2><span class="n">17</span>Vehicle route engagements</h2>
+  <p>If contact can't be avoided, the vehicle is your best tool for getting out of it. The core principle is to get off the X: leave the place where you were attacked as fast as the vehicle allows.</p>
+  <div class="sim" id="sim-drive"><div class="simtitle">Drive through the kill zone</div></div>
+
+  <div class="tbl"><table>
+    <thead><tr><th>Situation</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td><b>Contact while mobile, vehicle can move</b></td><td>Drive through. Don't stop in the kill zone. Rally past it.</td></tr>
+      <tr><td><b>Vehicles short of the kill zone</b></td><td>Don't drive in. Stop, report, and take the alternate to the rally point. Support only if you can do it without entering.</td></tr>
+      <tr><td><b>Route blocked ahead in contact</b></td><td>Reverse out or turn around on the VC's call. Go back the way you came to the last known safe point.</td></tr>
+      <tr><td><b>Vehicle disabled, others mobile</b></td><td>Another vehicle pushes or recovers it if possible, or the crew bails and cross-loads into a working vehicle.</td></tr>
+      <tr><td><b>Vehicle disabled, no help</b></td><td>Bail out away from contact, get to cover, then move to hard cover.</td></tr>
+      <tr><td><b>Suspicious object on the route</b></td><td>Don't approach it. Stop well short, back off, report the location, and take the alternate.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Cover at the vehicle</h3>
+  <figure>
+    <svg class="dia" viewBox="0 0 720 300" role="img" aria-label="Top view of a vehicle showing where cover and concealment are">
+      <g fill="var(--threat)"><circle cx="250" cy="24" r="8"/><circle cx="380" cy="18" r="8"/><circle cx="500" cy="26" r="8"/></g>
+      <path d="M250 24 L300 100 M380 18 L380 100 M500 24 L460 100" stroke="var(--threat)" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <rect x="400" y="190" width="85" height="80" fill="var(--friend2)" opacity=".3"/>
+      <rect x="250" y="190" width="45" height="60" fill="var(--friend2)" opacity=".3"/>
+      <rect x="295" y="190" width="100" height="45" fill="var(--threat)" opacity=".12"/>
+      <rect x="230" y="100" width="260" height="90" rx="14" fill="var(--panel)" stroke="var(--wall)" stroke-width="4"/>
+      <rect x="415" y="104" width="70" height="82" fill="var(--wall)" opacity=".45"/>
+      <g fill="var(--wall)"><rect x="252" y="88" width="42" height="14" rx="3"/><rect x="430" y="88" width="42" height="14" rx="3"/><rect x="252" y="188" width="42" height="14" rx="3"/><rect x="430" y="188" width="42" height="14" rx="3"/></g>
+      <path d="M300 100 V190 M360 100 V190" stroke="var(--wall)" stroke-width="2" stroke-dasharray="4 4"/>
+      <g font-family="JetBrains Mono, monospace" font-size="12" fill="var(--ink)">
+        <text x="450" y="148" text-anchor="middle" fill="var(--panel)" font-weight="600">ENGINE</text>
+        <text x="345" y="148" text-anchor="middle" fill="var(--muted)">doors · glass</text>
+        <text x="442" y="290" text-anchor="middle">BEST: behind engine block</text>
+        <text x="272" y="270" text-anchor="middle">wheel and axle</text>
+        <text x="345" y="254" text-anchor="middle" fill="var(--threat)">concealment only</text>
+        <text x="40" y="40" fill="var(--muted)">threat</text>
+      </g>
+    </svg>
+    <figcaption>Engine blocks and wheel hubs stop most small-arms fire. Doors, body panels, and glass usually don't, so they hide you without protecting you. Stay low and keep the vehicle between you and the threat.</figcaption>
+  </figure>
+  <div class="sim" id="sim-bail"><div class="simtitle">Disabled vehicle: bail out, cover, bound to hard cover</div></div>
+  <ul>
+    <li>Get behind the engine block first. Behind the wheels is second best. Keep your feet behind the wheels too; rounds skip under vehicles.</li>
+    <li>Stay a step or two back from the vehicle rather than pressed against it. It gives you room to move and keeps you out of rounds that skim along the body.</li>
+    <li>The vehicle is temporary cover. Fuel, glass, and a stationary target make it a poor place to stay. Move to hard cover as soon as you can.</li>
+    <li>Pairs bound in fire-and-movement. Movers' routes stay out of the covering pair's sectors.</li>
+  </ul>
+
+  <h3>Security at halts</h3>
+  <div class="sim" id="sim-herr"><div class="simtitle">Herringbone halt</div></div>
+  <div class="grid2">
+    <div class="box"><h3>Herringbone</h3><p>Used on a road when the halt is short or the route must stay open. Vehicles angle off alternately left and right, crews facing outward. A vehicle can still pass down the center.</p></div>
+    <div class="box"><h3>Coil</h3><p>Used for longer halts off the road. Vehicles form a circle with fronts or weapons outward and soft vehicles and people in the center. Takes more space and time to set.</p></div>
+  </div>
+  <div class="box"><h3>5 and 25 checks</h3><p>Before anyone gets out at a halt, the crew searches about 15 feet around the vehicle from inside, looking for anything disturbed or out of place. Then, on foot, they check out to about 80 feet. Only after the area is checked does the rest of the team dismount. The names come from the doctrinal 5- and 25-meter distances.</p></div>
+
+  <div class="box"><h3>After contact</h3><ol>
+    <li>Rally past the kill zone or at the planned rally point.</li>
+    <li>Set security with sectors outward.</li>
+    <li>Account for every person and vehicle.</li>
+    <li>Treat casualties and request evacuation.</li>
+    <li>Report: location, what happened, casualties, vehicle status.</li>
+    <li>Check vehicles for damage: tires, fluids, glass, steering.</li>
+    <li>Decide: continue, alternate route, or return.</li>
+  </ol></div>
+</section>
+
+<!-- 18 -->
+<section id="errors">
+  <h2><span class="n">18</span>Common errors</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Error</th><th>Why it matters</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td><b>Stopping in the doorway</b></td><td>The doorway is the most covered spot in the room and blocks everyone behind</td><td>Rehearse the first two steps past the threshold until it's automatic</td></tr>
+      <tr><td><b>Following the person ahead</b></td><td>Two people on one side leaves a whole side uncovered</td><td>Always go opposite the person ahead of you</td></tr>
+      <tr><td><b>Going too deep with #3 and #4</b></td><td>They mask #1 and #2 and cross muzzles</td><td>Stop short; mark points of domination on the floor in training</td></tr>
+      <tr><td><b>Hugging walls</b></td><td>Skipping rounds, snagging gear, no room to pivot</td><td>Keep 12–18 inches off</td></tr>
+      <tr><td><b>Looking past the immediate threat area</b></td><td>The close corner is where the fastest threat is</td><td>Corner first, then deep</td></tr>
+      <tr><td><b>Leaving doors behind</b></td><td>Threats can move in behind the team</td><td>Cover, clear, or mark every opening you pass</td></tr>
+      <tr><td><b>Slow recon reports</b></td><td>Information goes stale; the leader decides on old data</td><td>Report as you observe; send a full SALUTE once you're secure</td></tr>
+      <tr><td><b>Crossing fields of fire</b></td><td>A sector that runs across a teammate puts them in the line of fire</td><td>Sectors point outward and away from each other; muzzle comes off anyone who moves into yours</td></tr>
+      <tr><td><b>Covering a door from across the hall</b></td><td>Everyone who passes walks through that sector</td><td>Post on the door edge on the same wall, sector into the room</td></tr>
+      <tr><td><b>Stopping in a vehicle kill zone</b></td><td>A stationary vehicle is the easiest target there is</td><td>Drive through if the vehicle moves; rally past the kill zone</td></tr>
+      <tr><td><b>Getting boxed in at a stop</b></td><td>No way out if something happens</td><td>Leave room to see the rear tires of the vehicle ahead; pick the lane with options</td></tr>
+      <tr><td><b>Predictable routes and times</b></td><td>Makes it easy to plan against you</td><td>Rotate PACE routes and vary departure times</td></tr>
+      <tr><td><b>Hiding behind car doors</b></td><td>Doors and glass stop little</td><td>Engine block first, wheels second, then move to hard cover</td></tr>
+      <tr><td><b>Ignoring overpenetration</b></td><td>Rounds go through interior walls toward teammates or bystanders</td><td>Know the construction type and teammates' positions before you engage</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 19 -->
+<section id="train">
+  <h2><span class="n">19</span>Training progression</h2>
+  <div class="grid3">
+    <div class="box"><h4>Crawl</h4><h3>Walk-through</h3><p>Tape a floor plan on the ground or use an empty building. Walk each position slowly, call each step out loud, and mark points of domination. No weapons or training weapons only.</p></div>
+    <div class="box"><h4>Walk</h4><h3>Dry rehearsal</h3><p>Full speed with training weapons or inert replicas. Add doors, furniture, a second room, and role players. Add low light once daylight is clean.</p></div>
+    <div class="box"><h4>Run</h4><h3>Force on force or live</h3><p>Only in an approved facility, with qualified range staff, a written safety plan, and a team that has passed the earlier stages. Marking cartridges before live fire.</p></div>
+  </div>
+  <ul>
+    <li>Run each drill with every member in every position. Anyone may end up #1.</li>
+    <li>Change the floor plan often. A team that knows the shoot house is rehearsing the house, not the drill.</li>
+    <li>After-action review after every iteration: what was supposed to happen, what happened, why, what to sustain, what to fix.</li>
+    <li>Recon training pairs well with the land navigation and observation drills you can run anywhere: KIM games, range estimation, and sketching a building from across the street.</li>
+  </ul>
+</section>
+
+<!-- 20 -->
+<section id="src">
+  <h2><span class="n">20</span>Sources</h2>
+  <ul>
+    <li><a href="https://irp.fas.org/doddir/army/attp3-06-11.pdf" target="_blank" rel="noopener">ATTP 3-06.11, Combined Arms Operations in Urban Terrain (PDF, FAS)</a></li>
+    <li><a href="https://ia802603.us.archive.org/33/items/milmanual-fm-3-06.11-combined-arms-operations-in-urban-terrain/fm_3-06.11_combined_arms_operations_in_urban_terrain.pdf" target="_blank" rel="noopener">FM 3-06.11, Combined Arms Operations in Urban Terrain (PDF, Internet Archive)</a></li>
+    <li><a href="https://www.army.mil/article/287773" target="_blank" rel="noopener">Army.mil: Combined Arms in Urban Operations, Insights into ATP 3-06.11</a></li>
+    <li><a href="https://tamucc.edu/education/departments/rotc/files/atp_3-21.8.pdf" target="_blank" rel="noopener">ATP 3-21.8, Infantry Platoon and Squad (PDF)</a></li>
+    <li><a href="https://www.trngcmd.marines.mil/Portals/207/Docs/TBS/W3L0003%20-%20Convoy%20Operations.pdf" target="_blank" rel="noopener">USMC The Basic School, Convoy Operations (PDF)</a></li>
+    <li><a href="https://www.army.mil/article/125012" target="_blank" rel="noopener">Army.mil: Using sustainment vehicles for convoy protection</a></li>
+    <li><a href="https://www.army.mil/article/167323/atp_3_218_infantry_platoon_and_squad_now_available_for_download" target="_blank" rel="noopener">Army.mil: ATP 3-21.8 release notice</a></li>
+  </ul>
+</section>
+<footer>Training reference. Not a substitute for qualified instruction, rehearsal, and your unit's or agency's SOP.</footer>
+
+</main>
+<script src="assets/sim.js"></script>
+<script>
+(function(){
+const W=100,H=75,HALF=30;
+const lerp=(a,b,t)=>a+(b-a)*t;
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+function angLerp(a,b,t){let d=((b-a+540)%360)-180;return a+d*t}
+function angDiff(a,b){return Math.abs(((a-b+540)%360)-180)}
+function sample(keys,t){
+  if(t<=keys[0][0])return keys[0];
+  for(let i=1;i<keys.length;i++){const k0=keys[i-1],k1=keys[i];
+    if(t<=k1[0]){const u=(t-k0[0])/(k1[0]-k0[0]);return[t,lerp(k0[1],k1[1],u),lerp(k0[2],k1[2],u),angLerp(k0[3],k1[3],u)]}}
+  return keys[keys.length-1];
+}
+function pip(pt,poly){let c=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const[xi,yi]=poly[i],[xj,yj]=poly[j];
+  if(((yi>pt[1])!=(yj>pt[1]))&&(pt[0]<(xj-xi)*(pt[1]-yi)/(yj-yi)+xi))c=!c}return c}
+function covers(p,q,h,half){const d=Math.hypot(q.x-p.x,q.y-p.y);if(d<.3||d>95)return false;
+  return angDiff(Math.atan2(q.y-p.y,q.x-p.x)*180/Math.PI,h)<half+4}
+function inRanges(r,t){return (r||[]).some(([a,b])=>t>=a&&t<b)}
+
+/* Positions of everyone at time t, with muzzle discipline applied:
+   a member whose sector would cover a teammate is drawn with muzzle off (no sector). */
+function stateAt(scene,t){
+  const acts=(scene.actors||[]).map(a=>{
+    let x,y,h;
+    if(a.arc){const A=a.arc;const u=ease(Math.min(1,Math.max(0,(t-A.t0)/(A.t1-A.t0))));const ang=lerp(A.a0,A.a1,u)*Math.PI/180;
+      x=A.cx+A.r*Math.cos(ang);y=A.cy+A.r*Math.sin(ang);h=Math.atan2(A.cy-y,A.cx-x)*180/Math.PI;}
+    else{const k=sample(a.keys,t);x=k[1];y=k[2];h=k[3]}
+    const vis=(a.from==null||t>=a.from);
+    return{a,x,y,h,vis,masked:inRanges(a.masked,t)};
+  });
+  for(const p of acts){if(!p.vis||p.masked||p.a.arc)continue;
+    for(const q of acts){if(q===p||!q.vis)continue;if(covers(p,q,p.h,HALF)){p.masked=true;p.auto=true;break}}}
+  const veh=(scene.vehicles||[]).map(v=>{const k=sample(v.keys,t);return{v,x:k[1],y:k[2],h:k[3]}});
+  for(const p of veh){p.coneOn=!!(p.v.cone&&t>=p.v.cone.t);
+    if(p.coneOn)for(const q of veh){if(q!==p&&covers(p,q,p.v.cone.h,p.v.cone.half||40)){p.coneOn=false;p.auto=true}}}
+  return{acts,veh};
+}
+
+/* ---------- scenes (100 x 75 grid; indoors 1 unit ≈ 1 ft) ---------- */
+const fan={duration:14.5,coneR:24,
+  blocks:[[40,6,20,14]],
+  labels:[[50,14.5,"OBJ"],[59,61,"ORP"]],
+  paths:[[49,63,28,37],[50,63,50,42],[51,63,72,37]],
+  ops:[[28,37],[50,42],[72,37]],
+  orp:[50,66,6],
+  actors:[
+    {n:1,team:"a",masked:[[4,5.6],[8,9.4],[12,14.5]],keys:[[0,48,63,-90],[1,48,63,-90],[2.4,28,37,-52],[2.6,28,37,-44],[4,28,37,-44],[5.2,48,63,52],[5.6,48,63,-90],[6.6,49,43,-90],[8,49,43,-90],[9,48,63,90],[9.4,48,63,-48],[10.6,71,37,-48],[10.8,71,37,-136],[12,71,37,-136],[13,48,63,130],[14,48,63,-90]]},
+    {n:2,team:"a",masked:[[0,3],[4,7.1],[8,11.1],[12,14.5]],keys:[[0,52,63,-90],[1.2,52,63,-90],[2.6,31,39,-52],[3,31,39,150],[4,31,39,150],[5.4,52,63,52],[5.8,52,63,-90],[6.8,52,44,-90],[7.1,52,44,30],[8,52,44,30],[9.2,52,63,90],[9.6,52,63,-48],[10.8,74,39,-48],[11.1,74,39,30],[12,74,39,30],[13.2,52,63,130],[14,52,63,-90]]},
+    {n:3,team:"b",keys:[[0,44,68,180],[14.5,44,68,180]]},
+    {n:4,team:"b",keys:[[0,56,68,0],[14.5,56,68,0]]}
+  ],
+  captions:[[0,"ORP","Security pair (3, 4) holds the objective rally point, facing outward. Recon pair (1, 2) gets the leader's contingency plan and moves out."],
+    [1,"Leg 1","The recon pair moves on the first fan route. #2 trails with muzzle down so it never points at #1 or back at the ORP."],
+    [2.6,"Observe","#1 observes and records. #2 provides local security facing away from both #1 and the ORP."],
+    [4,"Return","Muzzles come down on the way back in, since the ORP is in front of them. Report, then leave on a new route."],
+    [6.6,"Leg 2","Second OP looks straight at side 1: entry points, windows, door swing."],
+    [9,"Leg 3","Third OP covers side 4 and the approach the first two couldn't see."],
+    [12.6,"Consolidate","Back at the ORP, the three views become one sketch and one report before the team acts on it."]]
+};
+
+const bound={duration:9.5,coneR:26,
+  blocks:[[5,8,23,32],[68,30,27,38]],
+  danger:[28,0,40,75],
+  labels:[[16,22,"BLDG A"],[81,50,"BLDG B"],[48,6,"DANGER AREA"]],
+  actors:[
+    {n:1,team:"a",keys:[[0,30,34,-60],[4.8,30,34,-60],[5.1,32,36,5],[7.2,66,38,5],[7.6,66,38,-100],[9.5,66,38,-100]]},
+    {n:2,team:"a",masked:[[7.4,8]],keys:[[0,29,41,-15],[5,29,41,-15],[5.3,31,42,6],[7.4,66,45,6],[8,66,45,-150],[9.5,66,45,-150]]},
+    {n:3,team:"b",masked:[[3.6,4.2]],keys:[[0,20,44,40],[1.2,20,44,40],[1.8,30,53,20],[3.6,64,58,0],[4.2,64,58,150],[9.5,64,58,150]]},
+    {n:4,team:"b",masked:[[3.8,4.3]],keys:[[0,14,47,60],[1.4,14,47,60],[2,28,61,15],[3.8,64,65,0],[4.3,64,65,120],[9.5,64,65,120]]}
+  ],
+  captions:[[0,"Alpha set","Alpha (1, 2) covers up the street and the upper windows of Building B. Their sectors stay above Bravo's route."],
+    [1.2,"Bravo bounds","Bravo (3, 4) crosses low and abreast, below Alpha's sectors. Nobody moves through a teammate's sector."],
+    [3.8,"Bravo set","Bravo reaches Building B and covers down the street, away from where Alpha will cross."],
+    [4.8,"Alpha bounds","Alpha crosses on the upper route, above Bravo's sectors."],
+    [7.6,"Consolidated","Both pairs on Building B with sectors pointing outward: north, west, and south. Ready to recon the entry point."]]
+};
+
+const pie={duration:7.5,
+  room:[15,6,70,38], walls:[[15,6,85,6],[85,6,85,44],[15,6,15,44],[15,44,44,44],[56,44,85,44],[8,70,92,70]],
+  labels:[[50,26,"ROOM"],[50,66,"HALLWAY"]],
+  threats:[[20,40],[80,12],[30,10],[78,40]],
+  actors:[{n:1,team:"a",arc:{cx:50,cy:44,r:18,a0:172,a1:8,t0:.9,t1:6.6}}],
+  captions:[[0,"Set","Stand off the opening, muzzle on the near door frame. Only a thin slice of the room is visible."],
+    [1.5,"Step","Small lateral steps along a curve. Each step opens a new slice; the wall still hides the rest."],
+    [3.6,"Midpoint","Facing the door straight on, you see the deep center and far wall, while the corners by the door stay hidden."],
+    [5.6,"Far side","The far side resolves last. The two corners on the door wall can't be cleared from outside."],
+    [6.8,"Result","Most of the room is cleared from cover. The team enters knowing where the unknowns are."]],
+  pie:true
+};
+
+const FUNNEL_POLY=[[44,50],[56,50],[57,61],[43,61]];
+const funnelBase={room:[20,8,60,46],walls:[[20,8,80,8],[80,8,80,54],[20,8,20,54],[20,54,45,54],[55,54,80,54],[10,70,90,70]],
+  sight:{threats:[[25,13],[75,13]],d1:[45,54],d2:[55,54]}, funnel:FUNNEL_POLY, labels:[[50,30,"ROOM"]], pods:[[70,46],[30,46]]};
+const funnelBad=Object.assign({},funnelBase,{duration:7.5,
+  actors:[
+    {n:1,team:"a",keys:[[0,41,59,0],[0.6,41,59,0],[1,50,56,-90],[3.2,50,56,-90],[3.8,55,49,-20],[4.6,70,46,-60],[5.2,70,46,-125],[7.5,70,46,-125]]},
+    {n:2,team:"a",keys:[[0,37,59,0],[3.6,37,59,0],[4.1,50,56,-90],[4.5,47,50,200],[5.3,30,46,-120],[5.9,30,46,-55],[7.5,30,46,-55]]}
+  ],
+  captions:[[0,"Stack","Stack outside the door, clear of the red lines of sight from the room's corners."],
+    [0.9,"Stops","#1 steps into the doorway and stops to look. Both corners have a clear line to him."],
+    [2.2,"Blocked","#2 can't enter while #1 stands in the door. The whole team is held at the funnel."],
+    [3.8,"Late","When #1 finally moves, the team has spent over two seconds in the most covered spot in the room."]]});
+const funnelGood=Object.assign({},funnelBase,{duration:6,
+  actors:[
+    {n:1,team:"a",keys:[[0,41,59,0],[0.6,41,59,0],[0.95,50,55,-90],[1.25,54,50,-20],[2.2,70,46,-60],[2.8,70,46,-125],[6,70,46,-125]]},
+    {n:2,team:"a",keys:[[0,37,59,0],[1,37,59,0],[1.35,50,55,-90],[1.65,46,50,200],[2.6,30,46,-120],[3.2,30,46,-55],[6,30,46,-55]]}
+  ],
+  captions:[[0,"Stack","Same room, same corners."],
+    [0.6,"Flow","#1 crosses the threshold in one motion and breaks along the wall. Time in the doorway is a fraction of a second."],
+    [1.3,"#2 follows","#2 is right behind, going the opposite way. The doorway is never occupied for long."],
+    [3,"Dominate","Both are at their points with sectors on the corners. Neither sector points at the other."]]});
+
+const ROOM=[20,8,60,54];
+const two={duration:5.5,
+  room:ROOM, walls:[[20,8,80,8],[80,8,80,62],[20,8,20,62],[20,62,45,62],[55,62,80,62],[10,74,90,74]],
+  pods:[[70,54],[30,54]], labels:[[50,30,"ROOM"]],
+  actors:[
+    {n:1,team:"a",keys:[[0,41,68,0],[0.3,41,68,0],[0.9,50,64,-90],[1.3,53,58,-20],[2.4,70,54,-60],[3.1,70,54,-125],[5.5,70,54,-125]]},
+    {n:2,team:"a",keys:[[0,37,68,0],[0.7,37,68,0],[1.3,50,64,-90],[1.7,47,58,200],[2.8,30,54,-120],[3.5,30,54,-55],[5.5,30,54,-55]]}
+  ],
+  captions:[[0,"Stack","Two-person stack on the door. #2's muzzle is off #1. #2 signals ready."],
+    [0.3,"#1 in","#1 enters and clears the right corner first, then moves along the entry wall."],
+    [1.3,"#2 in","#2 is right behind, going opposite: left corner, then along the wall."],
+    [3.2,"Dominate","Both at points of domination. Sectors overlap in the room's depth but neither covers the other."]]
+};
+
+const center={duration:6.5,
+  room:ROOM, walls:[[20,8,80,8],[80,8,80,62],[20,8,20,62],[20,62,45,62],[55,62,80,62],[10,74,90,74]],
+  pods:[[70,54],[30,54],[59,50],[41,50]], labels:[[50,30,"ROOM"]],
+  actors:[
+    {n:1,team:"a",keys:[[0,41,68,0],[0.3,41,68,0],[0.9,50,64,-90],[1.3,53,58,-20],[2.4,70,54,-60],[3.1,70,54,-125],[6.5,70,54,-125]]},
+    {n:2,team:"a",keys:[[0,37,68,0],[0.7,37,68,0],[1.3,50,64,-90],[1.7,47,58,200],[2.8,30,54,-120],[3.5,30,54,-55],[6.5,30,54,-55]]},
+    {n:3,team:"b",keys:[[0,33,68,0],[1.1,33,68,0],[1.9,50,64,-90],[2.3,54,57,-60],[3.2,59,50,-100],[6.5,59,50,-100]]},
+    {n:4,team:"b",keys:[[0,29,68,180],[1.5,29,68,180],[1.8,29,68,0],[2.4,50,64,-90],[2.8,46,57,-120],[3.7,41,50,-80],[6.5,41,50,-80]]}
+  ],
+  captions:[[0,"Stack","Stack on one side of the door. #1 covers the door, #4 the rear, #2 and #3 muzzles off the person ahead."],
+    [0.3,"#1 in","#1 crosses the threshold without stopping and clears the right side along the entry wall."],
+    [1.3,"#2 in","#2 goes opposite #1, clearing the left corner and moving along the wall."],
+    [1.9,"#3, #4","#3 and #4 enter, each going opposite the person ahead, and stop short of #1 and #2."],
+    [4,"Dominate","All four at points of domination. Sectors overlap in the room but none covers a teammate."]]
+};
+
+const corner={duration:6.5,
+  room:ROOM, walls:[[20,8,80,8],[80,8,80,62],[20,8,20,62],[20,62,22,62],[32,62,80,62],[10,74,90,74]],
+  pods:[[62,54],[25,42],[46,49],[34,49]], labels:[[55,30,"ROOM"]],
+  actors:[
+    {n:1,team:"a",keys:[[0,36,68,180],[0.3,36,68,180],[0.9,27,64,-90],[1.4,32,57,0],[2.6,62,54,-50],[3.4,62,54,-120],[6.5,62,54,-120]]},
+    {n:2,team:"a",keys:[[0,40,68,180],[0.7,40,68,180],[1.4,27,64,-90],[1.8,24,57,-150],[2.9,25,42,-80],[3.7,25,42,-25],[6.5,25,42,-25]]},
+    {n:3,team:"b",keys:[[0,44,68,180],[1.1,44,68,180],[1.9,27,64,-90],[2.4,34,56,-60],[3.4,46,49,-85],[6.5,46,49,-85]]},
+    {n:4,team:"b",masked:[[1.5,3]],keys:[[0,48,68,0],[1.5,48,68,0],[1.8,48,68,180],[2.4,27,64,-90],[2.9,29,55,-80],[3.8,34,49,-50],[6.5,34,49,-50]]}
+  ],
+  captions:[[0,"Stack","Door sits near the left corner. Stack on the right side, away from the hinge. #4 covers the hall behind."],
+    [0.3,"#1 long","#1 enters and takes the long wall, the direction with the most open room."],
+    [1.4,"#2 corner","#2 enters, clears the hard corner immediately left, then moves up the side wall."],
+    [1.9,"#3, #4","#3 and #4 follow and split, stopping short so they don't mask #1 or #2."],
+    [4,"Dominate","Points of domination taken. Sectors cover the full room and none covers a teammate."]]
+};
+
+const hall={duration:8,coneR:16,
+  floors:[[0,28,100,20]],
+  rooms:[[32,48,36,24]],
+  walls:[[0,28,100,28],[0,48,45,48],[55,48,100,48],[32,48,32,72],[68,48,68,72],[32,72,68,72]],
+  labels:[[50,66,"ROOM"]],
+  pods:[[60,54],[40,54]],
+  actors:[
+    {n:1,team:"a",keys:[[0,20,34,0],[2.2,40,34,0],[3.4,64,34,0],[8,64,34,0]]},
+    {n:2,team:"a",keys:[[0,14,42,0],[2.2,40,44,20],[2.5,42,45,62],[4,42,45,62],[4.4,50,51,90],[4.8,54,53,0],[5.6,60,54,115],[8,60,54,115]]},
+    {n:3,team:"b",keys:[[0,8,34,0],[2.2,28,34,0],[3,36,40,30],[3.4,38,44,40],[4.4,38,44,40],[4.8,50,50,90],[5.2,46,53,180],[6,40,54,65],[8,40,54,65]]},
+    {n:4,team:"b",keys:[[0,2,42,180],[2.2,22,42,180],[3,28,42,180],[8,28,42,180]]}
+  ],
+  captions:[[0,"Move","#1 and #2 lead on opposite walls. #3 follows #1 with muzzle off him. #4 covers the rear."],
+    [2.2,"Post","#2 reaches the open door and covers into the room from the door edge. That sector points into the room, away from the hall."],
+    [2.8,"Bypass","#1 passes on the far wall and holds the hall forward. #3 stacks behind #2. #4 holds the rear. No sector crosses another."],
+    [4,"Enter","#2 and #3 make a two-person entry while #1 and #4 hold both ends of the hall."],
+    [6,"Clear","Room clear. #2 and #3 call 'coming out,' wait for the reply, and rejoin. The hall is covered both ways the whole time."]]
+};
+
+const tee={duration:8,coneR:18,
+  floors:[[0,22,100,18],[42,40,16,35]],
+  walls:[[0,22,100,22],[0,40,42,40],[58,40,100,40],[42,40,42,75],[58,40,58,75]],
+  labels:[[14,32,"BRANCH"],[86,32,"BRANCH"]],
+  actors:[
+    {n:1,team:"a",keys:[[0,45,58,-90],[2,45,44,-90],[2.6,45,41,-130],[3.4,45,36,180],[8,45,36,180]]},
+    {n:2,team:"a",keys:[[0,55,62,-90],[2.2,55,44,-90],[2.8,55,41,-50],[3.6,55,36,0],[8,55,36,0]]},
+    {n:3,team:"b",keys:[[0,45,66,-90],[2.2,45,52,-90],[4.4,45,52,-90],[5.2,50,46,-90],[8,50,46,-90]]},
+    {n:4,team:"b",keys:[[0,55,72,90],[2.4,55,62,90],[5.4,52,58,90],[8,52,58,90]]}
+  ],
+  captions:[[0,"Approach","#1 and #2 lead on opposite walls, staggered. #3 follows #1 with muzzle off him. #4 covers the rear."],
+    [2,"Corners","At the intersection each lead works the corner on their own side. Neither looks across the other's path."],
+    [3.4,"Back to back","#1 holds the left branch, #2 the right. The sectors point away from each other and never cross."],
+    [4.6,"Hold","#3 moves up behind them with muzzle down, since both leads are in front of him. #4 keeps the rear. The leader picks the direction; the other branch stays covered until the team is past."]]
+};
+
+/* ---------- vehicle scenes (not to scale) ---------- */
+const drive={duration:8.5,
+  roads:[[10,-5,40,105,40]],
+  zone:{r:[34,28,30,24],t:2,label:"KILL ZONE"},
+  threatsAt:[[42,20,2],[50,18,2],[58,21,2]],
+  fire:{t0:2,t1:4.6},
+  flags:[[96,30,"RP"]],
+  vehicles:[
+    {id:"1",keys:[[0,34,40,0],[2,50,40,0],[3.1,72,40,0],[4.3,94,40,0],[8.5,94,40,0]]},
+    {id:"2",keys:[[0,20,40,0],[2,36,40,0],[3.3,62,40,0],[4.6,83,40,0],[8.5,83,40,0]]},
+    {id:"3",keys:[[0,-10,40,0],[2,6,40,0],[2.8,14,40,0],[5.4,14,40,0],[6.2,17,44,90],[7,12,47,180],[8.5,-6,47,180]]}
+  ],
+  captions:[[0,"Movement","Three vehicles at interval. The gap keeps one ambush from catching every vehicle at once."],
+    [2,"Contact","Contact left. Vehicles 1 and 2 are in the kill zone. Whoever sees it calls direction and distance."],
+    [2.5,"Drive through","Vehicles that can still move accelerate through. Nobody stops in the kill zone. Return fire only if it doesn't slow the vehicle."],
+    [3,"Trail holds","Vehicle 3 is short of the kill zone. It stops, doesn't drive in, reports, and takes the alternate route to the rally point."],
+    [5,"Rally","Vehicles 1 and 2 regroup past the kill zone, set security, and account for people and damage."]]
+};
+
+const bail={duration:10,coneR:18,
+  roads:[[16,-5,40,105,40]],
+  blocks:[[10,62,80,13]],
+  labels:[[50,70,"BUILDING (HARD COVER)"]],
+  threatsAt:[[38,8,1],[55,6,1],[70,9,1]],
+  fire:{t0:1,t1:5.4},
+  coverZones:[[51,45,8,7,2],[39,45,6,6,2]],
+  vehicles:[{id:"V1",L:22,Wd:10,engine:true,keys:[[0,-15,40,0],[1,30,40,0],[1.7,48,40,0],[10,48,40,0]]}],
+  actors:[
+    {n:1,team:"a",from:2.2,keys:[[2.2,52,48.5,90],[2.8,57,49.5,-90],[6.4,57,49.5,-90],[7.4,58,59,85],[7.8,58,59,-90],[10,58,59,-90]]},
+    {n:2,team:"a",from:2.3,keys:[[2.3,42,48.5,90],[2.9,44,49.5,-90],[5,44,49.5,-90],[6,40,59,110],[6.4,40,59,-90],[10,40,59,-90]]},
+    {n:3,team:"b",from:2.9,masked:[[2.9,3.6]],keys:[[2.9,52,48.5,90],[3.6,53,49.5,-100],[6.6,53,49.5,-100],[7.6,66,59,60],[8,66,59,-60],[10,66,59,-60]]},
+    {n:4,team:"b",from:3,keys:[[3,42,48.5,90],[3.6,37,49.5,180],[5,37,49.5,180],[6,30,59,120],[6.4,30,59,-120],[10,30,59,-120]]}
+  ],
+  captions:[[0,"Moving","Single vehicle on an open stretch beside a building."],
+    [1,"Contact","Contact left. The vehicle is disabled and stops. The vehicle commander calls direction and the exit side: 'Contact left, bail right.'"],
+    [2.2,"Bail out","Everyone exits away from the fire. The driver and left-rear passenger cross the cab rather than step out into it."],
+    [2.9,"Cover","Take cover behind the engine block and wheels (green). Doors and body panels only hide you."],
+    [4.8,"Bound","One pair moves to hard cover while the other covers from the vehicle. Movers' paths stay out of the covering pair's sectors."],
+    [7.8,"Consolidate","Team in hard cover with sectors set and no sector on a teammate. Account for everyone, report, plan the next move."]]
+};
+
+const herr={duration:8,
+  roads:[[10,-5,38,105,38]],
+  rings:[[0,6,4.6],[0,13,4.6]],
+  vehicles:[
+    {id:"1",cone:{t:3.6,h:-20,R:22,half:40},keys:[[0,52,38,0],[2.4,82,38,0],[3.4,85,30,-35],[8,85,30,-35]]},
+    {id:"2",cone:{t:3.6,h:70,R:22,half:40},keys:[[0,32,38,0],[2.4,62,38,0],[3.4,65,46,35],[8,65,46,35]]},
+    {id:"3",cone:{t:3.6,h:-110,R:22,half:40},keys:[[0,12,38,0],[2.4,42,38,0],[3.4,45,30,-35],[8,45,30,-35]]},
+    {id:"4",cone:{t:3.6,h:160,R:22,half:40},keys:[[0,-8,38,0],[2.4,22,38,0],[3.4,25,46,35],[8,25,46,35]]}
+  ],
+  captions:[[0,"Column","Column moving at interval."],
+    [2.4,"Halt","Halt called. Vehicles stop in place, holding their interval."],
+    [3,"Herringbone","Vehicles pull off at alternating angles. The road stays open for a vehicle to move through, and each crew faces outward."],
+    [3.8,"Sectors","Lead covers forward, trail covers rear, the middle vehicles cover their flanks. No sector covers another vehicle."],
+    [4.6,"5 and 25","Before anyone gets out, each crew scans about 15 feet around the vehicle, then about 80 feet, for anything out of place."]]
+};
+
+const avoid={duration:9,
+  roads:[[14,-5,30,105,30],[12,15,30,15,80]],
+  obstacles:[[74,23,5,11],[80,28,5,11]],
+  threatsAt:[[88,17,0],[92,44,0]],
+  flags:[[44,20,"DECISION PT"],[22,70,"ALT ROUTE"]],
+  vehicles:[
+    {id:"1",keys:[[0,22,27,0],[2,42,27,0],[3,52,27,0],[3.6,52,27,0],[4.3,56,30,90],[5,51,33,180],[6.2,28,33,180],[6.8,18,36,120],[7.4,15,44,90],[9,15,74,90]]},
+    {id:"2",keys:[[0,8,27,0],[2,28,27,0],[3,36,27,0],[3.3,36,27,0],[4,40,30,90],[4.6,35,33,180],[5.4,21,33,180],[5.9,16,38,110],[6.4,15,46,90],[8,15,74,90],[9,15,80,90]]}
+  ],
+  captions:[[0,"Approach","Two vehicles on the primary route. The vehicle commander scans far ahead, not just at the bumper in front."],
+    [1.4,"Indicators","Road blocked ahead, nobody working the scene, people standing off to the sides watching. Treat it as a threat."],
+    [2.4,"Stand-off","Slow early and stop well short with room to turn. The trail vehicle stops short too, keeping its own way out."],
+    [3.3,"Turn","The trail vehicle turns first and becomes the lead. The original lead turns once the trail is clear."],
+    [5.6,"Alternate","Both take the alternate route chosen during planning, then report the blockage and its location."]]
+};
+
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function ext(T,D,y){const k=(y-T[1])/(D[1]-T[1]);return[T[0]+(D[0]-T[0])*k,T[1]+(D[1]-T[1])*k]}
+function funnelTime(scene,t){let n=0;for(let u=0;u<t;u+=.05){const st=stateAt(scene,u);const p=st.acts[0];if(p&&pip([p.x,p.y],scene.funnel))n+=.05}return n}
+
+function Player(host,scene){
+  const canvas=document.createElement("canvas");
+  const ctrl=document.createElement("div");ctrl.className="ctrl";
+  const id=host.id;
+  ctrl.innerHTML=`<button id="${id}-play" type="button">Pause</button><button id="${id}-rst" type="button">Restart</button><button id="${id}-spd" type="button">Speed 1×</button><input id="${id}-scrub" type="range" min="0" max="1000" value="0" aria-label="Scrub timeline"><span class="t"></span>`;
+  const cap=document.createElement("div");cap.className="cap";cap.innerHTML='<span class="ph"></span><span class="tx"></span>';
+  host.append(canvas,ctrl,cap);
+  const ctx=canvas.getContext("2d");
+  const playB=ctrl.querySelector("#"+id+"-play"),rst=ctrl.querySelector("#"+id+"-rst"),spdB=ctrl.querySelector("#"+id+"-spd"),scrub=ctrl.querySelector("input"),tEl=ctrl.querySelector(".t");
+  let t=0,playing=!matchMedia("(prefers-reduced-motion: reduce)").matches,speed=1,last=null,hold=0,visible=true;
+  if(!playing){playB.textContent="Play";t=scene.duration}
+  const self={set(s){scene=s;t=playing?0:s.duration;hold=0;draw()}};
+  function size(){const r=canvas.getBoundingClientRect(),d=window.devicePixelRatio||1;if(!r.width)return;canvas.width=Math.round(r.width*d);canvas.height=Math.round(r.width*.75*d);draw()}
+  playB.onclick=()=>{playing=!playing;playB.textContent=playing?"Pause":"Play";if(playing&&t>=scene.duration)t=0};
+  rst.onclick=()=>{t=0;hold=0;playing=true;playB.textContent="Pause"};
+  spdB.onclick=()=>{speed=speed===1?.5:speed===.5?.25:1;spdB.textContent="Speed "+speed+"×"};
+  scrub.oninput=()=>{t=scrub.value/1000*scene.duration;playing=false;playB.textContent="Play";draw()};
+
+  function draw(){
+    if(!canvas.width)return;
+    const s=canvas.width/W;ctx.setTransform(s,0,0,s,0,0);
+    const C={floor:css("--floor"),panel:css("--panel"),wall:css("--wall"),ink:css("--ink"),muted:css("--muted"),friend:css("--friend"),friend2:css("--friend2"),threat:css("--threat"),cone:css("--cone"),vis:css("--vis"),accent:css("--accent"),line:css("--line")};
+    ctx.lineCap="butt";ctx.lineJoin="miter";
+    ctx.fillStyle=C.panel;ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle=C.line;ctx.lineWidth=.12;ctx.beginPath();for(let x=0;x<=W;x+=5){ctx.moveTo(x,0);ctx.lineTo(x,H)}for(let y=0;y<=H;y+=5){ctx.moveTo(0,y);ctx.lineTo(W,y)}ctx.stroke();
+    for(const r of scene.roads||[]){ctx.strokeStyle=C.floor;ctx.lineWidth=r[0];ctx.beginPath();ctx.moveTo(r[1],r[2]);for(let i=3;i<r.length;i+=2)ctx.lineTo(r[i],r[i+1]);ctx.stroke();
+      ctx.setLineDash([2,2]);ctx.strokeStyle=C.muted;ctx.lineWidth=.22;ctx.stroke();ctx.setLineDash([])}
+    if(scene.danger){const[d0,d1,d2,d3]=scene.danger;ctx.fillStyle=C.threat;ctx.globalAlpha=.07;ctx.fillRect(d0,d1,d2,d3);ctx.globalAlpha=1;
+      ctx.setLineDash([1.2,1]);ctx.strokeStyle=C.threat;ctx.lineWidth=.25;ctx.strokeRect(d0,d1,d2,d3);ctx.setLineDash([])}
+    if(scene.zone&&t>=scene.zone.t){const[a,b,c,d]=scene.zone.r;ctx.fillStyle=C.threat;ctx.globalAlpha=.1;ctx.fillRect(a,b,c,d);ctx.globalAlpha=1;
+      ctx.setLineDash([1.2,1]);ctx.strokeStyle=C.threat;ctx.lineWidth=.25;ctx.strokeRect(a,b,c,d);ctx.setLineDash([]);
+      ctx.fillStyle=C.threat;ctx.font="600 2.2px JetBrains Mono, monospace";ctx.textAlign="left";ctx.fillText(scene.zone.label,a+.8,b+d-1)}
+    ctx.fillStyle=C.floor;
+    if(scene.room){const[a,b,c,d]=scene.room;ctx.fillRect(a,b,c,d)}
+    for(const[a,b,c,d]of scene.floors||[])ctx.fillRect(a,b,c,d);
+    for(const[a,b,c,d]of scene.rooms||[])ctx.fillRect(a,b,c,d);
+    if(scene.sight){const{threats,d1,d2}=scene.sight;ctx.fillStyle=C.threat;ctx.globalAlpha=.13;
+      for(const T of threats){ctx.beginPath();ctx.moveTo(...T);ctx.lineTo(...ext(T,d1,H));ctx.lineTo(...ext(T,d2,H));ctx.closePath();ctx.fill()}ctx.globalAlpha=1;
+      ctx.setLineDash([.8,.8]);ctx.strokeStyle=C.threat;ctx.lineWidth=.2;ctx.beginPath();for(const T of threats)for(const D of[d1,d2]){ctx.moveTo(...T);ctx.lineTo(...ext(T,D,H))}ctx.stroke();ctx.setLineDash([])}
+    if(scene.blocks)for(const[a,b,c,d]of scene.blocks){ctx.fillStyle=C.wall;ctx.globalAlpha=.85;ctx.fillRect(a,b,c,d);ctx.globalAlpha=1}
+    for(const[a,b,c,d]of scene.obstacles||[]){ctx.fillStyle=C.threat;ctx.globalAlpha=.55;ctx.fillRect(a,b,c,d);ctx.globalAlpha=1}
+    for(const[a,b,c,d,t0]of scene.coverZones||[])if(t>=t0){ctx.fillStyle=C.friend2;ctx.globalAlpha=.3;ctx.fillRect(a,b,c,d);ctx.globalAlpha=1}
+    if(scene.orp){const[x,y,r]=scene.orp;ctx.setLineDash([1,.8]);ctx.strokeStyle=C.accent;ctx.lineWidth=.3;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.stroke();ctx.setLineDash([])}
+    if(scene.paths){ctx.setLineDash([.8,1]);ctx.strokeStyle=C.muted;ctx.lineWidth=.25;for(const p of scene.paths){ctx.beginPath();ctx.moveTo(p[0],p[1]);for(let i=2;i<p.length;i+=2)ctx.lineTo(p[i],p[i+1]);ctx.stroke()}ctx.setLineDash([])}
+    if(scene.ops){ctx.fillStyle=C.accent;for(const[x,y]of scene.ops){ctx.beginPath();ctx.moveTo(x,y-3.4);ctx.lineTo(x-2,y-6.4);ctx.lineTo(x+2,y-6.4);ctx.closePath();ctx.fill()}}
+    for(const[x,y,l]of scene.flags||[]){ctx.strokeStyle=C.accent;ctx.lineWidth=.35;ctx.beginPath();ctx.moveTo(x,y+4);ctx.lineTo(x,y-1);ctx.stroke();ctx.fillStyle=C.accent;ctx.beginPath();ctx.moveTo(x,y-1);ctx.lineTo(x+3,y);ctx.lineTo(x,y+1);ctx.closePath();ctx.fill();
+      ctx.font="600 2.1px JetBrains Mono, monospace";ctx.textAlign="center";ctx.fillText(l,x,y-2.2)}
+    if(scene.pods){ctx.strokeStyle=C.accent;ctx.lineWidth=.45;for(const[x,y]of scene.pods){ctx.beginPath();ctx.moveTo(x-1.4,y-1.4);ctx.lineTo(x+1.4,y+1.4);ctx.moveTo(x+1.4,y-1.4);ctx.lineTo(x-1.4,y+1.4);ctx.stroke()}}
+
+    const st=stateAt(scene,t);const pos=st.acts;
+
+    if(scene.pie){const p=pos[0];const J=[[44,44],[56,44]];
+      const far=J.map(([jx,jy])=>{const dx=jx-p.x,dy=jy-p.y,L=Math.hypot(dx,dy);return[jx+dx/L*200,jy+dy/L*200]});
+      const wedge=[J[0],far[0],far[1],J[1]];
+      ctx.save();const[a,b,c,d]=scene.room;ctx.beginPath();ctx.rect(a,b,c,d);ctx.clip();
+      ctx.fillStyle=C.vis;ctx.beginPath();ctx.moveTo(...wedge[0]);for(const q of wedge.slice(1))ctx.lineTo(...q);ctx.closePath();ctx.fill();ctx.restore();
+      ctx.save();ctx.beginPath();ctx.rect(0,44,W,26);ctx.clip();ctx.fillStyle=C.vis;ctx.globalAlpha=.5;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(...J[0]);ctx.lineTo(...J[1]);ctx.closePath();ctx.fill();ctx.restore();
+      const A=scene.actors[0].arc;ctx.setLineDash([.8,.8]);ctx.strokeStyle=C.muted;ctx.lineWidth=.2;ctx.beginPath();ctx.arc(A.cx,A.cy,A.r,A.a1*Math.PI/180,A.a0*Math.PI/180);ctx.stroke();ctx.setLineDash([]);
+      const seen=new Set();for(let u=0;u<=t;u+=.1){const q=stateAt(scene,u).acts[0];const fr=J.map(([jx,jy])=>{const dx=jx-q.x,dy=jy-q.y,L=Math.hypot(dx,dy);return[jx+dx/L*200,jy+dy/L*200]});
+        scene.threats.forEach((th,i)=>{if(pip(th,[J[0],fr[0],fr[1],J[1]]))seen.add(i)})}
+      scene.threats.forEach((th,i)=>{const now=pip(th,wedge);
+        ctx.beginPath();ctx.arc(th[0],th[1],1.6,0,7);
+        if(seen.has(i)){ctx.fillStyle=C.threat;ctx.globalAlpha=now?1:.55;ctx.fill();ctx.globalAlpha=1}
+        else{ctx.setLineDash([.5,.5]);ctx.strokeStyle=C.muted;ctx.lineWidth=.25;ctx.stroke();ctx.setLineDash([])}})
+    }
+
+    if(scene.walls){ctx.strokeStyle=C.wall;ctx.lineWidth=1.1;ctx.lineCap="square";ctx.beginPath();for(const[a,b,c,d]of scene.walls){ctx.moveTo(a,b);ctx.lineTo(c,d)}ctx.stroke();ctx.lineCap="butt"}
+    ctx.font="600 2.4px JetBrains Mono, monospace";ctx.textAlign="center";
+    for(const[x,y,tx]of scene.labels||[]){const onBlock=(scene.blocks||[]).some(([a,b,c,d])=>x>a&&x<a+c&&y>b&&y<b+d);ctx.fillStyle=onBlock?C.panel:C.muted;ctx.fillText(tx,x,y)}
+    if(scene.sight)for(const T of scene.sight.threats){ctx.fillStyle=C.threat;ctx.beginPath();ctx.arc(T[0],T[1],1.7,0,7);ctx.fill()}
+
+    for(const p of st.veh){if(!p.coneOn)continue;const c=p.v.cone,h=c.h*Math.PI/180,sp=(c.half||40)*Math.PI/180;ctx.fillStyle=C.cone;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.arc(p.x,p.y,c.R||22,h-sp,h+sp);ctx.closePath();ctx.fill()}
+    for(const p of st.veh){const L=p.v.L||7,Wd=p.v.Wd||3.6;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.h*Math.PI/180);
+      ctx.fillStyle=C.friend;ctx.fillRect(-L/2,-Wd/2,L,Wd);
+      if(p.v.engine){ctx.fillStyle=C.wall;ctx.globalAlpha=.45;ctx.fillRect(L/2-L*.24,-Wd/2,L*.24,Wd);ctx.globalAlpha=1;
+        ctx.fillStyle=C.wall;for(const wx of[-L*.3,L*.3])for(const wy of[-Wd/2-.5,Wd/2-.6])ctx.fillRect(wx-1.6,wy,3.2,1.1)}
+      ctx.fillStyle=C.panel;ctx.globalAlpha=.8;ctx.fillRect(L/2-L*(p.v.engine?.36:.32),-Wd/2+Wd*.15,L*.07,Wd*.7);ctx.globalAlpha=1;ctx.restore();
+      ctx.fillStyle=C.panel;ctx.font=`700 ${p.v.L?2.6:2.2}px JetBrains Mono, monospace`;ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(p.v.id,p.x-(p.v.L?3:0),p.y+.1);ctx.textBaseline="alphabetic"}
+    for(const[vi,r,t0]of scene.rings||[])if(t>=t0&&st.veh[vi]){const v=st.veh[vi];ctx.setLineDash([.8,.8]);ctx.strokeStyle=C.accent;ctx.lineWidth=.25;ctx.beginPath();ctx.arc(v.x,v.y,r,0,7);ctx.stroke();ctx.setLineDash([])}
+
+    const R=scene.coneR||18;
+    for(const p of pos){if(scene.pie||!p.vis||p.masked)continue;const h=p.h*Math.PI/180,sp=HALF*Math.PI/180;
+      ctx.fillStyle=C.cone;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.arc(p.x,p.y,R,h-sp,h+sp);ctx.closePath();ctx.fill()}
+    const inFunnel=scene.funnel&&pos[0]&&pip([pos[0].x,pos[0].y],scene.funnel);
+    for(const p of pos){if(!p.vis)continue;const col=p.a.team==="a"?C.friend:C.friend2;const h=p.h*Math.PI/180;
+      ctx.strokeStyle=p.masked?C.muted:col;ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(p.x,p.y);const ml=p.masked?2.4:3.6;ctx.lineTo(p.x+Math.cos(h)*ml,p.y+Math.sin(h)*ml);ctx.stroke();
+      if(p===pos[0]&&inFunnel){ctx.strokeStyle=C.threat;ctx.lineWidth=.45;ctx.beginPath();ctx.arc(p.x,p.y,3,0,7);ctx.stroke()}
+      ctx.fillStyle=col;ctx.beginPath();ctx.arc(p.x,p.y,1.9,0,7);ctx.fill();
+      ctx.fillStyle=C.panel;ctx.font="700 2.3px JetBrains Mono, monospace";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(p.a.n,p.x,p.y+.1);ctx.textBaseline="alphabetic"}
+
+    for(const[x,y,t0]of scene.threatsAt||[])if(t>=t0){ctx.fillStyle=C.threat;ctx.beginPath();ctx.arc(x,y,1.6,0,7);ctx.fill();
+      const ph=((t-t0)*1.5)%1;ctx.strokeStyle=C.threat;ctx.globalAlpha=1-ph;ctx.lineWidth=.25;ctx.beginPath();ctx.arc(x,y,1.6+ph*3,0,7);ctx.stroke();ctx.globalAlpha=1}
+    if(scene.fire&&t>=scene.fire.t0&&t<=scene.fire.t1){const tg=st.veh.length?st.veh:pos.filter(p=>p.vis);
+      (scene.threatsAt||[]).forEach(([x,y],i)=>{let b=null,bd=1e9;for(const q of tg){const d=Math.hypot(q.x-x,q.y-y);if(d<bd){bd=d;b=q}}
+        if(!b||bd>45)return;ctx.strokeStyle=C.threat;ctx.globalAlpha=.35+.35*Math.sin(t*22+i*2);ctx.lineWidth=.25;ctx.setLineDash([.9,.7]);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1})}
+
+    if(scene.funnel){const ft=funnelTime(scene,t);ctx.font="600 2.4px JetBrains Mono, monospace";ctx.textAlign="left";ctx.fillStyle=ft>.6?C.threat:C.ink;ctx.fillText("TIME IN DOORWAY  "+ft.toFixed(1)+" s",3,68)}
+
+    let c=scene.captions[0];for(const k of scene.captions)if(t>=k[0])c=k;
+    cap.querySelector(".ph").textContent=c[1];cap.querySelector(".tx").textContent=c[2];
+    scrub.value=Math.round(t/scene.duration*1000);tEl.textContent=t.toFixed(1)+" s";
+  }
+  function frame(ts){if(last==null)last=ts;const dt=Math.min(.05,(ts-last)/1000);last=ts;
+    if(playing&&visible){if(t<scene.duration)t=Math.min(scene.duration,t+dt*speed);else{hold+=dt;if(hold>1.8){hold=0;t=0}}draw()}
+    requestAnimationFrame(frame)}
+  new ResizeObserver(size).observe(canvas);
+  new IntersectionObserver(e=>{visible=e[0].isIntersecting}).observe(host);
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change",draw);
+  new MutationObserver(draw).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+  requestAnimationFrame(frame);
+  return self;
+}
+function tabs(a,b,player,sa,sb){const A=document.getElementById(a),B=document.getElementById(b);
+  A.onclick=()=>{A.setAttribute("aria-selected","true");B.setAttribute("aria-selected","false");player.set(sa)};
+  B.onclick=()=>{B.setAttribute("aria-selected","true");A.setAttribute("aria-selected","false");player.set(sb)}}
+const P=(id,s)=>Player(document.getElementById(id),s);
+P("sim-fan",fan);P("sim-bound",bound);
+tabs("tab-bad","tab-good",P("sim-funnel",funnelBad),funnelBad,funnelGood);
+P("sim-pie",pie);P("sim-two",two);
+tabs("tab-center","tab-corner",P("sim-room",center),center,corner);
+P("sim-hall",hall);P("sim-t",tee);
+P("sim-drive",drive);P("sim-bail",bail);P("sim-herr",herr);P("sim-avoid",avoid);
+})();
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Defensive Handgun Shooting</title>
+<meta name="description" content="Concealed carry, reactionary gap, draw from concealment, movement, and aftermath.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;700;800&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+
+</head>
+<body>
+<nav class="site" aria-label="Library"><div class="in"><a class="brand" href="index.html">Training <span>Library</span></a><div class="links"><a href="cqb.html">CQB Primer</a><span class="sep" aria-hidden="true"></span><a href="rifle.html">Rifle</a><a href="shotgun.html">Shotgun</a><a href="handgun.html">Handgun</a><span class="sep" aria-hidden="true"></span><a href="defensive-rifle.html">Defensive Rifle</a><a href="defensive-shotgun.html">Defensive Shotgun</a><a href="defensive-handgun.html" aria-current="page">Defensive Handgun</a></div></div></nav>
+<main class="wrap">
+<header class="page">
+  <div class="eyebrow">Defensive shooting · Handgun</div>
+  <h1>Defensive Handgun Shooting</h1>
+  <p class="lede">Carrying and using a handgun for self-defense: the legal framework, awareness, carry gear, the reactionary gap, drawing from concealment, moving off the line, close-contact shooting, multiple threats, low light, and what to do afterward.</p>
+  <p class="note">Built on common defensive handgun curricula, the Tueller drill, and general U.S. self-defense law, with Missouri's statute linked as an example. This is training information, not legal advice. Laws differ by state; learn yours from a qualified attorney or instructor. Right-handed shooter assumed.</p>
+  <nav class="toc" aria-label="Contents">
+    <a href="#law"><span>01</span>Legal framework</a>
+    <a href="#aware"><span>02</span>Awareness and decision</a>
+    <a href="#gear"><span>03</span>Carry gear</a>
+    <a href="#gap"><span>04</span>The reactionary gap</a>
+    <a href="#draw"><span>05</span>Drawing from concealment</a>
+    <a href="#contact"><span>06</span>Close-contact shooting</a>
+    <a href="#move"><span>07</span>Moving off the line</a>
+    <a href="#assess"><span>08</span>Assess and scan</a>
+    <a href="#multi"><span>09</span>Multiple threats</a>
+    <a href="#onehand"><span>10</span>One-handed shooting</a>
+    <a href="#light"><span>11</span>Low light</a>
+    <a href="#after"><span>12</span>After an incident</a>
+    <a href="#drills"><span>13</span>Training and drills</a>
+    <a href="#errors"><span>14</span>Common errors</a>
+    <a href="#src"><span>15</span>Sources</a>
+  </nav>
+</header>
+
+<section id="law">
+  <h2><span class="n">01</span>Legal framework</h2>
+  <p>In most U.S. jurisdictions, deadly force is justified only when you reasonably believe it's immediately necessary to prevent death or serious bodily harm to yourself or another innocent person. "Reasonably" is judged by what an ordinary, prudent person would believe in your position, knowing what you knew.</p>
+  <div class="grid2">
+    <div class="box"><h4>Ability</h4><p>The attacker has the means to kill or seriously injure: a weapon, or a large disparity of force (size, numbers, skill).</p></div>
+    <div class="box"><h4>Opportunity</h4><p>They can use that ability now: within range of the weapon or close enough to reach you.</p></div>
+    <div class="box"><h4>Jeopardy</h4><p>Their actions show intent: words plus actions that would make a reasonable person believe the attack is coming.</p></div>
+    <div class="box"><h4>Preclusion / avoidance</h4><p>Some states require retreat if you can do so in complete safety; many don't ("stand your ground"). Even where not required, avoiding the fight is always the best outcome.</p></div>
+  </div>
+  <div class="box"><h3>Example: Missouri</h3><p>Missouri's § 563.031 allows deadly force when you reasonably believe it's necessary to protect against death, serious physical injury, or a forcible felony. It removes the duty to retreat from your dwelling, residence, vehicle, private property you own or lease, and any place you have a right to be. It also covers someone who unlawfully enters, or tries to enter, your dwelling, residence, or vehicle. Read the statute itself and get advice from a Missouri attorney; the details and exceptions matter.</p></div>
+  <ul>
+    <li>Force must stop when the threat stops. Shots fired after the threat has ended are judged separately.</li>
+    <li>Being the initial aggressor generally removes the self-defense justification.</li>
+    <li>Brandishing or displaying a firearm when deadly force isn't justified can itself be a crime.</li>
+  </ul>
+</section>
+
+<section id="aware">
+  <h2><span class="n">02</span>Awareness and decision</h2>
+  <figure>
+    <svg class="dia" viewBox="0 0 720 150" role="img" aria-label="Cooper color code of awareness">
+      <rect x="20" y="30" width="170" height="60" fill="#f2f2ee" stroke="var(--wall)" stroke-width="2"/>
+      <rect x="190" y="30" width="170" height="60" fill="#e9c94a" stroke="var(--wall)" stroke-width="2"/>
+      <rect x="360" y="30" width="170" height="60" fill="#e08a3a" stroke="var(--wall)" stroke-width="2"/>
+      <rect x="530" y="30" width="170" height="60" fill="#c8402f" stroke="var(--wall)" stroke-width="2"/>
+      <g font-family="JetBrains Mono, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#1d2420">
+        <text x="105" y="58">WHITE</text><text x="275" y="58">YELLOW</text><text x="445" y="58">ORANGE</text><text x="615" y="58" fill="#fff">RED</text>
+      </g>
+      <g font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle" fill="#1d2420">
+        <text x="105" y="76">unaware</text><text x="275" y="76">relaxed alert</text><text x="445" y="76">specific concern</text><text x="615" y="76" fill="#fff">act on the trigger</text>
+      </g>
+      <g font-family="JetBrains Mono, monospace" font-size="11.5" fill="var(--muted)" text-anchor="middle">
+        <text x="105" y="114">phone, headphones, asleep</text><text x="275" y="114">default when carrying</text><text x="445" y="114">"that person might be a problem"</text><text x="615" y="114">"if he does X, I'll do Y"</text>
+      </g>
+    </svg>
+    <figcaption>Cooper's color code. Live in yellow when carrying: aware of who's around you without being tense.</figcaption>
+  </figure>
+  <div class="grid2">
+    <div class="box"><h3>Pre-attack indicators</h3><ul>
+      <li>Someone moving to intercept your path or closing distance for no reason</li>
+      <li>Hands hidden, or repeatedly touching the waistband</li>
+      <li>Looking around for witnesses, or coordinating glances with others</li>
+      <li>"Target glancing": looking at you, then away, then back</li>
+      <li>Sudden change in behavior, or a pretext question to get close ("got the time?")</li>
+    </ul></div>
+    <div class="box"><h3>Options before the gun</h3><ul>
+      <li><b>Avoid</b>: cross the street, change direction, don't enter.</li>
+      <li><b>Escape</b>: leave as soon as something feels wrong.</li>
+      <li><b>Verbal</b>: "Stop! Stay back!" with a hand up. It establishes you as the one who tried to avoid the fight.</li>
+      <li><b>Distance and barriers</b>: put a car or counter between you.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="gear">
+  <h2><span class="n">03</span>Carry gear</h2>
+  <figure>
+    <svg class="dia" viewBox="0 0 720 280" role="img" aria-label="Carry positions around the waist, viewed from above">
+      <ellipse cx="360" cy="150" rx="150" ry="100" fill="var(--floor)" stroke="var(--wall)" stroke-width="4"/>
+      <path d="M360 40 V60" stroke="var(--muted)" stroke-width="2"/><text x="360" y="32" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--muted)">FRONT (12)</text>
+      <g fill="var(--friend)"><rect x="390" y="44" width="34" height="20" rx="4" transform="rotate(12 407 54)"/><rect x="494" y="128" width="20" height="34" rx="4"/><rect x="446" y="216" width="34" height="20" rx="4" transform="rotate(-30 463 226)"/><rect x="250" y="66" width="34" height="20" rx="4" transform="rotate(-25 267 76)"/></g>
+      <g font-family="JetBrains Mono, monospace" font-size="12" fill="var(--ink)">
+        <text x="440" y="34">APPENDIX (1–2)</text>
+        <text x="526" y="150">STRONG SIDE (3–4)</text>
+        <text x="486" y="262">BEHIND HIP (4–5)</text>
+        <text x="110" y="62">CROSS-DRAW (10–11)</text>
+      </g>
+      <text x="360" y="155" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--muted)">top view, right-handed</text>
+    </svg>
+  </figure>
+  <div class="tbl"><table>
+    <thead><tr><th>Position</th><th>Strengths</th><th>Drawbacks</th></tr></thead>
+    <tbody>
+      <tr><td><b>Appendix (AIWB)</b></td><td>Fastest from concealment; easy to protect the gun; works seated and in a car</td><td>Muzzle points toward the body while holstering; requires strict holstering discipline</td></tr>
+      <tr><td><b>Strong side (3–4 o'clock)</b></td><td>Natural draw; muzzle never crosses the body</td><td>Harder to conceal; grip can print when bending</td></tr>
+      <tr><td><b>Behind the hip (4–5)</b></td><td>Conceals well</td><td>Slower; harder to protect from a grab; awkward seated</td></tr>
+      <tr><td><b>Cross-draw</b></td><td>Accessible seated or driving</td><td>Muzzle sweeps people to your side on the draw</td></tr>
+      <tr><td><b>Off-body (bag)</b></td><td>Works with any clothing</td><td>Slow; bag can be taken or left behind. Use a dedicated compartment.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="box"><h3>Holster requirements</h3><ul>
+      <li>Fully covers the trigger guard</li>
+      <li>Rigid (Kydex or reinforced leather) so the mouth stays open for one-handed holstering</li>
+      <li>Holds the gun securely through running, jumping, and turning upside down</li>
+      <li>Attaches firmly so it comes out with the belt, not with the gun</li>
+    </ul></div>
+    <div class="box"><h3>Everything else</h3><ul>
+      <li>A stiff gun belt; regular belts sag and shift.</li>
+      <li>Spare magazine: more for fixing malfunctions than for capacity.</li>
+      <li>A small handheld light.</li>
+      <li>A tourniquet and basic trauma kit. You're more likely to need it for someone else than the gun.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="gap">
+  <h2><span class="n">04</span>The reactionary gap</h2>
+  <p>In 1983 Sgt. Dennis Tueller found that an average adult could cover 21 feet in about 1.5 seconds, roughly the time it took officers to draw and fire from a duty holster. The lesson isn't that 21 feet is a magic number. It's that a person with a contact weapon can be on you before you can shoot, unless you already have distance, a head start, or are moving.</p>
+  <div class="sim" id="sim-gap" data-label="Attacker closing 21 feet versus defender drawing"><div class="simtitle">21 feet, two ways</div></div>
+  <ul>
+    <li>Reaction time alone (seeing, deciding, starting to move) is about 0.25–0.5 s for a prepared person, longer if surprised.</li>
+    <li>A draw from concealment to a first hit is typically 1.5–2.0 s for a trained shooter.</li>
+    <li>Moving off the attacker's line while drawing makes them change direction, which buys time and can avoid the first contact.</li>
+  </ul>
+</section>
+
+<section id="draw">
+  <h2><span class="n">05</span>Drawing from concealment</h2>
+  <div class="sim" id="sim-cdraw" data-label="Draw from concealment with an open-front garment"><div class="simtitle">Open-front garment: sweep, grip, draw</div></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Garment</th><th>Clearing technique</th></tr></thead>
+    <tbody>
+      <tr><td><b>Open-front (jacket, open shirt)</b></td><td>Strong hand sweeps the garment back, past the holster, and drives down onto the grip in one motion. Weight in the pocket helps it stay back.</td></tr>
+      <tr><td><b>Closed-front (T-shirt, sweater), strong side</b></td><td>Support hand grabs the shirt and pulls it up high toward the chest; strong hand gets the grip.</td></tr>
+      <tr><td><b>Closed-front, appendix</b></td><td>One or both hands pull the shirt up hard; strong hand takes the grip. A support-hand "pec pull" lifts the shirt to the collarbone.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Practice the draw with the clothes you actually wear, in dry practice first. Re-holster slowly, sweeping the garment out of the way and looking the gun into the holster.</p>
+</section>
+
+<section id="contact">
+  <h2><span class="n">06</span>Close-contact shooting</h2>
+  <p>When an attacker is at arm's length, extending the gun puts it within their reach. Shooting from a retention position, gun close to the body, keeps it away from their hands.</p>
+  <figure>
+    <svg class="dia" viewBox="0 0 720 260" role="img" aria-label="Retention shooting position, side view">
+      <g stroke="var(--ink)" stroke-width="6" stroke-linecap="round" fill="none">
+        <circle cx="220" cy="54" r="16" fill="var(--ink)" stroke="none"/>
+        <path d="M216 70 L212 160 L196 240 M212 160 L236 240"/>
+        <path d="M214 92 L236 120 L262 118"/>
+        <path d="M214 86 L246 68 L240 44" stroke="var(--friend2)"/>
+      </g>
+      <rect x="252" y="108" width="34" height="10" fill="var(--wall)"/><rect x="254" y="116" width="9" height="16" fill="var(--wall)"/>
+      <path d="M286 113 L420 120" stroke="var(--accent)" stroke-dasharray="5 5"/>
+      <circle cx="440" cy="60" r="16" fill="var(--threat)" opacity=".75"/><path d="M440 76 V170 M440 170 L424 240 M440 170 L456 240 M440 100 L400 120" stroke="var(--threat)" stroke-width="6" stroke-linecap="round" opacity=".75"/>
+      <g font-family="JetBrains Mono, monospace" font-size="12" fill="var(--ink)">
+        <text x="280" y="150">gun indexed against the ribs/pectoral</text><text x="280" y="166" fill="var(--muted)">canted slightly outward so the slide clears clothing</text>
+        <text x="40" y="40" fill="var(--friend2)">support arm up, protecting the head,</text><text x="40" y="56" fill="var(--friend2)">clear of the muzzle</text>
+      </g>
+    </svg>
+    <figcaption>Retention position. The support arm stays high and away from the muzzle. As soon as you create distance, extend to a normal two-hand grip.</figcaption>
+  </figure>
+  <ul>
+    <li>Use the support hand to strike, push, or shield, then shoot from retention.</li>
+    <li>Step back or to the side to create space as you shoot, then extend to a full grip.</li>
+    <li>Pressing the muzzle against an attacker can push some semi-autos out of battery; keep a little space.</li>
+  </ul>
+</section>
+
+<section id="move">
+  <h2><span class="n">07</span>Moving off the line</h2>
+  <div class="grid2">
+    <div class="box"><h3>Why move</h3><p>An attacker aims (or charges) at where you are. Moving laterally or diagonally makes them adjust, which costs them time. Moving toward cover also improves what happens next.</p></div>
+    <div class="box"><h3>How</h3><ul>
+      <li>First step is big and explosive, to the side and slightly forward or back.</li>
+      <li>Draw while moving; shoot when the gun is up and the shot is available. Stopping to shoot is often more accurate than shooting on the move.</li>
+      <li>Moving straight backward is slow and risks tripping. Go diagonal.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="assess">
+  <h2><span class="n">08</span>Assess and scan</h2>
+  <p>After shooting, the danger isn't automatically over. The attacker may still be a threat, have a partner, or there may be bystanders in your line of fire. Assessment is deliberate.</p>
+  <div class="sim" id="sim-scan" data-label="Assess the threat, then scan the area"><div class="simtitle">After the shots</div></div>
+  <ol>
+    <li><b>Assess the threat</b> over the sights, then just below them so you can see hands and weapon. Is the threat still able and trying to hurt you?</li>
+    <li><b>Breathe</b> and break tunnel vision. Stress narrows your field of view.</li>
+    <li><b>Scan</b> left, right, and behind, turning your head and body. Look for other threats, a partner, and bystanders.</li>
+    <li><b>Move</b> to cover or away from the scene if it's safe to do so.</li>
+    <li><b>Top off or reload</b> if you can, then consider holstering only when the situation is truly over.</li>
+  </ol>
+</section>
+
+<section id="multi">
+  <h2><span class="n">09</span>Multiple threats</h2>
+  <p>Engage the most dangerous threat first, which is usually the nearest one, or the one with a gun pointed at you. Eyes move to the next target first, and the gun follows the eyes.</p>
+  <div class="sim" id="sim-multi" data-label="Eyes lead the gun across multiple threats"><div class="simtitle">Eyes lead, gun follows</div></div>
+  <ul>
+    <li>Move so the threats line up or so one blocks the others.</li>
+    <li>Don't overswing: stop the gun on the next target, settle, then press.</li>
+    <li>After the last threat, come back across all of them to assess. The first one may still be active.</li>
+  </ul>
+</section>
+
+<section id="onehand">
+  <h2><span class="n">10</span>One-handed shooting</h2>
+  <div class="grid2">
+    <div class="box"><h3>Strong hand only</h3><ul>
+      <li>Grip as high and tight as possible; lock the wrist.</li>
+      <li>Rotate the gun slightly inward (about 15–30°) to align with the natural line of the arm.</li>
+      <li>Lean forward; the arm recovers from recoil slower without the support hand.</li>
+    </ul></div>
+    <div class="box"><h3>Support hand only</h3><ul>
+      <li>Same grip principles with the other hand.</li>
+      <li>Close the strong-side eye if you can't use the support-side eye with the sights.</li>
+      <li>Practice support-hand draws (reaching across) and transfers from the strong hand in dry practice.</li>
+      <li>Practice one-handed malfunction clearances: rack the slide on a belt, holster edge, or heel.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="light">
+  <h2><span class="n">11</span>Low light</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Technique</th><th>How</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><b>Weapon-mounted light</b></td><td>Light on the pistol's rail, switch under the trigger or support finger</td><td>Two hands on the gun; never search with the muzzle at things you don't intend to shoot. Use the spill.</td></tr>
+      <tr><td><b>Neck index</b></td><td>Light held at the jaw line, beam forward</td><td>Lights what you see; easy to maintain; works with one-handed shooting</td></tr>
+      <tr><td><b>Harries</b></td><td>Light hand under the gun hand, backs of hands pressed together</td><td>Stable, aligned beam; tiring over time</td></tr>
+      <tr><td><b>FBI (high)</b></td><td>Light held high and away from the body</td><td>Moves the light away from your center; harder to aim the beam</td></tr>
+    </tbody>
+  </table></div>
+  <p>Light, identify, act or turn it off, move. In a dark house, a burst of light can disorient an intruder and lets you see hands. Always identify; the person in your hallway at night may be a family member.</p>
+</section>
+
+<section id="after">
+  <h2><span class="n">12</span>After an incident</h2>
+  <div class="grid2">
+    <div class="box"><h3>Immediately</h3><ol>
+      <li>Stay alert; scan; get to a safe position.</li>
+      <li>Holster when the threat is over, or keep the gun at low ready if not.</li>
+      <li>Call 911.</li>
+      <li>Holster or put the gun down before police arrive. Empty hands visible. Follow every command, even if it's uncomfortable.</li>
+      <li>Render aid if it's safe and you're trained.</li>
+    </ol></div>
+    <div class="box"><h3>What to say to 911</h3><p>"My name is ___. I'm at ___. I was attacked and had to defend myself. Someone is injured; send police and an ambulance. I'm wearing ___. I'm armed; my gun is ___ (holstered / on the ground)."</p></div>
+  </div>
+  <div class="box"><h3>When police arrive</h3><ul>
+    <li>Identify yourself as the person who called and was attacked.</li>
+    <li>Point out evidence (the attacker's weapon, shell casings) and witnesses before they leave.</li>
+    <li>Say you'll sign a complaint and will cooperate fully after speaking with your attorney.</li>
+    <li>Don't give a detailed statement while adrenaline is high. Memory, distance, and time estimates are distorted after a violent encounter.</li>
+    <li>Get medical attention; adrenaline masks injuries.</li>
+  </ul></div>
+</section>
+
+<section id="drills">
+  <h2><span class="n">13</span>Training and drills</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Drill</th><th>Setup</th><th>Standard</th></tr></thead>
+    <tbody>
+      <tr><td><b>Concealed draw</b></td><td>From concealment, one shot in an 8-inch circle at 7 yd</td><td class="num">2.0 s / 1.5 s</td></tr>
+      <tr><td><b>Draw and move</b></td><td>Step off the line while drawing, 2 shots in the 8-inch circle at 7 yd</td><td class="num">2.5 s</td></tr>
+      <tr><td><b>Three seconds or less</b></td><td>Short strings of 2–4 shots from 3–7 yd, each under 3 seconds</td><td class="num">All hits</td></tr>
+      <tr><td><b>Retention</b></td><td>2 shots from retention at 2 yd, step back, 2 shots extended (on an approved range)</td><td class="num">Clean hits; support arm clear of muzzle</td></tr>
+      <tr><td><b>Failure to stop</b></td><td>2 shots to the chest, 1 to the head box at 5 yd</td><td class="num">3.0 s</td></tr>
+      <tr><td><b>Assess and scan</b></td><td>After every string: assess over and under the sights, scan 360°</td><td>Every time, until it's habit</td></tr>
+    </tbody>
+  </table></div>
+  <p>Take classes beyond the range: force-on-force with marking cartridges, a legal-use-of-force class taught by an attorney, and a trauma medical course. All three cover things marksmanship doesn't.</p>
+</section>
+
+<section id="errors">
+  <h2><span class="n">14</span>Common errors</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Error</th><th>What it does</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td><b>Standing still to draw</b></td><td>Contact before the first shot at close range</td><td>Move off the line while drawing</td></tr>
+      <tr><td><b>Never practicing from concealment</b></td><td>Fumbled garment clears under stress</td><td>Dry-practice in your real clothes</td></tr>
+      <tr><td><b>Holstering fast</b></td><td>Negligent discharge, especially appendix</td><td>Slow, garment clear, look it in, thumb on the hammer or slide</td></tr>
+      <tr><td><b>Tunnel vision</b></td><td>Misses other threats and bystanders</td><td>Assess and scan after every string in training</td></tr>
+      <tr><td><b>Extending the gun at contact distance</b></td><td>Gun grabbed</td><td>Retention position, then create space</td></tr>
+      <tr><td><b>Talking too much afterward</b></td><td>Statements made under stress are often wrong and used against you</td><td>Basic facts, then attorney</td></tr>
+      <tr><td><b>Carrying without knowing the law</b></td><td>Lawful defense turns into a criminal case</td><td>Take a use-of-force law class for your state</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="src">
+  <h2><span class="n">15</span>Sources</h2>
+  <ul>
+    <li><a href="https://codes.findlaw.com/mo/title-xxxviii-crimes-and-punishment-peace-officers-and-public-defenders/mo-rev-st-563-031/" target="_blank" rel="noopener">Missouri Revised Statutes § 563.031, Use of force in defense of persons (FindLaw)</a></li>
+    <li><a href="https://lawofselfdefense.com/563031" target="_blank" rel="noopener">Law of Self Defense: Missouri § 563.031 annotated</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/Tueller_Drill" target="_blank" rel="noopener">Tueller drill (Wikipedia)</a></li>
+    <li><a href="https://www.officer.com/training-careers/specialized-training/article/12264524/the-21-foot-rule-let-december-2016-firearms-tactics" target="_blank" rel="noopener">Officer.com: What the 21-foot rule is, and what it is not</a></li>
+    <li><a href="https://www.shootingillustrated.com/articles/2015/4/29/twenty-one-feet/" target="_blank" rel="noopener">Shooting Illustrated: Twenty-one feet</a></li>
+    <li><a href="https://irp.fas.org/doddir/army/tc3-23-35.pdf" target="_blank" rel="noopener">TC 3-23.35, Pistol (PDF, FAS)</a></li>
+  </ul>
+</section>
+<footer class="page">Training reference, not legal advice. Not a substitute for qualified instruction, a use-of-force law class, and range supervision.</footer>
+
+
+</main>
+<script src="assets/sim.js"></script>
+
+<script>
+(function(){
+/* reactionary gap: 1 unit = 1 ft horizontally, origin x=10 */
+function gapScene(tab,move,caps){return{tab,duration:4,aspect:.55,hold:2.5,captions:caps,draw(g,t){
+  g.clear();const X=ft=>10+ft*3.6,H=g.H;
+  for(let f=0;f<=21;f+=3){g.line(X(f),36,X(f),38,{c:"muted",w:.2});g.text(f+" ft",X(f),41.5,{size:1.7})}
+  g.line(X(0),37,X(21),37,{c:"line",w:.3});
+  /* attacker: starts at 21 ft at t=.3, ~14 ft/s, homes on defender */
+  const dpos=u=>move?g.keys([[0,0,28],[.5,0,28],[1.4,-2,14],[4,-2,14]],u):[0,28];
+  let ax=21,ay=28;const dt=.02;let contact=null;
+  for(let u=.3;u<=t;u+=dt){const [dx,dy]=dpos(u);const vx=dx-ax,vy=(dy-ay)/3.6;const d=Math.hypot(vx,vy);const sp=u<.6?10:16;if(d<1.2){contact=contact??u;break}ax+=vx/d*sp*dt;ay+=vy/d*sp*dt*3.6}
+  const [dx,dy]=dpos(t);
+  /* draw progress: reaction .35 s, then 1.35 s draw → first shot at 1.7 */
+  const shotT=1.7;const gun=g.seg(t,.65,shotT);
+  g.person(X(dx),dy,0,{c:"friend",muzzleOff:gun<1});g.text("DEFENDER",X(dx),dy+5,{size:1.7});
+  g.circle(X(ax),ay,2,{fill:"threat"});g.text("ATTACKER",X(ax),ay-3.2,{size:1.7,c:"threat"});
+  /* timeline */
+  const x0=8,x1=92,yb=47;g.line(x0,yb,x1,yb,{c:"line",w:.3});for(let s=0;s<=3;s+=.5){const x=x0+s/3*(x1-x0);g.line(x,yb-.8,x,yb+.8,{c:"muted",w:.2});g.text(s+" s",x,yb+3.4,{size:1.6})}
+  g.rect(x0,yb-1.6,(x1-x0)*Math.min(t,3)/3,.8,{fill:"threat",alpha:.6});
+  const tx=s=>x0+s/3*(x1-x0);
+  g.rect(tx(.3),yb+.8,tx(.65)-tx(.3),.8,{fill:"muted",alpha:.5});g.rect(tx(.65),yb+.8,(tx(shotT)-tx(.65))*Math.min(1,g.seg(t,.65,shotT)),.8,{fill:"friend",alpha:.7});
+  g.text("react",tx(.47),yb+6,{size:1.5});g.text("draw",tx(1.15),yb+6,{size:1.5,c:"friend"});
+  if(t>=shotT){g.line(tx(shotT),yb-2,tx(shotT),yb+2,{c:"friend",w:.4});g.text("first shot",tx(shotT),yb-2.6,{size:1.6,c:"friend"})}
+  if(contact!=null&&t>=contact){g.line(tx(contact),yb-2,tx(contact),yb+2,{c:"threat",w:.4});g.text("contact "+contact.toFixed(2)+" s",tx(contact),yb-5.4,{size:1.7,c:"threat"})}
+  if(t>=shotT&&(contact==null||contact>shotT))g.text("shot before contact",78,24,{size:2.2,c:"friend2"});
+  if(contact!=null&&t>=contact&&contact<=shotT)g.text("contact before the shot",78,24,{size:2.2,c:"threat"});
+}}}
+Sim("sim-gap",[
+  gapScene("Stand and draw",false,[[0,"Start","Attacker with a knife at 21 feet. Defender's gun is concealed."],[.3,"Charge","The attacker charges. The defender needs about a third of a second just to recognize it and start moving."],[.65,"Draw","Drawing from concealment."],[1.6,"Contact","The attacker arrives around 1.65 s, just before the defender's first shot at 1.7 s."]]),
+  gapScene("Move and draw",true,[[0,"Start","Same distance, same attacker."],[.3,"Charge","The attacker charges."],[.5,"Move","Defender takes a big diagonal step off the line while drawing."],[1.4,"Adjust","The attacker has to change direction to follow."],[1.7,"Shot","The first shot comes before contact. Movement bought the time."]])
+]);
+
+/* concealed draw side view */
+Sim("sim-cdraw",{duration:4.2,aspect:.7,hold:2.4,captions:[[0,"Start","Open-front jacket covers the holster."],[.3,"Sweep","Strong hand sweeps the jacket back past the gun."],[.6,"Grip","Hand drives down onto a full firing grip."],[.85,"Clear and rotate","Gun up out of the holster and rotated toward the target."],[1.2,"Meet","Hands meet at the chest."],[1.5,"Extend","Press out to the target."],[1.85,"Shot","First shot at about 1.85 s: a typical concealed time for a trained carrier."]],draw(g,t){
+  g.clear();const H=g.H;
+  const keys=[[0,26,30,90,25,36],[.3,26,30,90,25,36],[.45,16,42,90,25,34],[.6,23,44,90,24,33],[.85,23,37,90,24,33],[1.0,24,36,0,24,33],[1.2,30,33,0,30,33],[1.85,48,26,0,48,26],[4.2,48,26,0,48,26]];
+  const [gx,gy,ga,sx,sy]=g.keys(keys,t);
+  g.circle(19,14,4.6,{fill:"ink",alpha:.85});g.path([[16,19],[22,19],[24,48],[14,48]],{fill:"ink",alpha:.25,close:true});
+  g.line(16,48,13,68,{c:"ink",w:2.2,alpha:.5});g.line(22,48,27,68,{c:"ink",w:2.2,alpha:.5});
+  g.rect(20,40,5,8,{fill:"wall",alpha:.6});
+  /* jacket front panel: swings back after .3 */
+  const sw=g.ease(g.seg(t,.3,.5));const jx=g.lerp(26.5,14.5,sw);g.path([[21,19],[jx,22],[jx+(sw>.5?-1:1),50],[18,50]],{fill:"friend2",alpha:.45,close:true});
+  const ik=(sh,h,L1=13,L2=13)=>{const dx=h[0]-sh[0],dy=h[1]-sh[1];const d=Math.min(Math.hypot(dx,dy),L1+L2-.01);const a=Math.atan2(dy,dx);const b=Math.acos((L1*L1+d*d-L2*L2)/(2*L1*d));return[sh[0]+Math.cos(a+b)*L1,sh[1]+Math.sin(a+b)*L1]};
+  const sh=[20,21];const el=ik(sh,[gx,gy]);g.path([sh,el,[gx,gy]],{c:"friend",w:1.4});
+  const el2=ik([19,22],[sx,sy+1]);g.path([[19,22],el2,[sx,sy+1]],{c:"friend2",w:1.2,alpha:.85});
+  if(t>=.6)g.rot(gx,gy,ga===90?90:ga,()=>{g.rect(-1,-2.6,9,2.6,{fill:"wall"});g.rect(-1,-.2,2.2,3.6,{fill:"wall"})});
+  g.line(19,14,96,26,{c:"accent",w:.15,dash:[.6,.6]});g.rect(94,20,3,12,{fill:"threat",alpha:.6});
+  if(t>=1.85&&t<1.95)g.circle(gx+10,gy-1.3,2.2,{fill:"accent",alpha:.7});
+  const marks=[[.3,"SWEEP"],[.6,"GRIP"],[.85,"CLEAR"],[1.2,"MEET"],[1.5,"EXTEND"],[1.85,"SHOT"]];
+  const x0=8,x1=94,yb=H-6;g.line(x0,yb,x1,yb,{c:"line",w:.3});marks.forEach(([m,l],i)=>{const x=x0+m/2.2*(x1-x0);g.line(x,yb-1,x,yb+1,{c:t>=m?"accent":"muted",w:.3});g.text(l,x,i%2?yb+3.4:yb-2,{size:1.6,c:t>=m?"accent":"muted"})});
+  g.rect(x0,yb-.4,Math.min(1,t/2.2)*(x1-x0),.8,{fill:"accent"});
+}});
+
+/* assess and scan */
+Sim("sim-scan",{duration:9,aspect:.65,captions:[[0,"Threat stops","The attacker is down. The defender is still on the sights."],[.8,"Assess","Gun lowers slightly so the defender can see hands and the weapon."],[2.2,"Scan left","Head and shoulders turn. There's a second person to the left."],[3.6,"Identify","Hands empty, backing away: a bystander, not a threat. Muzzle stays off them."],[4.6,"Scan right and behind","Continue right and turn to check behind."],[7.4,"Decide","Move to cover, call 911, holster when it's over."]],draw(g,t){
+  g.clear();const D=[50,40],T=[78,18],B=[16,22],R=[86,58];
+  g.circle(T[0],T[1],2,{fill:"threat",alpha:.4});g.text("downed attacker",T[0],T[1]-3.4,{size:1.7});
+  let h=Math.atan2(T[1]-D[1],T[0]-D[0])*180/Math.PI;const base=h;
+  if(t>=2.2&&t<4.6)h=base+g.ease(g.seg(t,2.2,3))*-125;
+  if(t>=4.6&&t<7.4){const s=g.seg(t,4.6,7.4);h=base-125+s*360}
+  if(t>=7.4)h=base;
+  const near=(p)=>{const a=Math.atan2(p[1]-D[1],p[0]-D[0])*180/Math.PI;return Math.abs(((a-h+540)%360)-180)<32};
+  g.wedge(D[0],D[1],34,h,32,{fill:"cone"});
+  const bSeen=t>=2.7;g.circle(B[0],B[1],2,{fill:bSeen?"friend2":"muted",alpha:bSeen?1:.4});if(bSeen)g.text(t>=3.6?"bystander":"?",B[0],B[1]-3.4,{size:1.8,c:"friend2"});
+  g.circle(R[0],R[1],1.4,{fill:"muted",alpha:near(R)||t>5.5?.8:.3});if(t>5.5)g.text("clear",R[0],R[1]+4,{size:1.7});
+  const gunOff=t>=.8;const gh=Math.atan2(T[1]-D[1],T[0]-D[0])*180/Math.PI;
+  g.person(D[0],D[1],gh,{c:"friend",muzzleOff:gunOff});
+  if(t<2.2)g.line(D[0],D[1],T[0],T[1],{c:"friend",w:.2,dash:[.6,.6],alpha:t<.8?1:.5});
+}});
+
+/* multiple threats: eyes lead the gun */
+Sim("sim-multi",{duration:7,aspect:.55,captions:[[0,"Three threats","Nearest and armed is engaged first (1), then the others by danger."],[.6,"1","Gun on threat 1. Shots."],[1.5,"Eyes move","Eyes jump to threat 2 before the gun moves."],[1.8,"Gun follows","The gun swings to where the eyes are and stops on target."],[2.4,"2","Shots on 2."],[3.2,"3","Eyes to 3, gun follows, shots."],[4.6,"Back across","Eyes and gun come back across all three to confirm each has stopped."]],draw(g,t){
+  g.clear();const D=[12,40];const Th=[[48,30,"1"],[72,14,"2"],[86,36,"3"]];
+  Th.forEach(([x,y,n])=>{g.circle(x,y,2.2,{fill:"threat"});g.text(n,x,y+.1,{size:2,base:"middle",c:"panel",weight:700})});
+  const ang=p=>Math.atan2(p[1]-D[1],p[0]-D[0])*180/Math.PI;
+  const eyes=g.keys([[0,ang(Th[0])],[1.5,ang(Th[0])],[1.6,ang(Th[1])],[3.1,ang(Th[1])],[3.2,ang(Th[2])],[4.6,ang(Th[2])],[5.2,ang(Th[0])],[5.8,ang(Th[1])],[6.4,ang(Th[2])],[7,ang(Th[2])]],t)[0];
+  const gun=g.keys([[0,ang(Th[0])],[1.7,ang(Th[0])],[2.2,ang(Th[1])],[3.3,ang(Th[1])],[3.8,ang(Th[2])],[4.7,ang(Th[2])],[5.3,ang(Th[0])],[5.9,ang(Th[1])],[6.5,ang(Th[2])],[7,ang(Th[2])]],t)[0];
+  const L=90;g.line(D[0],D[1],D[0]+Math.cos(eyes*Math.PI/180)*L,D[1]+Math.sin(eyes*Math.PI/180)*L,{c:"accent",w:.25,dash:[.8,.6]});
+  g.line(D[0],D[1],D[0]+Math.cos(gun*Math.PI/180)*L,D[1]+Math.sin(gun*Math.PI/180)*L,{c:"friend",w:.35});
+  g.person(D[0],D[1],gun,{c:"friend"});
+  for(const ts of [1.0,1.25,2.6,2.85,4.0,4.25])if(t>=ts&&t<ts+.08)g.circle(D[0]+Math.cos(gun*Math.PI/180)*5,D[1]+Math.sin(gun*Math.PI/180)*5,1.6,{fill:"accent",alpha:.7});
+  g.line(64,50,70,50,{c:"accent",w:.3,dash:[.8,.6]});g.text("eyes",71,50.6,{size:1.8,align:"left"});g.line(80,50,86,50,{c:"friend",w:.35});g.text("gun",87,50.6,{size:1.8,align:"left"});
+}});
+})();
+</script>
+
+</body>
+</html>
