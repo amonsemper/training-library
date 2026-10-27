@@ -35,13 +35,15 @@ nav.site .dt svg{width:10px;height:10px;transition:transform .15s}
 nav.site .dd.cur .dt{opacity:1;border-bottom-color:var(--accent)}
 nav.site .dd:hover .dt,nav.site .dd.open .dt{opacity:1}
 nav.site .dd.open .dt svg{transform:rotate(180deg)}
+nav.site .dd.open .dt{border-bottom-color:var(--accent)}
+nav.site .dds:has(.dd.open) .dd.cur:not(.open) .dt{border-bottom-color:transparent;opacity:.8}
 nav.site .dm{display:none;position:absolute;top:100%;left:0;min-width:220px;background:var(--dd1);border-top:2px solid var(--accent);box-shadow:0 14px 28px rgba(0,0,0,.35);padding:6px 0;z-index:25}
 nav.site .dd.def .dm{background:var(--dd2)}
 nav.site .dd.pro .dm{background:var(--dd3)}
 nav.site .dd.pro .dm a:hover{background:rgba(255,220,225,.08)}
 nav.site .dd:last-child .dm{left:auto;right:0}
 nav.site .dd.open .dm{display:block}
-@media (hover:hover) and (min-width:641px){nav.site .dd:hover .dm{display:block}nav.site .dd:hover .dt svg{transform:rotate(180deg)}}
+@media (hover:hover) and (min-width:641px){nav.site .dd:hover .dm{display:block}nav.site .dd:hover .dt svg{transform:rotate(180deg)}nav.site .dd:hover .dt{border-bottom-color:var(--accent)}nav.site .dds:has(.dd:hover) .dd.cur:not(:hover) .dt{border-bottom-color:transparent;opacity:.8}}
 nav.site .dm a{display:block;font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--navink);text-decoration:none;padding:11px 18px;border-left:3px solid transparent;white-space:nowrap;opacity:.85}
 nav.site .dm a:hover{opacity:1;background:rgba(227,225,214,.07)}
 nav.site .dm a[aria-current="page"]{opacity:1;border-left-color:var(--accent)}
