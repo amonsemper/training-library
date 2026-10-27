@@ -157,3 +157,38 @@ figure.profile img{display:block;width:100%;height:auto;filter:drop-shadow(0 6px
 figure.profile.narrow img{max-width:440px}
 figure.profile figcaption{align-self:stretch}
 figure.profile figcaption a{color:inherit}
+
+/* Videos: inline watch links, bottom grid, centered player */
+.watch{display:flex;flex-wrap:wrap;gap:8px}
+.vlink{display:inline-flex;align-items:center;gap:8px;max-width:100%;font-size:14px;line-height:1.25;color:var(--ink);text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 12px 5px 6px}
+.vlink:hover{border-color:var(--accent);color:var(--accent)}
+.vlink:focus-visible,.vthumb:focus-visible,.vclose:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.vlink i{flex:none;width:22px;height:22px;border-radius:50%;background:var(--accent);position:relative}
+.vlink i::after{content:"";position:absolute;left:8px;top:6px;border-left:8px solid var(--panel);border-top:5px solid transparent;border-bottom:5px solid transparent}
+.vlink span{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.vlink b{font-weight:600;overflow:hidden;text-overflow:ellipsis}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.vcard{background:var(--panel);border:1px solid var(--line);border-radius:4px;overflow:hidden;gap:0;scroll-margin-top:80px}
+.vcard:target{border-color:var(--accent)}
+.vthumb{display:block;position:relative;width:100%;aspect-ratio:16/9;padding:0;border:0;background:#000;cursor:pointer}
+.vthumb img{display:block;width:100%;height:100%;object-fit:cover;opacity:.88}
+.vthumb:hover img{opacity:1}
+.vthumb .vplay{position:absolute;left:50%;top:50%;width:52px;height:36px;margin:-18px 0 0 -26px;border-radius:9px;background:rgba(0,0,0,.72)}
+.vthumb:hover .vplay{background:var(--threat)}
+.vthumb .vplay::after{content:"";position:absolute;left:21px;top:10px;border-left:14px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent}
+.vthumb .vt{position:absolute;right:6px;bottom:6px;font:600 11.5px var(--mono);color:#fff;background:rgba(0,0,0,.75);padding:1px 6px;border-radius:3px}
+.vcard figcaption{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px;font-size:14px}
+.vcard figcaption b{font-weight:600;line-height:1.25}
+.vcard figcaption span{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.vcard figcaption a{color:inherit}
+dialog.vmodal{width:min(900px,calc(100vw - 32px));max-height:calc(100vh - 32px);padding:0;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);overflow:hidden}
+dialog.vmodal::backdrop{background:rgba(8,12,14,.72)}
+.vmodal .vframe{aspect-ratio:16/9;width:100%;max-height:calc(100vh - 110px);background:#000}
+.vmodal iframe{display:block;width:100%;height:100%;border:0}
+.vmodal .vbar{display:flex;align-items:center;gap:12px;padding:10px 12px;font-size:14px}
+.vmodal .vbar b{flex:1;min-width:0;font-weight:600;line-height:1.25}
+.vmodal .vbar a{font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap}
+.vclose{flex:none;font:600 12.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:6px 10px;cursor:pointer}
+.vmore{align-self:center;font-family:var(--mono);font-size:12.5px;color:var(--accent);text-decoration:none;padding:5px 4px}
+.vmore:hover{text-decoration:underline}
+.vcard figcaption{font-family:var(--body);color:var(--ink)}
