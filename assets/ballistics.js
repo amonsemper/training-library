@@ -27,6 +27,12 @@ const LOADS={
   ["230 gr FMJ, 5\" pistol",230,.195,850],["230 gr JHP, 5\" pistol",230,.170,875],["185 gr JHP, 5\" pistol",185,.150,1000],["230 gr +P JHP, 5\" pistol",230,.170,950],["230 gr FMJ, 16\" carbine",230,.195,960]]},
  "57":{group:"Handgun & pistol-caliber carbine",label:"5.7×28 mm",sh:.6,zero:25,max:200,step:25,loads:[
   ["40 gr V-Max (SS197SR), 4.8\" pistol",40,.200,1650],["40 gr V-Max, 16\" carbine",40,.200,2000]]},
+ "38spl":{group:"Handgun & pistol-caliber carbine",label:".38 Special",sh:.6,zero:25,max:100,step:10,loads:[
+  ["130 gr FMJ, 4\" revolver",130,.130,790],["158 gr LRN, 4\" revolver",158,.146,755],["125 gr +P JHP, 4\" revolver",125,.135,945],["135 gr +P JHP, 2\" snub",135,.141,860],["110 gr +P JHP, 2\" snub",110,.120,950]]},
+ "357":{group:"Handgun & pistol-caliber carbine",label:".357 Magnum",sh:.6,zero:25,max:150,step:25,loads:[
+  ["125 gr JHP, 4\" revolver",125,.135,1400],["158 gr JHP, 4\" revolver",158,.206,1235],["180 gr hard cast, 4\" revolver",180,.210,1150],["125 gr JHP, 2\" snub",125,.135,1200],["158 gr JSP, 18\" lever carbine",158,.206,1800]]},
+ "44mag":{group:"Handgun & pistol-caliber carbine",label:".44 Magnum",sh:.6,zero:25,max:200,step:25,loads:[
+  ["240 gr JHP, 4\" revolver",240,.205,1250],["240 gr JHP, 6\" revolver",240,.205,1350],["300 gr hard cast, 6\" revolver",300,.245,1200],["180 gr JHP, 6\" revolver",180,.140,1600],["240 gr JHP, 20\" lever carbine",240,.205,1760]]},
  /* Intermediate rifle */
  "223":{group:"Intermediate rifle",label:".223 Remington",sh:2.6,zero:100,max:600,step:50,loads:[
   ["40 gr V-Max varmint, 24\"",40,.200,3800],["50 gr V-Max, 24\"",50,.242,3410],["55 gr FMJ, 20\"",55,.243,3150],["55 gr soft point, 20\"",55,.250,3100],
