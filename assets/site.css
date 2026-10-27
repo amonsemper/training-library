@@ -192,3 +192,7 @@ dialog.vmodal::backdrop{background:rgba(8,12,14,.72)}
 .vmore{align-self:center;font-family:var(--mono);font-size:12.5px;color:var(--accent);text-decoration:none;padding:5px 4px}
 .vmore:hover{text-decoration:underline}
 .vcard figcaption{font-family:var(--body);color:var(--ink)}
+.watch.in{margin-top:4px}
+.watch.in .vlink{font-size:13px;padding:3px 10px 3px 4px}
+.watch.in .vlink i{width:18px;height:18px}
+.watch.in .vlink i::after{left:6px;top:4px;border-left-width:7px;border-top-width:5px;border-bottom-width:5px}
