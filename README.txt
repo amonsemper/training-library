@@ -9,6 +9,7 @@ Files:
   index.html                 library home and navigation
   cqb.html                   Recon & CQB Primer
   scenarios.html             Scenario-Based Engagement Breakdowns
+  cover.html                 Cover and Concealment
   calculator.html            Ballistics Calculator (all cartridges; data in assets/ballistics.js)
   rifle.html, shotgun.html, handgun.html, bolt-rifle.html
   defensive-rifle.html, defensive-shotgun.html, defensive-handgun.html, defensive-bolt-rifle.html
