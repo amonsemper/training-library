@@ -34,6 +34,7 @@
 
 <section id="defs">
   <h2><span class="n">01</span>Cover vs. concealment</h2>
+  <div class="sim" id="sim-defs" data-label="Brick wall versus wood fence"><div class="simtitle">Same rounds, two hiding places</div></div>
   <div class="grid2">
     <div class="box"><h4>Cover</h4><p>Something solid enough to stop incoming fire: an engine block, a large tree, earth, thick masonry. Fight from behind it, reload behind it, fix malfunctions behind it, or wait behind it for help. It's temporary: repeated hits wear it down, and an attacker can move to a new angle.</p></div>
     <div class="box"><h4>Concealment</h4><p>Something that keeps you from being seen but won't stop a bullet: drywall, doors, car doors, hedges, furniture, darkness, smoke. It still helps, because you can't be aimed at if you can't be seen. Use it to move, reposition, or break contact. Expect fire through it at where you were last seen.</p></div>
@@ -43,6 +44,7 @@
 
 <section id="materials">
   <h2><span class="n">02</span>What stops what</h2>
+  <div class="sim" id="sim-mat" data-label="Rounds through drywall, a door, brick, concrete, and earth"><div class="simtitle">What stops what</div></div>
   <div class="tbl"><table>
     <thead><tr><th>Material</th><th>Handgun rounds</th><th>Rifle rounds</th></tr></thead>
     <tbody>
@@ -66,6 +68,7 @@
 
 <section id="principles">
   <h2><span class="n">03</span>Principles</h2>
+  <div class="sim" id="sim-skip" data-label="A round skipping along a wall"><div class="simtitle">Don't hug hard surfaces</div></div>
   <div class="grid2">
     <div class="box"><h3>Stand back from it</h3><p>A few feet back lets you see more around the edge with less of your body showing, and keeps your muzzle from sticking out past the edge where it can be seen or grabbed. Three to six feet when space allows.</p></div>
     <div class="box"><h3>Don't hug hard surfaces</h3><p>A bullet that hits a wall, a car, or the ground at a shallow angle tends to skip along it a few inches off the surface, straight into someone pressed against it.</p></div>
@@ -76,6 +79,7 @@
 
 <section id="shooting">
   <h2><span class="n">04</span>Shooting from cover</h2>
+  <div class="sim" id="sim-corner" data-label="Body exposure when crowding a corner versus standing off"><div class="simtitle">Exposure at a corner</div></div>
   <ul>
     <li><b>Work the edge in small steps</b> (slicing the pie), so you see the threat a little at a time instead of stepping out into the open.</li>
     <li><b>Shoot around the side rather than over the top</b> when you can; it exposes less of your head.</li>
@@ -88,6 +92,7 @@
 
 <section id="moving">
   <h2><span class="n">05</span>Moving between cover</h2>
+  <div class="sim" id="sim-rush" data-label="A short rush between cover versus lingering in the open"><div class="simtitle">Rushing between cover</div></div>
   <ul>
     <li><b>Know where you're going</b> before you leave, and the route to it.</li>
     <li><b>Move in short rushes.</b> The Army's rule of thumb is about three to five seconds in the open: "I'm up, he sees me, I'm down."</li>
@@ -99,6 +104,7 @@
 
 <section id="indoors">
   <h2><span class="n">06</span>Indoors</h2>
+  <div class="sim" id="sim-indoor" data-label="Rounds through interior walls, and holding a doorway"><div class="simtitle">Inside a house</div></div>
   <p>Inside most homes and offices, almost nothing is cover. Interior walls, doors, and furniture are concealment, and rounds fired inside pass through several rooms.</p>
   <ul>
     <li><b>Position matters more than walls.</b> Pick a spot where a threat has to come to you through a doorway or hallway, ideally with something solid behind them.</li>
@@ -110,6 +116,7 @@
 
 <section id="vehicles">
   <h2><span class="n">07</span>Vehicles</h2>
+  <div class="sim" id="sim-car" data-label="Behind car doors versus behind the engine block"><div class="simtitle">Using a vehicle</div></div>
   <div class="grid2">
     <div class="box"><h3>Where the cover is</h3><ul>
       <li>The <b>engine block</b>, and the <b>wheels and axles</b>.</li>
@@ -126,6 +133,7 @@
 
 <section id="outdoors">
   <h2><span class="n">08</span>Open ground</h2>
+  <div class="sim" id="sim-field" data-label="Behind a fence versus in a fold of the ground"><div class="simtitle">Open ground</div></div>
   <ul>
     <li><b>Earth is the best cover outdoors:</b> a ditch, a berm, a dip in the ground, a road embankment. Prone behind a fold of dirt beats standing behind a fence.</li>
     <li><b>Large trees and stone walls</b> are cover; brush, fences, and sheet-metal outbuildings are not.</li>
@@ -136,6 +144,7 @@
 
 <section id="concealment">
   <h2><span class="n">09</span>Using concealment</h2>
+  <div class="sim" id="sim-conc" data-label="Staying behind concealment after being seen versus moving"><div class="simtitle">After you're seen</div></div>
   <ul>
     <li><b>Break line of sight to move.</b> A threat that can't see you can't aim at you, and has to guess where you'll reappear.</li>
     <li><b>Darkness is concealment.</b> Use light only when you need it, then move; the light shows where you were.</li>
@@ -146,6 +155,7 @@
 
 <section id="errors">
   <h2><span class="n">10</span>Common errors</h2>
+  <div class="sim" id="sim-quiz" data-label="Quiz: cover or concealment"><div class="simtitle">Cover or concealment?</div></div>
   <ul>
     <li>Treating car doors, interior walls, or fences as cover.</li>
     <li>Hugging cover, which exposes you to skipping rounds and pushes the muzzle past the edge.</li>
@@ -169,5 +179,178 @@
 <footer class="page">Training reference. Material ratings are general guidance, not test data; when in doubt, treat it as concealment.</footer>
 </main>
 <script src="assets/sim.js"></script>
+<script>
+(function(){
+const L=(a,b,u)=>[a[0]+(b[0]-a[0])*u,a[1]+(b[1]-a[1])*u];
+/* a round from a to b: tracer while flying, puff on arrival */
+function shot(g,t,t0,dur,a,b,puff=true){if(t<t0)return false;const u=Math.min(1,(t-t0)/dur);
+  if(u<1){const p=L(a,b,u),q=L(a,b,Math.max(0,u-.22));g.line(q[0],q[1],p[0],p[1],{c:"accent",w:.4});g.circle(p[0],p[1],.55,{fill:"accent"})}
+  else if(puff){const e=t-t0-dur;if(e<.6)g.circle(b[0],b[1],.7+e*4,{c:"accent",w:.3,alpha:1-e/.6})}
+  return u>=1}
+/* a round along a polyline at a fixed speed */
+function shotPath(g,t,t0,speed,pts){if(t<t0)return;const segs=[];let tot=0;for(let i=1;i<pts.length;i++){const l=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);segs.push(l);tot+=l}
+  const d=Math.min(tot,(t-t0)*speed);let acc=0;const tr=[pts[0]];let head=pts[0];
+  for(let i=0;i<segs.length;i++){if(acc+segs[i]>=d){head=L(pts[i],pts[i+1],(d-acc)/segs[i]);tr.push(head);break}acc+=segs[i];tr.push(pts[i+1]);head=pts[i+1]}
+  g.path(tr,{c:"accent",w:.3,alpha:.45});if(d<tot)g.circle(head[0],head[1],.6,{fill:"accent"});}
+function hitMark(g,x,y,t,th,label="HIT"){if(t>=th&&t<th+2.2){const e=t-th;g.circle(x,y,3.2+Math.min(e,1)*1.6,{c:"threat",w:.5,alpha:Math.max(.25,1-e/2.2)});g.text(label,x,y-5.5,{size:2,c:"threat",weight:700})}}
+function threat(g,x,y,h){g.person(x,y,h,{c:"threat"});g.text("THREAT",x,y+5.2,{size:1.7,c:"threat"})}
+const ang=(a,b)=>Math.atan2(b[1]-a[1],b[0]-a[0])*180/Math.PI;
+
+/* 01: cover vs concealment */
+Sim("sim-defs",{duration:5.5,aspect:.56,captions:[[0,"Two positions","Both defenders are out of the threat's sight: one behind a brick wall, one behind a wooden fence."],[1,"Fire","The threat fires at both positions."],[1.6,"Cover","Brick stops the rounds. That's cover."],[2.6,"Concealment","The fence only hid the second defender. The rounds go straight through it. That's concealment."]],draw(g,t){
+  g.clear();const T=[90,28],A=[24,15],B=[24,42];
+  g.rect(46,5,4,20,{fill:"wall"});for(let y=6;y<25;y+=2.2)g.line(46,y,50,y,{c:"panel",w:.15});g.text("BRICK WALL",48,3.6,{size:1.7});
+  for(let y=31;y<53;y+=2.4)g.rect(46,y,2.4,1.5,{fill:"accent",alpha:.55});g.text("WOOD FENCE",48,29.4,{size:1.7});
+  threat(g,T[0],T[1],180);
+  [1,1.35,1.7].forEach((s,i)=>{shot(g,t,s,.45,T,[50,12+i*3]);shot(g,t,s+.08,.62,T,[B[0]+2,B[1]-1+i])});
+  g.person(A[0],A[1],0,{c:"friend"});g.person(B[0],B[1],0,{c:"friend"});
+  g.text("COVER",A[0],A[1]+5.5,{size:1.8,c:"friend2",weight:700});g.text("CONCEALMENT",B[0],B[1]+5.5,{size:1.8,c:"accent",weight:700});
+  if(t>2.2)g.text("rounds stopped",52,8,{size:1.6,c:"friend2",align:"left"});
+  hitMark(g,B[0],B[1],t,1.75);
+}});
+
+/* 02: what stops what */
+function matScene(tab,rifle){const L0=[{x:18,w:1.6,n:"DRYWALL",f:"muted",a:.8},{x:28,w:1.6,n:"DRYWALL",f:"muted",a:.8},{x:38,w:3,n:"DOOR",f:"accent",a:.6},{x:52,w:5,n:"BRICK",f:"threat",a:.6},{x:70,w:8,n:"CONCRETE",f:"wall"},{x:88,w:10,n:"EARTH",f:"friend2",a:.4}];
+  const ys=[17,25,33],ts=[1,2.1,3.2],stop=rifle?[52,52,70]:[52,52,52];
+  const caps=rifle?[[0,"Rifle","Three rifle rounds into the same materials."],[1.1,"Drywall and door","They pass through drywall and a wood door without slowing much."],[2.2,"Brick","Brick stops the first rounds but chips away with each hit."],[3.4,"Breach","The third round goes through the weakened brick and stops in the concrete. Brick is short-term cover against a rifle."]]
+    :[[0,"Handgun","Three handgun rounds into drywall, a door, brick, concrete, and earth."],[1.1,"Drywall and door","They go through both drywall walls and the wood door: all concealment."],[2.2,"Brick","Brick stops them. Against a handgun, brick is cover for several hits."]];
+  return{tab,duration:5.5,aspect:.5,captions:caps,draw(g,t){g.clear();
+    g.person(4,25,0,{c:"threat"});g.text(rifle?"RIFLE":"HANDGUN",4,31,{size:1.6,c:"threat"});
+    const breach=rifle&&t>=ts[2]+(52-6)/120;
+    for(const m of L0){if(m.n==="BRICK"&&breach){g.rect(m.x,6,m.w,ys[2]-7,{fill:m.f,alpha:m.a});g.rect(m.x,ys[2]+2,m.w,42-ys[2]-2,{fill:m.f,alpha:m.a});}else g.rect(m.x,6,m.w,36,{fill:m.f,alpha:m.a??1});g.text(m.n,m.x+m.w/2,46,{size:1.5})}
+    ys.forEach((y,i)=>{const sx=stop[i];if(shot(g,t,ts[i],(sx-6)/120,[6,y],[sx,y],false))g.circle(sx+.6,y,.8,{fill:"panel"})});
+  }}}
+Sim("sim-mat",[matScene("Handgun",false),matScene("Rifle",true)]);
+
+/* 03: principles: rounds skip along hard surfaces */
+function skipScene(tab,def,hit,caps){const T=[92,8],I=[60,46.6],E=[3,44.2];const d1=Math.hypot(I[0]-T[0],I[1]-T[1]),sp=80;const th=1+(d1+(I[0]-def[0]))/sp;
+  return{tab,duration:5,aspect:.6,captions:caps,draw(g,t){g.clear();g.rect(0,47,100,6,{fill:"wall"});g.text("CONCRETE WALL",50,51.4,{size:1.7,c:"panel"});
+    threat(g,T[0],T[1],ang(T,I));shotPath(g,t,1,sp,[T,I,E]);
+    g.person(def[0],def[1],ang(def,T),{c:"friend"});
+    if(!hit){g.line(def[0]+5,def[1],def[0]+5,46.4,{c:"friend2",w:.25,dash:[.6,.5]});g.text("3–6 ft",def[0]+6,(def[1]+46)/2,{size:1.7,c:"friend2",align:"left"})}
+    if(hit)hitMark(g,def[0],def[1],t,th);else if(t>th)g.text("round passes by",def[0],def[1]-5,{size:1.7,c:"friend2"});
+    if(t>1.5&&t<3)g.text("skips a few inches off the wall",58,42,{size:1.7,c:"accent"});
+  }}}
+Sim("sim-skip",[skipScene("Hugging the wall",[30,43.6],true,[[0,"Hugging","Defender pressed against a wall, the threat off at an angle."],[1,"Shallow angle","The round strikes the wall at a shallow angle..."],[1.5,"Skip","...and skips along it a few inches off the surface, straight into the defender."]]),
+  skipScene("Standing off",[30,32],false,[[0,"Standing off","Same wall, same threat; the defender stands several feet back."],[1,"Shallow angle","The round strikes the wall at the same shallow angle..."],[1.5,"Skip","...and skips along the wall, passing well below the defender."]])]);
+
+/* 04: shooting from cover: exposure at a corner */
+function segX(a,b,c,d){const o=(p,q,r)=>(q[0]-p[0])*(r[1]-p[1])-(q[1]-p[1])*(r[0]-p[0]);return o(a,b,c)*o(a,b,d)<0&&o(c,d,a)*o(c,d,b)<0}
+function coverScene(tab,keys,caps){const T=[86,60],W1=[40,0],W2=[40,40];return{tab,duration:5,aspect:.7,captions:caps,draw(g,t){
+  g.clear();g.rect(40,0,6,40,{fill:"wall"});g.text("WALL",43,20,{size:1.8,c:"panel"});
+  const [x,y,h]=g.keys(keys,t);
+  const dx=W2[0]-T[0],dy=W2[1]-T[1];g.path([T,[T[0]+dx*3,T[1]+dy*3]],{c:"threat",w:.2,dash:[.6,.6]});
+  g.path([[40,40],[T[0]+dx*3,T[1]+dy*3],[0,0],[40,0]],{fill:"friend2",alpha:.1,close:true});
+  g.text("shielded by wall",14,12,{size:1.8,c:"friend2"});
+  let vis=0,n=0;const R=2.6;for(let i=-4;i<=4;i++)for(let j=-4;j<=4;j++){const px=x+i/4*R,py=y+j/4*R;if(Math.hypot(px-x,py-y)>R)continue;n++;const v=!segX([px,py],T,W1,W2)&&!(px>40&&px<46&&py<40);if(v){vis++;g.circle(px,py,.32,{fill:"threat"})}}
+  g.circle(x,y,R,{c:"friend",w:.35});
+  const mx=x+Math.cos(h*Math.PI/180)*8,my=y+Math.sin(h*Math.PI/180)*8;g.line(x,y,mx,my,{c:"friend",w:.7});
+  if(mx>40.2&&y>38)g.circle(mx,my,1.4,{c:"threat",w:.3});
+  g.circle(T[0],T[1],2,{fill:"threat"});g.text("THREAT",T[0],T[1]+5,{size:1.8,c:"threat"});
+  const pct=Math.round(vis/n*100);g.rect(62,6,34,12,{fill:"panel",c:"line",w:.2});g.text("BODY EXPOSED",79,10.5,{size:1.9});g.text(pct+"%",79,15.6,{size:3.2,c:pct>40?"threat":"friend2",weight:700});
+  if(mx>40.2&&y>38)g.text("muzzle past the edge",mx+2,my+4,{size:1.8,c:"threat",align:"left"});
+}}}
+Sim("sim-corner",[
+  coverScene("Crowding the corner",[[0,20,20,40],[1.2,37,37,35],[2.4,37,43,30],[5,37,43,30]],[[0,"Approach","Moving up to the corner of a wall to engage a threat beyond it."],[1.2,"Crowd","Pressed against the wall, the shooter can't see around it..."],[2.4,"Lean out","...so they lean out past the corner. Most of the body is exposed, and the muzzle sticks out past the edge."]]),
+  coverScene("Standing off",[[0,20,20,40],[1.2,28,30,30],[2.4,30.5,34.3,25],[5,30.5,34.3,25]],[[0,"Approach","Same wall, same threat."],[1.2,"Stand off","Stop several feet back from the corner."],[2.4,"Slice","Step out in small increments until the threat is visible past the edge. Only a sliver of the body is exposed, and the muzzle stays behind the corner."]])
+]);
+
+/* 05: moving between cover */
+function rushScene(tab,dur,K,shots,hitT,caps){const T=[50,6],lag=.9;const open=p=>p[0]>23&&p[0]<71;
+  return{tab,duration:dur,aspect:.6,captions:caps,draw(g,t){g.clear();
+    g.rect(4,28,20,4,{fill:"wall"});g.rect(70,28,20,4,{fill:"wall"});g.text("COVER",14,26.4,{size:1.6});g.text("COVER",80,26.4,{size:1.6});
+    let tt=hitT!=null?Math.min(t,hitT):t;const p=g.keys(K,tt),aim=g.keys(K,Math.max(0,tt-lag));
+    if(open(aim)&&(hitT==null||t<hitT+.4))g.line(T[0],T[1],aim[0],aim[1],{c:"threat",w:.22,dash:[.7,.6]});
+    threat(g,T[0],T[1],open(aim)?ang(T,aim):90);
+    shots.forEach(s=>{const a=g.keys(K,Math.max(0,s-lag));if(open(a))shot(g,t,s,.3,T,[a[0],a[1]+1.2])});
+    g.person(p[0],p[1],ang(p,T),{c:"friend"});
+    let ex=0;for(let u=0;u<tt;u+=.05)if(open(g.keys(K,u)))ex+=.05;
+    g.rect(32,46,36,10,{fill:"panel",c:"line",w:.2});g.text("IN THE OPEN",50,50,{size:1.8});g.text(ex.toFixed(1)+" s",50,54.6,{size:3,weight:700,c:ex>5?"threat":"friend2"});
+    if(hitT!=null)hitMark(g,p[0],p[1],t,hitT+.3);
+  }}}
+Sim("sim-rush",[
+  rushScene("Short rush",6,[[0,14,38],[1,14,38],[1.3,24,38],[3.9,70,38],[4.4,78,38],[6,78,38]],[2.2,2.9,3.6],null,[[0,"Behind cover","Defender behind cover, next position picked before moving."],[1,"I'm up","Up and moving fast, straight to the next cover."],[2,"He sees me","The threat has to see, react, and aim. Its rounds land where the defender was."],[3.9,"I'm down","Behind cover in about three seconds. Short rushes beat a threat's reaction time."]]),
+  rushScene("Too long in the open",9,[[0,14,38],[1,14,38],[1.5,24,38],[4.2,40,38],[9,40,38]],[3,4.6],4.6,[[0,"Behind cover","Same cover, same threat."],[1,"Slow","The defender moves slowly..."],[4.2,"Stops","...then stops in the open to look around."],[4.9,"Caught","The threat's aim catches up. Every second in the open gives it time to settle."]])
+]);
+
+/* 06: indoors */
+function room(g){g.rect(4,6,92,58,{c:"wall",w:1.2});
+  for(const x of [35,65]){g.line(x,6,x,28,{c:"muted",w:.5,dash:[1,.6]});g.line(x,38,x,64,{c:"muted",w:.5,dash:[1,.6]})}
+  g.text("ROOM 1",19.5,11,{size:1.6});g.text("ROOM 2",50,11,{size:1.6});g.text("ROOM 3",80.5,11,{size:1.6});g.text("drywall",35,60.5,{size:1.5,c:"muted"});g.text("drywall",65,60.5,{size:1.5,c:"muted"})}
+Sim("sim-indoor",[
+  {tab:"Walls stop nothing",duration:5,aspect:.7,captions:[[0,"Three rooms","Interior walls are drywall: concealment, not cover."],[1,"One round","A round fired in room 3..."],[1.5,"Through","...goes through both interior walls..."],[2.1,"Out","...past someone in room 1, and out through the exterior wall."]],draw(g,t){g.clear(false);room(g);
+    threat(g,82,20,180);g.person(18,26,0,{c:"friend2"});g.text("FAMILY",18,31.5,{size:1.6,c:"friend2"});
+    shot(g,t,1,1.2,[80,20],[-2,19.2],false);
+    for(const [x,tc] of [[65,1.2],[35,1.6],[4,2.05]])if(t>tc&&t<tc+.7)g.circle(x,19.6,1+(t-tc)*3,{c:"accent",w:.25,alpha:1-(t-tc)/.7});
+    if(t>2.1){g.rect(26,48.6,48,5,{fill:"panel",r:1});g.text("rounds pass through several rooms",50,52,{size:1.8,c:"threat"})}
+  }},
+  {tab:"Use position",duration:6,aspect:.7,captions:[[0,"Position","Defender set in a corner of room 1, covering the only doorway in."],[1,"Approach","A threat comes through room 2 toward the doorway..."],[2.6,"Doorway","...and has to come through the door into the defender's sights."],[3.4,"Backstop","Before firing, know what's beyond the doorway: here, the exterior wall and the street."]],draw(g,t){g.clear(false);room(g);
+    const D=[10,58],door=[35,33];g.rect(33.5,28,3,10,{fill:"threat",alpha:.18});
+    const ex=[D[0]+(door[0]-D[0])*2.1,D[1]+(door[1]-D[1])*2.1];g.wedge(D[0],D[1],34,ang(D,door),8,{fill:"cone"});
+    if(t>3.4){g.line(door[0],door[1],ex[0],ex[1],{c:"accent",w:.25,dash:[.7,.6]});g.text("what's behind it?",ex[0]-2,ex[1]+14,{size:1.7,c:"accent",align:"right"})}
+    const p=g.keys([[0,82,33],[1,82,33],[2.6,39,33],[6,39,33]],t);threat(g,p[0],p[1],180);
+    g.person(D[0],D[1],ang(D,door),{c:"friend"});
+  }}
+]);
+
+/* 07: vehicles, top-down */
+function car(g){g.rect(28,18,48,22,{fill:"muted",alpha:.3,c:"ink",w:.3,r:2});g.rect(28,20,12,18,{fill:"wall"});g.text("ENGINE",34,29.6,{size:1.5,c:"panel"});
+  for(const [x,y] of [[31,15.5],[31,39.5],[64,15.5],[64,39.5]])g.rect(x,y,7,3,{fill:"ink",r:.6});
+  g.line(42,19,42,39,{c:"ink",w:.2});g.text("DOORS",57,29.6,{size:1.5,c:"muted"})}
+function carScene(tab,def,stopY,caps){const T=[38,58];return{tab,duration:5,aspect:.6,captions:caps,draw(g,t){g.clear();car(g);threat(g,T[0],T[1],ang(T,def));
+  [1,1.4,1.8].forEach((s,i)=>{const tgt=[def[0]+(i-1)*.8,def[1]];if(stopY){const u=(T[1]-stopY)/(T[1]-tgt[1]);shot(g,t,s,.35,T,L(T,tgt,u))}else shot(g,t,s,.5,T,tgt)});
+  g.person(def[0],def[1],ang(def,T),{c:"friend"});if(!stopY)hitMark(g,def[0],def[1],t,1.5);else if(t>2)g.text("stopped by the engine block",def[0]+6,def[1]+1,{size:1.7,c:"friend2",align:"left"});
+}}}
+Sim("sim-car",[
+  carScene("Behind the doors",[55,10],null,[[0,"Doors","Defender behind the doors of a car; the threat on the other side."],[1,"Fire","Rounds go through the door panels and seats like they aren't there."],[2.2,"Concealment","Doors, body panels, and glass are concealment."]]),
+  carScene("Behind the engine",[34,10],38,[[0,"Engine","Same car; the defender moves to the front, behind the engine block and wheel."],[1,"Fire","The same rounds hit the engine block and stop."],[2.2,"Cover","Engine block, wheels, and axles are the only real cover on a car. Keep your feet behind a wheel: rounds fired under the car hit feet."]])
+]);
+
+/* 08: open ground, side view */
+const GND=[[0,38],[18,38],[22,44],[32,44],[36,37.5],[40,36],[70,34],[85,26],[100,24]];
+function gy(x){for(let i=1;i<GND.length;i++)if(x<=GND[i][0]){const a=GND[i-1],b=GND[i];return a[1]+(b[1]-a[1])*(x-a[0])/(b[0]-a[0])}return 24}
+function groundHit(a,b){for(let u=0;u<=1;u+=.004){const p=L(a,b,u);if(p[1]>=gy(p[0])-.2&&u>.05)return p}return b}
+function fieldScene(tab,prone,caps){const T=[90,21.5];return{tab,duration:5,aspect:.5,captions:caps,draw(g,t){g.clear(false);
+  g.path([...GND,[100,50],[0,50]],{fill:"accent",alpha:.22,close:true});g.path(GND,{c:"accent",w:.35});
+  g.circle(T[0],T[1]-2,1.6,{fill:"threat"});g.line(T[0],T[1]-.4,T[0],T[1]+3.6,{c:"threat",w:.6});g.text("THREAT",T[0],T[1]-5,{size:1.6,c:"threat"});
+  let D;if(prone){D=[27,42.6];g.rect(22.5,41.6,9,1.8,{fill:"friend",r:.8});g.circle(31.5,42.2,1.1,{fill:"friend"});
+    const lip=[36,37.5],far=[0,21.5+(0-90)*(37.5-21.5)/(36-90)];g.line(T[0],T[1],far[0],far[1],{c:"friend2",w:.2,dash:[.7,.6]});
+    if(t>2.2)g.text("dead space: the threat can't hit below this line",4,27,{size:1.6,c:"friend2",align:"left"});}
+  else{D=[52,31];for(const x of [57,60])g.line(x,gy(x),x,gy(x)-7,{c:"ink",w:.4});g.line(56,gy(57)-5.5,61,gy(60)-5.5,{c:"ink",w:.3});g.line(56,gy(57)-3,61,gy(60)-3,{c:"ink",w:.3});g.text("FENCE",58.5,gy(58)+3.4,{size:1.5});
+    g.circle(D[0],D[1]-2.2,1.5,{fill:"friend"});g.line(D[0],D[1]-.6,D[0],gy(D[0]),{c:"friend",w:.7})}
+  [1,1.4,1.8].forEach((s,i)=>{const tgt=prone?[D[0]+(i-1)*1.5,D[1]]:[D[0],D[1]-2+i];const end=groundHit(T,tgt);shot(g,t,s,.45,T,end)});
+  if(!prone)hitMark(g,D[0],D[1]-2,t,1.5);else if(t>2)g.text("rounds hit the rise",52,41,{size:1.7,c:"ink"});
+}}}
+Sim("sim-field",[
+  fieldScene("Behind a fence",false,[[0,"Fence","Defender standing behind a wire-and-post fence; the threat on higher ground."],[1,"Fire","The fence hides nothing and stops nothing. Rounds pass straight through."]]),
+  fieldScene("In a fold of ground",true,[[0,"Ditch","Defender prone in a ditch behind a low rise of earth."],[1,"Fire","The threat fires at where it saw the defender..."],[1.8,"Earth","...but the rise of ground catches every round. Earth is the best cover outdoors."],[2.2,"Dead space","Below the line from the threat across the lip of the rise, it can't hit anything."]])
+]);
+
+/* 09: using concealment */
+function hedge(g){for(let x=6;x<=94;x+=2.2)for(const y of [27,29.5,32])g.circle(x+(y===29.5?1.1:0),y,1.5,{fill:"friend2",alpha:.45});g.text("HEDGE (concealment)",50,23.4,{size:1.6,c:"friend2"})}
+function concScene(tab,move,caps){const T=[50,6],S=[30,40];return{tab,duration:6,aspect:.6,captions:caps,draw(g,t){g.clear();hedge(g);
+  const p=move?g.keys([[0,30,40],[1.3,30,40],[3.2,70,40],[6,70,40]],t):S;
+  if(t>.8&&t<1.3){g.line(S[0],S[1],T[0],T[1],{c:"friend",w:.25});g.circle(S[0],S[1],3+(t-.8)*4,{c:"accent",w:.3,alpha:1-(t-.8)/.5});g.text("SEEN",S[0]-6,S[1]-4,{size:1.8,c:"accent",weight:700})}
+  if(t>1.3){g.line(S[0]-1.4,S[1]-1.4,S[0]+1.4,S[1]+1.4,{c:"accent",w:.3});g.line(S[0]-1.4,S[1]+1.4,S[0]+1.4,S[1]-1.4,{c:"accent",w:.3});if(move)g.text("last seen here",S[0],S[1]+6,{size:1.6,c:"accent"})}
+  threat(g,T[0],T[1],ang(T,S));
+  [2,2.4,2.8].forEach((s,i)=>shot(g,t,s,.45,T,[S[0]+(i-1)*1.4,S[1]-.5+i*.4]));
+  g.person(p[0],p[1],ang(p,T),{c:"friend"});
+  if(!move)hitMark(g,S[0],S[1],t,2.45);else if(t>3.2)g.text("rounds land where the defender was",50,52,{size:1.8,c:"friend2"});
+}}}
+Sim("sim-conc",[
+  concScene("Stay put",false,[[0,"Hidden","Defender hidden behind a hedge."],[.8,"Seen","A shot or a light gives the position away."],[2,"Fire","The threat fires through the hedge at that spot. Concealment hid the defender; it doesn't stop rounds."]]),
+  concScene("Move after being seen",true,[[0,"Hidden","Same hedge, same threat."],[.8,"Seen","The position is given away..."],[1.3,"Move","...so the defender moves along the hedge, still out of sight."],[2,"Fire","The threat fires at the last place it saw the defender, which is now empty."]])
+]);
+
+/* 10: common errors: cover or concealment? */
+const CARDS=[["Car door",0,"Door panels and glass stop almost nothing."],["Interior wall",0,"Drywall passes rounds through several rooms."],["Engine block",1,"The engine and wheels are a car's only cover."],["Wooden fence",0,"Hides you; stops nothing."],["Large tree",1,"Cover against handguns; rifles depend on the trunk."],["Earth berm",1,"One to two feet of dirt stops rifle rounds."]];
+Sim("sim-quiz",{duration:CARDS.length*1.8,aspect:.42,hold:1.2,captions:CARDS.map((c,i)=>[i*1.8,c[0],c[2]]),draw(g,t){g.clear(false);
+  const i=Math.min(CARDS.length-1,Math.floor(t/1.8)),u=t-i*1.8,c=CARDS[i];
+  g.rect(22,4,56,22,{fill:"panel",c:"line",w:.3,r:1.5});g.text("COVER OR CONCEALMENT?",50,9,{size:1.7});g.text(c[0].toUpperCase(),50,17.5,{size:4.2,font:"display",weight:800,c:"ink"});
+  if(u>.7){const ok=c[1];g.rect(34,19.5,32,5,{c:ok?"friend2":"threat",w:.5,r:1});g.text(ok?"COVER":"CONCEALMENT",50,23.2,{size:2.3,weight:700,c:ok?"friend2":"threat"})}
+  CARDS.forEach((k,j)=>{const x=4+j*15.5;const done=j<i||(j===i&&u>.7);g.rect(x,31,14.5,6,{fill:done?(k[1]?"friend2":"threat"):"line",alpha:done?.25:.35,r:1});g.text(k[0],x+7.25,34.8,{size:1.45,c:done?"ink":"muted"})});
+}});
+})();
+</script>
 </body>
 </html>
