@@ -9,12 +9,14 @@ Files:
   index.html                 library home and navigation
   cqb.html                   Recon & CQB Primer
   scenarios.html             Scenario-Based Engagement Breakdowns
+  fieldcraft.html            Fieldcraft (land nav, hide sites, signature, drones, recon)
   cover.html                 Cover and Concealment
   calculator.html            Ballistics Calculator (all cartridges; data in assets/ballistics.js)
   rifle.html, shotgun.html, handgun.html, bolt-rifle.html
   defensive-rifle.html, defensive-shotgun.html, defensive-handgun.html, defensive-bolt-rifle.html
   modifications.html         Common Weapon Modifications
   drills.html                Common Practice Drills (with par timer)
+  assets/video.js            click-to-play YouTube player for the Videos sections
   assets/img/                platform photos and card icons
   assets/img/icons/          home-card icons (sketch illustrations)
   assets/site.css            shared styles (colors are tokens at the top)

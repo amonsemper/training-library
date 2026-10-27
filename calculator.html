@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
-<nav class="site" aria-label="Library"><div class="in"><a class="brand" href="index.html">Training <span>Library</span></a><div class="dds"><div class="dd cur"><button class="dt" type="button" aria-expanded="false" aria-controls="dd-tac">Tactics<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="dm" id="dd-tac"><a href="cqb.html">CQB Primer</a><a href="scenarios.html">Scenarios</a><a href="cover.html">Cover & Concealment</a><a href="calculator.html" aria-current="page">Ballistics Calculator</a><a href="modifications.html">Modifications</a><a href="drills.html">Drills</a></div></div><span class="sep" aria-hidden="true"></span><div class="dd pro"><button class="dt" type="button" aria-expanded="false" aria-controls="dd-pro">Professional<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="dm" id="dd-pro"><a href="rifle.html">Rifle</a><a href="shotgun.html">Shotgun</a><a href="handgun.html">Handgun</a><a href="bolt-rifle.html">Bolt Rifle</a></div></div><span class="sep" aria-hidden="true"></span><div class="dd def"><button class="dt" type="button" aria-expanded="false" aria-controls="dd-def">Defensive<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="dm" id="dd-def"><a href="defensive-rifle.html">Defensive Rifle</a><a href="defensive-shotgun.html">Defensive Shotgun</a><a href="defensive-handgun.html">Defensive Handgun</a><a href="defensive-bolt-rifle.html">Defensive Bolt Rifle</a></div></div></div></div></nav>
+<nav class="site" aria-label="Library"><div class="in"><a class="brand" href="index.html">Training <span>Library</span></a><div class="dds"><div class="dd cur"><button class="dt" type="button" aria-expanded="false" aria-controls="dd-tac">Tactics<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="dm" id="dd-tac"><a href="cqb.html">CQB Primer</a><a href="scenarios.html">Scenarios</a><a href="fieldcraft.html">Fieldcraft</a><a href="cover.html">Cover & Concealment</a><a href="calculator.html" aria-current="page">Ballistics Calculator</a><a href="modifications.html">Modifications</a><a href="drills.html">Drills</a></div></div><span class="sep" aria-hidden="true"></span><div class="dd pro"><button class="dt" type="button" aria-expanded="false" aria-controls="dd-pro">Professional<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="dm" id="dd-pro"><a href="rifle.html">Rifle</a><a href="shotgun.html">Shotgun</a><a href="handgun.html">Handgun</a><a href="bolt-rifle.html">Bolt Rifle</a></div></div><span class="sep" aria-hidden="true"></span><div class="dd def"><button class="dt" type="button" aria-expanded="false" aria-controls="dd-def">Defensive<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="dm" id="dd-def"><a href="defensive-rifle.html">Defensive Rifle</a><a href="defensive-shotgun.html">Defensive Shotgun</a><a href="defensive-handgun.html">Defensive Handgun</a><a href="defensive-bolt-rifle.html">Defensive Bolt Rifle</a></div></div></div></div></nav>
 <main class="wrap">
 <header class="page">
   <div class="eyebrow">Tactics · Ballistics</div>
@@ -22,6 +22,7 @@
     <a href="#use"><span>02</span>How to use it</a>
     <a href="#inputs"><span>03</span>What the inputs mean</a>
     <a href="#limits"><span>04</span>Limits</a>
+    <!--v--><a href="#videos"><span>05</span>Videos</a><!--/v-->
   </nav>
 </header>
 
@@ -34,11 +35,11 @@
   <h2><span class="n">02</span>How to use it</h2>
   <ol>
     <li>Pick the cartridge, then the load closest to what you shoot. The fields fill in with typical values.</li>
-    <li>Replace the muzzle velocity with your own chronograph reading. It matters more than any other input.</li>
+    <li>Replace the muzzle velocity with your own chronograph reading. It matters more than any other input.<!--v--><div class="watch in"><a class="vlink" href="#v-use-1"><i></i><b>Dirty Civilian: Finding DOPE: muzzle velocity</b><span>7:49</span></a></div><!--/v--></li>
     <li>Measure your sight height: the distance from the center of the bore to the center of the sight or optic.</li>
     <li>Set your zero distance, your temperature and altitude, and the wind.</li>
     <li>Type a distance into "Hold at" for the exact elevation and wind correction there. The table and chart update as you type.</li>
-    <li>Shoot at real distances and adjust the velocity until the calculator matches your hits. That's called truing.</li>
+    <li>Shoot at real distances and adjust the velocity until the calculator matches your hits. That's called truing.<!--v--><div class="watch in"><a class="vlink" href="#v-use-2"><i></i><b>Dirty Civilian: Finding DOPE: correcting errors</b><span>16:00</span></a></div><!--/v--></li>
   </ol>
 </section>
 
@@ -56,6 +57,7 @@
       <tr><td><b>Temperature and altitude</b></td><td>Air density</td><td>Warmer, higher air is thinner: less drop and drift.</td></tr>
     </tbody>
   </table></div>
+  <!--v--><div class="watch" aria-label="Related video"><a class="vlink" href="#v-inputs-3"><i></i><b>Dirty Civilian: Finding DOPE: MOA vs. MRAD</b><span>11:50</span></a></div><!--/v-->
 </section>
 
 <section id="limits">
@@ -69,9 +71,21 @@
   <p>The <a href="rifle.html#calc">Rifle</a>, <a href="shotgun.html#slugs">Shotgun</a>, <a href="handgun.html#calc">Handgun</a>, and <a href="bolt-rifle.html#calc">Bolt Rifle</a> pages each have the same calculator set up for their own cartridges.</p>
 </section>
 
+<!--v--><section id="videos">
+  <h2><span class="n">05</span>Videos</h2>
+  <p class="note">Selected videos from Dirty Civilian, each starting at the part that matches its section. They play from YouTube; nothing loads until you press play.</p>
+  <div class="vgrid">
+    <figure class="vcard" id="v-use-1" data-yt="tnqEG0ze8v0" data-start="469" data-ch="Dirty Civilian" data-title="Finding DOPE: muzzle velocity"><button class="vthumb" type="button" aria-label="Play Dirty Civilian: Finding DOPE: muzzle velocity"><img src="https://i.ytimg.com/vi/tnqEG0ze8v0/mqdefault.jpg" width="320" height="180" alt="" loading="lazy"><span class="vplay"></span><span class="vt">7:49</span></button><figcaption><b>Finding DOPE: muzzle velocity</b><span>Dirty Civilian · <a href="#use">How to use it</a></span></figcaption></figure>
+    <figure class="vcard" id="v-use-2" data-yt="tnqEG0ze8v0" data-start="960" data-ch="Dirty Civilian" data-title="Finding DOPE: correcting errors"><button class="vthumb" type="button" aria-label="Play Dirty Civilian: Finding DOPE: correcting errors"><img src="https://i.ytimg.com/vi/tnqEG0ze8v0/mqdefault.jpg" width="320" height="180" alt="" loading="lazy"><span class="vplay"></span><span class="vt">16:00</span></button><figcaption><b>Finding DOPE: correcting errors</b><span>Dirty Civilian · <a href="#use">How to use it</a></span></figcaption></figure>
+    <figure class="vcard" id="v-inputs-3" data-yt="tnqEG0ze8v0" data-start="710" data-ch="Dirty Civilian" data-title="Finding DOPE: MOA vs. MRAD"><button class="vthumb" type="button" aria-label="Play Dirty Civilian: Finding DOPE: MOA vs. MRAD"><img src="https://i.ytimg.com/vi/tnqEG0ze8v0/mqdefault.jpg" width="320" height="180" alt="" loading="lazy"><span class="vplay"></span><span class="vt">11:50</span></button><figcaption><b>Finding DOPE: MOA vs. MRAD</b><span>Dirty Civilian · <a href="#inputs">What the inputs mean</a></span></figcaption></figure>
+  </div>
+</section>
+<!--/v-->
+
 <footer class="page">Training reference. Confirm all data with your own rifle, ammunition, and chronograph.</footer>
 </main>
 <script src="assets/sim.js"></script>
+<script src="assets/video.js"></script>
 <script src="assets/ballistics.js"></script>
 <script>Ballistics.mount(document.getElementById("bal-main"));</script>
 </body>
