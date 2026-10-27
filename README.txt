@@ -15,7 +15,7 @@ Files:
   defensive-rifle.html, defensive-shotgun.html, defensive-handgun.html, defensive-bolt-rifle.html
   modifications.html         Common Weapon Modifications
   drills.html                Common Practice Drills (with par timer)
-  assets/img/                platform photos (public domain; credits in each caption)
+  assets/img/                platform photos and card icons
   assets/img/icons/          home-card icons (sketch illustrations)
   assets/site.css            shared styles (colors are tokens at the top)
   assets/sim.js              shared animation engine
