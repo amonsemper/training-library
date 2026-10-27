@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ballistics Calculator</title>
+<meta name="description" content="Trajectory, holds, wind drift, velocity, and energy for rimfire, handgun, intermediate, hunting, long-range, straight-wall, and shotgun loads.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;700;800&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<nav class="site" aria-label="Library"><div class="in"><a class="brand" href="index.html">Training <span>Library</span></a><div class="dds"><div class="dd cur"><button class="dt" type="button" aria-expanded="false" aria-controls="dd-tac">Tactics<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="dm" id="dd-tac"><a href="cqb.html">CQB Primer</a><a href="scenarios.html">Scenarios</a><a href="calculator.html" aria-current="page">Ballistics Calculator</a><a href="modifications.html">Modifications</a><a href="drills.html">Drills</a></div></div><span class="sep" aria-hidden="true"></span><div class="dd pro"><button class="dt" type="button" aria-expanded="false" aria-controls="dd-pro">Professional<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="dm" id="dd-pro"><a href="rifle.html">Rifle</a><a href="shotgun.html">Shotgun</a><a href="handgun.html">Handgun</a><a href="bolt-rifle.html">Bolt Rifle</a></div></div><span class="sep" aria-hidden="true"></span><div class="dd def"><button class="dt" type="button" aria-expanded="false" aria-controls="dd-def">Defensive<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="dm" id="dd-def"><a href="defensive-rifle.html">Defensive Rifle</a><a href="defensive-shotgun.html">Defensive Shotgun</a><a href="defensive-handgun.html">Defensive Handgun</a><a href="defensive-bolt-rifle.html">Defensive Bolt Rifle</a></div></div></div></div></nav>
+<main class="wrap">
+<header class="page">
+  <div class="eyebrow">Tactics · Ballistics</div>
+  <h1>Ballistics Calculator</h1>
+  <p class="lede">Drop, holds in MOA and mils, wind drift, velocity, energy, and time of flight for 33 cartridges and more than 100 common loads: rimfire, handgun and pistol-caliber carbine, intermediate rifle, hunting and long-range rifle, lever-action and straight-wall, and shotgun shot, buckshot, and slugs.</p>
+  <p class="note">A point-mass solver using the standard G1 drag model. Load data are typical published figures; your barrel length, ammunition lot, and conditions change them. Chronograph your own gun and confirm every hold on paper before you rely on it.</p>
+  <nav class="toc" aria-label="Contents">
+    <a href="#calc"><span>01</span>Calculator</a>
+    <a href="#use"><span>02</span>How to use it</a>
+    <a href="#inputs"><span>03</span>What the inputs mean</a>
+    <a href="#limits"><span>04</span>Limits</a>
+  </nav>
+</header>
+
+<section id="calc">
+  <h2><span class="n">01</span>Calculator</h2>
+  <div id="bal-main" data-cartridges="all"></div>
+</section>
+
+<section id="use">
+  <h2><span class="n">02</span>How to use it</h2>
+  <ol>
+    <li>Pick the cartridge, then the load closest to what you shoot. The fields fill in with typical values.</li>
+    <li>Replace the muzzle velocity with your own chronograph reading. It matters more than any other input.</li>
+    <li>Measure your sight height: the distance from the center of the bore to the center of the sight or optic.</li>
+    <li>Set your zero distance, your temperature and altitude, and the wind.</li>
+    <li>Type a distance into "Hold at" for the exact elevation and wind correction there. The table and chart update as you type.</li>
+    <li>Shoot at real distances and adjust the velocity until the calculator matches your hits. That's called truing.</li>
+  </ol>
+</section>
+
+<section id="inputs">
+  <h2><span class="n">03</span>What the inputs mean</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Input</th><th>What it is</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td><b>Bullet weight</b></td><td>In grains (7,000 per pound)</td><td>Used for energy. Drop comes from velocity and BC.</td></tr>
+      <tr><td><b>Muzzle velocity</b></td><td>Speed leaving the barrel, in ft/s</td><td>The biggest single factor in drop. Shorter barrels are slower.</td></tr>
+      <tr><td><b>G1 BC</b></td><td>Ballistic coefficient: how well the bullet keeps its speed against air drag</td><td>Higher BC means less drop and drift at long range.</td></tr>
+      <tr><td><b>Sight height</b></td><td>Bore center to sight center, in inches</td><td>Matters most at close range and for the near zero distance. About 2.6" on an AR, 1.5–2" on a scoped bolt gun, 0.5–0.6" on a handgun.</td></tr>
+      <tr><td><b>Zero</b></td><td>The distance where the bullet crosses the line of sight</td><td>Sets where you're on, and how high the bullet rises between.</td></tr>
+      <tr><td><b>Wind</b></td><td>Speed in mph and the clock direction it comes from</td><td>3 and 9 o'clock are full value; 12 and 6 have no drift.</td></tr>
+      <tr><td><b>Temperature and altitude</b></td><td>Air density</td><td>Warmer, higher air is thinner: less drop and drift.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="limits">
+  <h2><span class="n">04</span>Limits</h2>
+  <ul>
+    <li><b>G1 vs. G7.</b> Long, boat-tailed match bullets are better described by the G7 model. Past about 800 yards, G1 figures can be off by several inches; use the bullet maker's own calculator for long-range work.</li>
+    <li><b>Shot and buckshot</b> are plotted as one pellet with an estimated drag figure for a round ball. Use the result for drop and retained energy, not precision. Patterning your gun matters more.</li>
+    <li><b>Not modeled:</b> spin drift, Coriolis effect, shooting at steep angles, and the transonic instability some bullets show as they slow through the speed of sound.</li>
+    <li><b>Subsonic loads</b> (.300 and 8.6 Blackout, standard-velocity .22 LR) drop steeply past 100 yards. The calculator shows it, but small range errors become large misses.</li>
+  </ul>
+  <p>The <a href="rifle.html#calc">Rifle</a>, <a href="shotgun.html#slugs">Shotgun</a>, <a href="handgun.html#calc">Handgun</a>, and <a href="bolt-rifle.html#calc">Bolt Rifle</a> pages each have the same calculator set up for their own cartridges.</p>
+</section>
+
+<footer class="page">Training reference. Confirm all data with your own rifle, ammunition, and chronograph.</footer>
+</main>
+<script src="assets/sim.js"></script>
+<script src="assets/ballistics.js"></script>
+<script>Ballistics.mount(document.getElementById("bal-main"));</script>
+</body>
+</html>
