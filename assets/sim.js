@@ -72,7 +72,7 @@ window.Sim=function(id,scenes){
 };
 })();
 /* library nav drop-downs: click or tap toggles, hover opens on desktop, Esc or an outside click closes */
-(function(){const nav=document.querySelector("nav.site");if(!nav)return;const dds=[...nav.querySelectorAll(".dd")];
+(function(){const nav=document.querySelector("nav.site");if(!nav)return;const dds=[...nav.querySelectorAll(".dd")].filter(d=>d.querySelector(".dm"));
   const close=x=>dds.forEach(d=>{if(d!==x){d.classList.remove("open");d.querySelector(".dt").setAttribute("aria-expanded","false")}});
   dds.forEach(d=>{const b=d.querySelector(".dt");b.addEventListener("click",e=>{e.stopPropagation();const o=!d.classList.contains("open");close(d);d.classList.toggle("open",o);b.setAttribute("aria-expanded",o?"true":"false")});
     d.addEventListener("mouseleave",()=>{if(matchMedia("(hover:hover)").matches){d.classList.remove("open");b.setAttribute("aria-expanded","false")}})});

@@ -32,6 +32,7 @@ nav.site .sep{width:1px;background:currentColor;opacity:.22;margin:14px 0}
 nav.site .dd{position:relative;display:flex}
 nav.site .dt{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--navink);opacity:.8;background:transparent;border:0;border-bottom:3px solid transparent;padding:0 14px;cursor:pointer}
 nav.site .dt svg{width:10px;height:10px;transition:transform .15s}
+nav.site a.dt{text-decoration:none}
 nav.site .dd.cur .dt{opacity:1;border-bottom-color:var(--accent)}
 nav.site .dd:hover .dt,nav.site .dd.open .dt{opacity:1}
 nav.site .dd.open .dt svg{transform:rotate(180deg)}
