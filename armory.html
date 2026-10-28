@@ -388,7 +388,7 @@ function statusChips(){
 function renderHeader(){const el=document.getElementById("status"); if(el) el.innerHTML=statusChips();}
 function shell(inner){
   const tabs=[["overview","Overview"],["inventory","Inventory"],["ammo","Ammo"],["notes","Range notes"],["plan","Buy next"],["backup","Backup & settings"]];
-  return `<header class="top"><div class="wrap"><div class="topbar"><div class="brandwrap"><a class="backlib" href="index.html">← Library</a><div class="brand"><span>Armory</span></div></div><div class="status" id="status">${statusChips()}</div></div>
+  return `<header class="top"><div class="wrap"><div class="topbar"><div class="brandwrap"><a class="backlib" href="index.html">← Library</a><div class="brand"><span>Armory</span></div><a class="backlib" href="gun-guide.html">Gun Guide</a></div><div class="status" id="status">${statusChips()}</div></div>
   ${S.setupDone?`<nav class="tabs" aria-label="Sections">${tabs.map(([k,n])=>`<button data-act="tab" data-k="${k}" aria-current="${UI.tab===k}">${n}</button>`).join("")}</nav>`:""}</div></header>
   <main class="wrap">${inner}</main>
   <footer class="wrap small muted" style="padding-block:0 32px">Armory is an organization and planning tool, not a legal tool. Scores and suggestions are not legal, tactical, or safety advice.</footer>`;
