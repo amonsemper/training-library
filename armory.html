@@ -1,0 +1,1070 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Armory: a free, no-account planner to log your guns, ammo, and gear, see what's missing, and plan what to buy next. Everything stays in your browser.">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Armory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: range-card app. Brass marks what matters, steel-grey ground, OD green for "met". One column on phones. */
+:root{
+  --bg:#EEF0EC; --surface:#FAFAF7; --raise:#FFFFFF; --ink:#1B201C; --muted:#5B645D; --line:#D3D8D0;
+  --brass:#946A17; --brass-ink:#FFFFFF; --brass-soft:#F3E8CF;
+  --good:#2E7A4C; --good-soft:#DCEEE2; --warn:#A8701A; --warn-soft:#F6EBD6; --crit:#B23E2E; --crit-soft:#F7DFDA;
+  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#131618; --surface:#1A1E21; --raise:#21262A; --ink:#E6E8E3; --muted:#9BA39C; --line:#2F363A;
+  --brass:#D4A54C; --brass-ink:#1A1408; --brass-soft:#3A3021;
+  --good:#61BB86; --good-soft:#1E3327; --warn:#E2AA4E; --warn-soft:#3A2F1C; --crit:#E57A66; --crit-soft:#3D2420; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#131618; --surface:#1A1E21; --raise:#21262A; --ink:#E6E8E3; --muted:#9BA39C; --line:#2F363A;
+  --brass:#D4A54C; --brass-ink:#1A1408; --brass-soft:#3A3021;
+  --good:#61BB86; --good-soft:#1E3327; --warn:#E2AA4E; --warn-soft:#3A2F1C; --crit:#E57A66; --crit-soft:#3D2420; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:980px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.topbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-block:10px}
+.brand{font-family:var(--f-display);font-weight:800;font-size:22px;letter-spacing:.06em;text-transform:uppercase;line-height:1}
+.brandwrap{display:flex;align-items:center;gap:12px;min-width:0}
+.backlib{font:500 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;white-space:nowrap;padding:4px 9px;border:1px solid var(--line);border-radius:999px}
+.backlib:hover{color:var(--ink);border-color:var(--muted)}
+.brand span{color:var(--brass)}
+.status{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;font-size:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;border:1px solid var(--line);background:var(--raise);color:var(--muted);font-size:12px;white-space:nowrap}
+.chip .dot{width:7px;height:7px;border-radius:50%;background:var(--muted)}
+.chip.good .dot{background:var(--good)} .chip.warn .dot{background:var(--warn)} .chip.crit .dot{background:var(--crit)}
+nav.tabs{display:flex;gap:2px;overflow-x:auto;padding-bottom:0}
+nav.tabs button{font:600 13px var(--f-body);letter-spacing:.04em;text-transform:uppercase;padding:10px 14px;border:0;border-bottom:3px solid transparent;background:none;color:var(--muted);cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-current="true"]{color:var(--ink);border-bottom-color:var(--brass)}
+main{padding-block:20px 60px}
+h1,h2,h3{text-wrap:balance;margin:0}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(30px,6vw,44px);line-height:1.02;letter-spacing:.01em;text-transform:uppercase}
+h2{font-family:var(--f-display);font-weight:700;font-size:24px;letter-spacing:.03em;text-transform:uppercase;line-height:1.1}
+h3{font-size:15px;font-weight:600}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}
+.muted{color:var(--muted)} .small{font-size:13px} .mono{font-family:var(--f-mono)}
+.num{font-variant-numeric:tabular-nums}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;min-width:0}
+.btn{font:600 14px var(--f-body);padding:9px 16px;border-radius:var(--r);border:1px solid var(--line);background:var(--raise);color:var(--ink);cursor:pointer}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--brass);border-color:var(--brass);color:var(--brass-ink)}
+.btn.ghost{background:none;border-color:transparent;color:var(--muted);padding-inline:8px}
+.btn.danger{color:var(--crit);border-color:var(--crit)}
+.btn.sm{font-size:12.5px;padding:5px 10px}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.pick{font:500 14px var(--f-body);padding:10px 14px;border-radius:var(--r);border:1px solid var(--line);background:var(--raise);color:var(--ink);cursor:pointer;text-align:left}
+.pick[aria-pressed="true"]{border-color:var(--brass);background:var(--brass-soft);box-shadow:inset 0 0 0 1px var(--brass)}
+.pick.big{padding:14px 16px;min-width:200px;flex:1 1 220px}
+input[type=text],input[type=number],input[type=date],select,textarea{font:400 14px var(--f-body);padding:8px 10px;border:1px solid var(--line);border-radius:var(--r);background:var(--raise);color:var(--ink);min-width:0}
+input[type=number]{width:110px}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted);font-weight:500}
+.setup{max-width:720px;margin:0 auto}
+.progress{display:flex;gap:4px;margin-bottom:14px}
+.progress i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.progress i.on{background:var(--brass)}
+.qnav{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:22px;flex-wrap:wrap}
+.meter{height:10px;border-radius:5px;background:var(--line);overflow:hidden}
+.meter b{display:block;height:100%;background:var(--good)}
+.meter.warn b{background:var(--warn)} .meter.crit b{background:var(--crit)}
+.pct{font:800 44px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.gap{display:grid;grid-template-columns:auto 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.flag{display:inline-block;font:600 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px}
+.flag.met{background:var(--good-soft);color:var(--good)} .flag.partial{background:var(--warn-soft);color:var(--warn)} .flag.missing{background:var(--crit-soft);color:var(--crit)}
+.tag{font:500 11px var(--f-mono);color:var(--brass);letter-spacing:.04em}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{font:600 11.5px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+td.r,th.r{text-align:right}
+.gunrow{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:var(--r);background:var(--raise);cursor:pointer;width:100%;text-align:left;font:inherit;color:inherit}
+.gunrow:hover{border-color:var(--muted)}
+.gunrow .ty{font:700 13px var(--f-mono);color:var(--brass);min-width:78px;text-transform:uppercase;letter-spacing:.05em}
+.gunrow .main{flex:1;min-width:0}
+.badges{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.badge{font:500 11px var(--f-mono);padding:1px 6px;border-radius:3px;border:1px solid var(--line);color:var(--muted)}
+.badge.on{border-color:var(--good);color:var(--good)}
+.banner{padding:12px 14px;border-radius:var(--r);border:1px solid var(--brass);background:var(--brass-soft);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.banner.crit{border-color:var(--crit);background:var(--crit-soft)}
+.overlay{position:fixed;inset:0;background:rgb(0 0 0 / .45);z-index:20;display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:max(24px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) 24px max(12px,env(safe-area-inset-left,0px))}
+.modal{background:var(--surface);border:1px solid var(--line);border-radius:10px;width:min(620px,100%);padding:20px;display:flex;flex-direction:column;gap:16px}
+.ask{border:1px dashed var(--brass);border-radius:var(--r);padding:12px;background:var(--brass-soft)}
+.month{border-left:3px solid var(--brass);padding:4px 0 4px 12px}
+.planrow{display:grid;grid-template-columns:28px 1fr auto;gap:10px;padding:12px 0;border-top:1px solid var(--line);align-items:start}
+.planrow .rk{font:700 18px var(--f-display);color:var(--brass)}
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.stat .v{font:800 28px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.stat .k{font:500 11.5px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+textarea{width:100%;min-height:120px;font-family:var(--f-mono);font-size:12px}
+.combo{position:relative;flex:1 1 240px;min-width:0}
+.combo input{width:100%}
+.combo-list{position:absolute;left:0;right:0;top:100%;margin-top:4px;background:var(--raise);border:1px solid var(--line);border-radius:var(--r);z-index:25;max-height:280px;overflow-y:auto;box-shadow:0 8px 24px rgb(0 0 0 / .18)}
+.opt{display:block;width:100%;text-align:left;padding:9px 12px;border:0;background:none;color:var(--ink);font:inherit;font-size:14px;cursor:pointer}
+.opt[aria-selected="true"],.opt:hover{background:var(--brass-soft)}
+.opt.own{border-top:1px solid var(--line);color:var(--brass);font-weight:600}
+details>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";width:8px;height:8px;border-right:2px solid var(--brass);border-bottom:2px solid var(--brass);transform:rotate(-45deg);transition:transform .15s;flex:none}
+details[open]>summary::before{transform:rotate(45deg)}
+.h2like{font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:.03em;text-transform:uppercase}
+.pri{width:10px;height:10px;border-radius:50%;margin-top:6px;background:var(--muted)}
+.pri.high{background:var(--crit)} .pri.med{background:var(--warn)} .pri.low{background:var(--good)}
+.planrow.sugg{opacity:.92}
+.planrow.sugg .rk{font:700 18px var(--f-display);color:var(--brass)}
+.dropzone{border:1.5px dashed var(--line);border-radius:var(--r);padding:12px 14px;color:var(--muted)}
+body.dragging::after{content:"Drop your Armory backup to restore it";position:fixed;inset:12px;z-index:40;display:flex;align-items:center;justify-content:center;border:3px dashed var(--brass);border-radius:12px;background:color-mix(in srgb,var(--surface) 88%,transparent);color:var(--ink);font:700 22px var(--f-display);letter-spacing:.04em;text-transform:uppercase;text-align:center;padding:24px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:var(--r);z-index:30;font-size:14px}
+@media (max-width:520px){ .gunrow .ty{min-width:60px} .pct{font-size:36px} }
+@media (prefers-reduced-motion:no-preference){ .meter b{transition:width .4s ease} }
+</style>
+
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+(function(){
+"use strict";
+/* ---------- reference data ---------- */
+const TYPES=[["rifle","Rifle"],["bolt","Bolt gun"],["shotgun","Shotgun"],["pcc","PCC"],["pistol","Pistol"],["revolver","Revolver"]];
+const TYPE_NAME=Object.fromEntries(TYPES);
+const CAL={rifle:["5.56 / .223","7.62x39",".300 BLK",".308","5.45x39","30-30",".22 LR"],
+  bolt:[".308","6.5 Creedmoor",".30-06",".223",".300 Win Mag",".22 LR"],
+  shotgun:["12 ga","20 ga",".410"], pcc:["9mm","10mm",".40 S&W",".45 ACP","5.7x28"],
+  pistol:["9mm",".45 ACP",".40 S&W","10mm",".380","5.7x28"], revolver:[".38 Spl / .357",".22 LR",".44 Mag",".45 Colt"]};
+const GOALS=[["home","Home defense"],["gethome","Getting home from work on foot"],["vehicle","Truck / vehicle gun"],["hunting","Hunting"],["training","Training and competition"],["collecting","Collecting and builds"]];
+const GOAL_NAME=Object.fromEntries(GOALS);
+const LACKING=[["ammo","Not enough ammo"],["mags","Too few magazines"],["optic_light","No optic or light on my main gun"],["medical","No medical kit"],["bag","No get-home bag"],["unsure","Not sure, tell me"]];
+const BUYNEXT=[["gun","A new gun"],["ammo","Ammo"],["optics","Optics or lights"],["mags","Magazines"],["medical","Medical / kit"],["parts","Parts for a build"]];
+const RANGES=[["lt100","Under 100",50],["100_500","100–500",300],["500_1000","500–1,000",750],["1000p","1,000+",1000]];
+const GEAR=[["spareMags","Spare mags"],["optic","Optic"],["light","Weapon light"],["sling","Sling"],["holster","Holster"],["ifak","IFAK / tourniquets"],["radios","Radios"],["bag","Get-home bag"]];
+/* example per-round prices in cents, used only until the user logs a purchase */
+const CPR={"5.56 / .223":40,"7.62x39":42,".300 BLK":85,".308":95,"5.45x39":45,"30-30":125,".22 LR":8,"6.5 Creedmoor":120,".30-06":130,".223":45,".300 Win Mag":200,"12 ga":75,"20 ga":60,".410":90,"9mm":28,"10mm":55,".40 S&W":33,".45 ACP":45,"5.7x28":60,".380":38,".38 Spl / .357":60,".44 Mag":90,".45 Colt":95};
+const ACCCAT=[["optic","Optic"],["light","Weapon light"],["laser","Laser"],["mount","Optic mount"],["sights","Iron / night sights"],["grip","Grip"],["stock","Stock"],["choke","Choke"],["muzzle","Muzzle device / suppressor"],["sling","Sling"],["trigger","Trigger"],["handguard","Handguard / rail"],["other","Other"]];
+const ACC_NAME=Object.fromEntries(ACCCAT);
+const CAT_OK=(cat,type)=>!type?true:cat==="choke"?type==="shotgun":["stock","handguard"].includes(cat)?!HAND.includes(type):true;
+/* starter catalog: common items people own; anything else goes in with "Add your own" */
+const CATALOG={
+ optic:["Aimpoint PRO","Aimpoint Micro T-2","Aimpoint COMP M5","EOTech EXPS3","EOTech 512","Trijicon MRO","Trijicon RMR Type 2","Trijicon ACOG 4x32","Trijicon SRO","Holosun HS403B","Holosun HS510C","Holosun HE507K","Holosun 507C X2","Holosun HS503CU","SIG Romeo5","SIG Romeo7","SIG Romeo Zero","Vortex Strikefire II","Vortex Crossfire Red Dot","Vortex Venom","Vortex Strike Eagle 1-6x24","Vortex Viper PST Gen II 1-6x24","Vortex Diamondback 4-12x40","Primary Arms SLx 1-6x24","Primary Arms SLx 3x MicroPrism","Primary Arms SLx 5x Prism","Leupold VX-Freedom 3-9x40","Leupold VX-3HD 4.5-14x40","Leupold Mark 4HD 1-4.5x24","Burris FastFire 3","Burris RT-6 1-6x24","Swampfox Arrowhead 1-6x24","Bushnell AR Optics 1-4x24","Meprolight M21"],
+ light:["SureFire M600DF Scout","SureFire M300 Mini Scout","SureFire X300U-A","SureFire X300T Turbo","SureFire XSC","Streamlight TLR-1 HL","Streamlight TLR-1 HPL","Streamlight TLR-7A","Streamlight TLR-7 Sub","Streamlight TLR-8","Streamlight ProTac Rail Mount HL-X","Streamlight ProTac Rail Mount 2","Cloud Defensive REIN 3.0","Cloud Defensive OWL","Modlite OKW","Modlite PLHv2","Arisaka Scout Light","Inforce WMLx","Olight Odin","Olight Baldr Pro R","Olight PL-Pro Valkyrie","Olight Arkfeld"],
+ laser:["Crimson Trace Lasergrips","Crimson Trace CMR-301","Crimson Trace LiNQ","Streamlight TLR-8 (light + laser)","Streamlight TLR-6","Olight Baldr Pro (light + laser)","Viridian E-Series","LaserMax Guide Rod Laser","SureFire XC2","Holosun LS117"],
+ mount:["Unity FAST Micro","Unity FAST LPVO","Scalarworks LEAP","Aimpoint LRP","American Defense AD-170","Midwest Industries AK Side Mount","Midwest Industries QD Scope Mount","Burris PEPR","Badger Ordnance Condition One","Vortex Sport Cantilever"],
+ sights:["Magpul MBUS 3","Magpul MBUS Pro","Troy Folding BUIS","Daniel Defense Fixed Sights","XS Big Dot","XS DXT2","Trijicon HD Night Sights","Ameriglo Agent","Meprolight Tru-Dot","Dawson Precision Fiber Optic"],
+ grip:["Magpul MOE Grip","Magpul MOE-K2","Magpul MOE+ Grip","BCM Gunfighter Mod 3","Hogue OverMolded AR Grip","Magpul RVG","Magpul AFG","Magpul MVG","BCM Vertical Grip Mod 3","Hogue Rubber Revolver Grips","Hogue HandAll Beavertail","Talon Grip Tape","FAB Defense AGR-47","Magpul MOE AK Grip","Strike Industries Grip"],
+ stock:["Magpul CTR","Magpul MOE Carbine Stock","Magpul PRS Gen3","Magpul SL-S","BCM Gunfighter Mod 0","B5 Systems Bravo","Magpul SGA (870 / 500)","Mesa Tactical Urbino","Hogue OverMolded Shotgun Stock","Magpul Zhukov-S (AK)","Magpul Hunter (Rem 700)","Law Tactical Folding Adapter"],
+ choke:["Cylinder","Skeet","Improved Cylinder","Light Modified","Modified","Improved Modified","Full","Extra Full / Turkey","Carlson's Cylinder","Carlson's Improved Cylinder","Carlson's Modified","Briley Extended","Trulock Precision Hunter","Patternmaster Code Black","Primos Jelly Head Turkey","Mossberg Accu-Choke"],
+ muzzle:["A2 Birdcage","SureFire WarComp","SureFire ProComp","Griffin Armament Hammer Comp","YHM Phantom Flash Hider","Thread protector","SilencerCo Omega 36M","SilencerCo Hybrid 46M","SilencerCo Sparrow 22","SureFire SOCOM556-RC2","Dead Air Sandman-S","Huxwrx Flow 556K","Rugged Obsidian 45","YHM Turbo T2","Banish 22"],
+ sling:["Blue Force Gear Vickers 2-Point","Magpul MS1","Magpul MS4","Viking Tactics VTAC","Ferro Concepts Slingster","Leather rifle sling","Paracord sling"],
+ trigger:["Geissele SSA-E","Geissele SD-E","LaRue MBT-2S","CMC Single Stage","ALG ACT","Timney AR Single Stage","Timney Remington 700","Apex Action Enhancement (M&P)","CMC AK-47 Group","Hiperfire Eclipse"],
+ handguard:["Midwest Industries Combat Rail","BCM MCMR","Geissele MK16","Aero Precision Atlas S-One","Magpul MOE SL Handguard","Ultimak AK Gas Tube Rail","Magpul MOE Forend (870 / 500)"],
+ other:["Mesa Tactical Sidesaddle","Nordic Components Mag Extension","Taran Tactical Basepad","Magpul Rail Light Mount","QD sling swivel","Bipod","Rail covers"]
+};
+const EST={buy_longgun:900,buy_hunting:650,handgun:550,holster:60,ifak:90,radios:70,bag:150,light:130,optic:220,sling:45,mag:15};
+const DEF_LONG=["rifle","pcc","shotgun"], HAND=["pistol","revolver"];
+const STEPS=["welcome","goals","lacking","buy","types","calibers","ammo","gear","result"];
+
+/* ---------- state ---------- */
+const uid=()=>Math.random().toString(36).slice(2,10);
+const today=()=>new Date().toISOString().slice(0,10);
+function fresh(){return {v:1,setupDone:false,step:"welcome",example:false,goals:[],lacking:[],buyNext:[],budget:100,getHomeMi:30,
+  draft:{types:{},counts:{},ammoRange:{},gear:{}},guns:[],ammo:{},gear:{},costTracking:false,
+  plan:{pinned:[],deferred:[],est:{},done:[]},log:[],purchases:[],acc:[],notes:[],list:[],
+  meta:{changes:0,lastBackup:null,savedAt:null,created:new Date().toISOString()}};}
+let S=fresh();
+let UI={openMonths:null,openCats:{},pick:{},invQ:"",tab:"overview",modal:null,toast:null,persisted:null,fileHandle:null,fileOk:false,storageOk:true};
+
+/* ---------- storage: IndexedDB + localStorage mirror ---------- */
+const LS_KEY="aeglos-armory-v1";
+function idb(){return new Promise((res,rej)=>{try{const r=indexedDB.open("aeglos-armory",1);r.onupgradeneeded=()=>r.result.createObjectStore("kv");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);}catch(e){rej(e)}});}
+async function idbGet(k){try{const db=await idb();return await new Promise((res,rej)=>{const q=db.transaction("kv").objectStore("kv").get(k);q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error);});}catch(e){return undefined}}
+async function idbSet(k,v){try{const db=await idb();await new Promise((res,rej)=>{const t=db.transaction("kv","readwrite");t.objectStore("kv").put(v,k);t.oncomplete=res;t.onerror=()=>rej(t.error);});return true}catch(e){return false}}
+let saveTimer=null;
+function commit(countChange=true){ if(countChange) S.meta.changes++; S.meta.savedAt=new Date().toISOString(); render(); clearTimeout(saveTimer); saveTimer=setTimeout(persistNow,250); }
+async function persistNow(){
+  const json=JSON.stringify(S); let ok=false;
+  try{localStorage.setItem(LS_KEY,json);ok=true}catch(e){}
+  if(await idbSet("state",json)) ok=true;
+  UI.storageOk=ok;
+  if(UI.fileHandle&&UI.fileOk&&UI.fileChecked&&!UI.fileNewer){ try{const w=await UI.fileHandle.createWritable();await w.write(json);await w.close();}catch(e){UI.fileOk=false} }
+  renderHeader();
+}
+async function loadState(){
+  let a=null,b=null;
+  try{const t=localStorage.getItem(LS_KEY); if(t) a=JSON.parse(t)}catch(e){}
+  try{const t=await idbGet("state"); if(t) b=JSON.parse(t)}catch(e){}
+  const pick=[a,b].filter(Boolean).sort((x,y)=>String(y.meta&&y.meta.savedAt).localeCompare(String(x.meta&&x.meta.savedAt)))[0];
+  if(pick&&pick.v===1) S=migrate(Object.assign(fresh(),pick));
+  try{const h=await idbGet("fileHandle"); if(h){UI.fileHandle=h; const p=h.queryPermission?await h.queryPermission({mode:"readwrite"}):"denied"; UI.fileOk=p==="granted";}}catch(e){}
+  try{ if(navigator.storage&&navigator.storage.persisted) UI.persisted=await navigator.storage.persisted(); }catch(e){}
+}
+async function askPersist(){ try{ if(navigator.storage&&navigator.storage.persist){ UI.persisted=await navigator.storage.persist(); renderHeader(); } }catch(e){} }
+
+/* ---------- helpers ---------- */
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const money=n=>"$"+(Math.round((n||0)*100)/100).toLocaleString("en-US",{minimumFractionDigits:(n%1?2:0),maximumFractionDigits:2});
+const money0=n=>"$"+Math.round(n||0).toLocaleString("en-US");
+const fmt=n=>Math.round(n||0).toLocaleString("en-US");
+const has=(arr,k)=>arr.includes(k);
+function toggle(arr,k){const i=arr.indexOf(k); if(i>=0) arr.splice(i,1); else arr.push(k);}
+const active=()=>S.guns.filter(g=>g.status==="active");
+const ammoOf=cal=>S.ammo[cal]||{count:0,defensive:0,lots:[],approx:false};
+const isShot=cal=>/ga$|\.410/.test(cal);
+const gunName=g=>`${TYPE_NAME[g.type]}, ${g.caliber}`;
+const gunLabel=g=>(g.make||g.model)?`${g.make||""} ${g.model||""}`.trim():gunName(g);
+function cpr(cal){ // dollars per round
+  const lots=ammoOf(cal).lots.filter(l=>l.paid>0&&l.rounds>0);
+  if(lots.length){const p=lots.reduce((s,l)=>s+l.paid,0), r=lots.reduce((s,l)=>s+l.rounds,0); return p/r;}
+  return (CPR[cal]||60)/100;
+}
+const cprIsReal=cal=>ammoOf(cal).lots.some(l=>l.paid>0&&l.rounds>0);
+const cents=d=>(Math.round(d*1000)/10).toLocaleString("en-US",{maximumFractionDigits:1})+"¢";
+const accOf=g=>S.acc.filter(a=>a.gun===g.id);
+const gHas=(g,cat)=>!!g&&S.acc.some(a=>a.gun===g.id&&a.cat===cat);
+const spare=cat=>S.acc.find(a=>!a.gun&&a.cat===cat)||null;
+function allIn(g){ return (+g.price||0)+(g.other||[]).reduce((s,o)=>s+(+o.amt||0),0)+accOf(g).reduce((s,a)=>s+(+a.cost||0),0)+(+g.magCost||0); }
+function migrate(st){ st.acc=st.acc||[]; st.notes=st.notes||[]; st.list=st.list||[]; (st.guns||[]).forEach(g=>["optic","light","sling"].forEach(c=>{ if(g[c]===true&&!st.acc.some(a=>a.gun===g.id&&a.cat===c)) st.acc.push({id:uid(),cat:c,name:ACC_NAME[c],gun:g.id,cost:g[c+"Cost"]||""}); delete g[c]; delete g[c+"Cost"]; })); return st; }
+function catalogSearch(cat,q){ const list=CATALOG[cat]||[]; const t=q.toLowerCase().split(/\s+/).filter(Boolean); return list.filter(n=>t.every(w=>n.toLowerCase().includes(w))); }
+function daysSince(iso){ if(!iso) return null; return Math.floor((Date.now()-Date.parse(iso))/864e5); }
+
+/* ---------- scoring ---------- */
+function primaryLong(){
+  const c=active().filter(g=>DEF_LONG.includes(g.type)); if(!c.length) return null;
+  const flagged=c.find(g=>g.primary); if(flagged) return flagged;
+  const rank={rifle:3,pcc:2,shotgun:1};
+  return c.slice().sort((a,b)=>(rank[b.type]-rank[a.type])||(ammoOf(b.caliber).count-ammoOf(a.caliber).count))[0];
+}
+const handguns=()=>active().filter(g=>HAND.includes(g.type));
+const firstHandgun=()=>{const h=handguns(); return h.find(g=>g.primary)||h.slice().sort((a,b)=>ammoOf(b.caliber).count-ammoOf(a.caliber).count)[0]||null;};
+const defTarget=cal=>isShot(cal)?250:1000;
+function R(id,label,weight,state,detail,fix){return {id,label,weight,state,detail,fix};}
+function ammoState(cal,target){const c=ammoOf(cal).count; return c>=target?"met":c>=target*0.25?"partial":"missing";}
+function fx(key,label,est,extra){return Object.assign({key,label,est},extra||{});}
+
+function profileReqs(p){
+  const g=S.gear, out=[], own=c=>!!S.gear[c]||!!spare(c);
+  if(p==="home"){
+    const pl=primaryLong(), anyLong=active().some(x=>x.type==="bolt");
+    out.push(R("longgun","Primary long gun",20, pl?"met":anyLong?"partial":"missing", pl?`${gunLabel(pl)} is your primary`:"At least 1 rifle, shotgun, or PCC for defense", pl?null:fx("buy_longgun","Buy a defensive long gun (rifle, PCC, or shotgun)",EST.buy_longgun,{kind:"gun"})));
+    if(pl){
+      const t=defTarget(pl.caliber), c=ammoOf(pl.caliber).count;
+      out.push(R("ammo","Ammo for "+pl.caliber,15, ammoState(pl.caliber,t), `${fmt(c)} of ${fmt(t)} rd`, c<t?fx("ammo:"+pl.caliber,`${fmt(t-c)} rd of ${pl.caliber}`,0,{cal:pl.caliber,rounds:t-c}):null));
+      if(pl.type==="shotgun") out.push(R("mags","Magazines for primary",10,"met","Tube-fed, no magazines needed",null));
+      else { const m=+pl.mags||0, st=m>=5?"met":m>=3?"partial":(g.spareMags&&m===0?"partial":"missing");
+        out.push(R("mags","Magazines for primary",10,st, m===0&&g.spareMags?"Spare mags owned but not counted":`${m} of 5`, m<5?fx("mags:"+pl.id,`${5-m} magazines for ${gunLabel(pl)}`,0,{gun:pl.id,n:5-m}):null)); }
+      const a=ammoOf(pl.caliber), share=a.count?a.defensive/a.count:0, unk=a.approx&&!a.lots.length;
+      const st=a.count===0?"missing":share>=0.2?"met":(share>0||unk)?"partial":"missing";
+      out.push(R("defload","Defensive loads",10,st, unk?"Load type not logged yet":`${Math.round(share*100)}% of ${pl.caliber} is defensive`, st!=="met"?fx("defammo:"+pl.caliber,`${isShot(pl.caliber)?"50 shells of buckshot":"100 rd of defensive"} ${pl.caliber}`,0,{cal:pl.caliber,rounds:isShot(pl.caliber)?50:100,def:true}):null));
+      out.push(R("light","Weapon light on primary",10, gHas(pl,"light")?"met":own("light")?"partial":"missing", gHas(pl,"light")?"Light linked":own("light")?"Light owned but not linked to a gun":"No light", gHas(pl,"light")?null:own("light")?fx("link:light:"+pl.id,`Link your light to ${gunLabel(pl)}`,0,{gun:pl.id,free:true}):fx("light:"+pl.id,`Weapon light for ${gunLabel(pl)}`,EST.light,{gun:pl.id})));
+      out.push(R("optic","Optic on primary",5, gHas(pl,"optic")||pl.type==="shotgun"?"met":own("optic")?"partial":"missing", gHas(pl,"optic")?"Optic linked":pl.type==="shotgun"?"Bead sight is fine for close range":own("optic")?"Optic owned but not linked":"Irons only", (gHas(pl,"optic")||pl.type==="shotgun")?null:own("optic")?fx("link:optic:"+pl.id,`Link your optic to ${gunLabel(pl)}`,0,{gun:pl.id,free:true}):fx("optic:"+pl.id,`Optic for ${gunLabel(pl)}`,EST.optic,{gun:pl.id})));
+    } else {
+      out.push(R("ammo","Ammo for primary",15,"missing","Needs a primary long gun first",null));
+      out.push(R("mags","Magazines for primary",10,"missing","Needs a primary long gun first",null));
+      out.push(R("defload","Defensive loads",10,"missing","Needs a primary long gun first",null));
+      out.push(R("light","Weapon light on primary",10,own("light")?"partial":"missing","Needs a primary long gun first",null));
+      out.push(R("optic","Optic on primary",5,own("optic")?"partial":"missing","Needs a primary long gun first",null));
+    }
+    const hg=firstHandgun();
+    out.push(R("sidearm","Sidearm and holster",10, hg&&g.holster?"met":hg?"partial":"missing", hg?(g.holster?"Handgun and holster":"Handgun, no holster"):"No handgun", hg?(g.holster?null:fx("holster","Holster",EST.holster)):fx("handgun","Buy a handgun",EST.handgun,{kind:"gun"})));
+    out.push(R("medical","Medical (IFAK, 2+ tourniquets)",15, g.ifak?"met":"missing", g.ifak?"IFAK logged":"No IFAK logged", g.ifak?null:fx("ifak","IFAK with 2 tourniquets",EST.ifak)));
+    out.push(R("comms","Communications",5, g.radios?"met":"missing", g.radios?"Radios logged":"No radios", g.radios?null:fx("radios","Pair of handheld radios",EST.radios)));
+  }
+  if(p==="gethome"){
+    const hg=firstHandgun(), mi=S.getHomeMi||30;
+    out.push(R("sidearm","Carry handgun",25, hg?"met":"missing", hg?gunLabel(hg):"No handgun", hg?null:fx("handgun","Buy a handgun",EST.handgun,{kind:"gun"})));
+    out.push(R("holster","Holster",10, g.holster?"met":"missing", g.holster?"Logged":"None", g.holster?null:fx("holster","Holster",EST.holster)));
+    if(hg){const c=ammoOf(hg.caliber).count; out.push(R("hgammo","Ammo for "+hg.caliber,15, ammoState(hg.caliber,200), `${fmt(c)} of 200 rd`, c<200?fx("ammo:"+hg.caliber,`${fmt(200-c)} rd of ${hg.caliber}`,0,{cal:hg.caliber,rounds:200-c}):null));
+      if(hg.type==="revolver") out.push(R("reloads","Reloads",10,g.spareMags?"met":"partial","Speedloaders or strips",null));
+      else {const m=+hg.mags||0; out.push(R("reloads","Spare magazines",10, m>=3?"met":(m>0||g.spareMags)?"partial":"missing", `${m} of 3`, m<3?fx("mags:"+hg.id,`${3-m} magazines for ${gunLabel(hg)}`,0,{gun:hg.id,n:3-m}):null));}}
+    else { out.push(R("hgammo","Handgun ammo",15,"missing","Needs a handgun first",null)); out.push(R("reloads","Spare magazines",10,"missing","Needs a handgun first",null)); }
+    out.push(R("medical","IFAK",20, g.ifak?"met":"missing", g.ifak?"Logged":"None", g.ifak?null:fx("ifak","IFAK with 2 tourniquets",EST.ifak)));
+    out.push(R("bag","Get-home bag",15, g.bag?"met":"missing", `Built for ${mi} mi on foot`, g.bag?null:fx("bag",`Get-home bag for ${mi} mi`,EST.bag)));
+    out.push(R("ghlight","Light",5, (own("light")||active().some(x=>gHas(x,"light")))?"met":"missing", "Weapon or handheld light", (own("light")||active().some(x=>gHas(x,"light")))?null:fx("light:"+(hg?hg.id:"none"),"Weapon light",EST.light,{gun:hg?hg.id:null})));
+  }
+  if(p==="vehicle"){
+    const c=active().filter(x=>x.type==="pcc"||x.type==="rifle"); const vg=c.find(x=>x.type==="pcc")||c[0]||null;
+    out.push(R("vgun","Compact long gun (PCC or rifle)",30, vg?"met":"missing", vg?gunLabel(vg):"None", vg?null:fx("buy_longgun","Buy a defensive long gun (rifle, PCC, or shotgun)",EST.buy_longgun,{kind:"gun"})));
+    if(vg){const n=ammoOf(vg.caliber).count, m=+vg.mags||0;
+      out.push(R("vammo","Ammo for "+vg.caliber,15, ammoState(vg.caliber,200), `${fmt(n)} of 200 rd`, n<200?fx("ammo:"+vg.caliber,`${fmt(200-n)} rd of ${vg.caliber}`,0,{cal:vg.caliber,rounds:200-n}):null));
+      out.push(R("vmags","Magazines",15, m>=3?"met":(m>0||g.spareMags)?"partial":"missing", `${m} of 3`, m<3?fx("mags:"+vg.id,`${3-m} magazines for ${gunLabel(vg)}`,0,{gun:vg.id,n:3-m}):null));
+      out.push(R("vsling","Sling",10, gHas(vg,"sling")?"met":own("sling")?"partial":"missing", gHas(vg,"sling")?"Linked":own("sling")?"Sling owned but not linked":"None", gHas(vg,"sling")?null:own("sling")?fx("link:sling:"+vg.id,`Link your sling to ${gunLabel(vg)}`,0,{gun:vg.id,free:true}):fx("sling:"+vg.id,`Sling for ${gunLabel(vg)}`,EST.sling,{gun:vg.id})));}
+    else { out.push(R("vammo","Ammo",15,"missing","Needs a gun first",null)); out.push(R("vmags","Magazines",15,"missing","Needs a gun first",null)); out.push(R("vsling","Sling",10,own("sling")?"partial":"missing","Needs a gun first",null)); }
+    out.push(R("medical","IFAK",20, g.ifak?"met":"missing", g.ifak?"Logged":"None", g.ifak?null:fx("ifak","IFAK with 2 tourniquets",EST.ifak)));
+    out.push(R("bag","Vehicle bag",10, g.bag?"met":"missing", g.bag?"Logged":"None", g.bag?null:fx("bag",`Get-home bag for ${S.getHomeMi||30} mi`,EST.bag)));
+  }
+  if(p==="hunting"){
+    const c=active(); const hg=c.find(x=>x.type==="bolt")||c.find(x=>x.type==="rifle")||c.find(x=>x.type==="shotgun")||null;
+    out.push(R("hgun","Hunting gun",35, hg?"met":"missing", hg?gunLabel(hg):"Bolt gun, rifle, or shotgun", hg?null:fx("buy_hunting","Buy a hunting rifle",EST.buy_hunting,{kind:"gun"})));
+    if(hg){const n=ammoOf(hg.caliber).count;
+      out.push(R("hoptic","Optic",25, (gHas(hg,"optic")||hg.type==="shotgun")?"met":own("optic")?"partial":"missing", gHas(hg,"optic")?"Linked":hg.type==="shotgun"?"Bead is fine for birds":own("optic")?"Optic owned but not linked":"None", (gHas(hg,"optic")||hg.type==="shotgun")?null:own("optic")?fx("link:optic:"+hg.id,`Link your optic to ${gunLabel(hg)}`,0,{gun:hg.id,free:true}):fx("optic:"+hg.id,`Optic for ${gunLabel(hg)}`,EST.optic,{gun:hg.id})));
+      out.push(R("hammo","Ammo for "+hg.caliber,20, ammoState(hg.caliber,100), `${fmt(n)} of 100 rd`, n<100?fx("ammo:"+hg.caliber,`${fmt(100-n)} rd of ${hg.caliber}`,0,{cal:hg.caliber,rounds:100-n}):null));
+      out.push(R("hsling","Sling",20, gHas(hg,"sling")?"met":own("sling")?"partial":"missing", gHas(hg,"sling")?"Linked":own("sling")?"Sling owned but not linked":"None", gHas(hg,"sling")?null:own("sling")?fx("link:sling:"+hg.id,`Link your sling to ${gunLabel(hg)}`,0,{gun:hg.id,free:true}):fx("sling:"+hg.id,`Sling for ${gunLabel(hg)}`,EST.sling,{gun:hg.id})));}
+    else { out.push(R("hoptic","Optic",25,own("optic")?"partial":"missing","Needs a gun first",null)); out.push(R("hammo","Ammo",20,"missing","Needs a gun first",null)); out.push(R("hsling","Sling",20,own("sling")?"partial":"missing","Needs a gun first",null)); }
+  }
+  if(p==="training"){
+    const c=active(); const tg=firstHandgun()||primaryLong()||c[0]||null;
+    out.push(R("tgun","A gun to train with",15, tg?"met":"missing", tg?gunLabel(tg):"None", tg?null:fx("handgun","Buy a handgun",EST.handgun,{kind:"gun"})));
+    if(tg){const n=ammoOf(tg.caliber).count, m=+tg.mags||0;
+      out.push(R("tammo","Practice ammo, "+tg.caliber,35, ammoState(tg.caliber,1000), `${fmt(n)} of 1,000 rd`, n<1000?fx("ammo:"+tg.caliber,`${fmt(1000-n)} rd of ${tg.caliber}`,0,{cal:tg.caliber,rounds:1000-n}):null));
+      if(["shotgun","revolver","bolt"].includes(tg.type)) out.push(R("tmags","Magazines",15,"met","Not mag-fed",null));
+      else out.push(R("tmags","Magazines",15, m>=5?"met":(m>0||g.spareMags)?"partial":"missing", `${m} of 5`, m<5?fx("mags:"+tg.id,`${5-m} magazines for ${gunLabel(tg)}`,0,{gun:tg.id,n:5-m}):null));}
+    else { out.push(R("tammo","Practice ammo",35,"missing","Needs a gun first",null)); out.push(R("tmags","Magazines",15,"missing","Needs a gun first",null)); }
+    out.push(R("tcarry","Holster or sling",15, (g.holster||own("sling"))?"met":"missing", (g.holster||own("sling"))?"Logged":"None", (g.holster||own("sling"))?null:fx("holster","Holster",EST.holster)));
+    const recent=S.log.some(l=>l.reason==="range"&&daysSince(l.date)<=90)||S.notes.some(n=>daysSince(n.date)<=90);
+    out.push(R("tlog","Range trip in the last 90 days",20, recent?"met":"missing", recent?"Logged":"No range trips logged", recent?null:fx("log:range","Add a range note after your next trip",0,{free:true,nav:"notes"})));
+  }
+  return out;
+}
+const SCORED=["home","gethome","vehicle","hunting","training"];
+function score(reqs){const tot=reqs.reduce((s,r)=>s+r.weight,0); const got=reqs.reduce((s,r)=>s+(r.state==="met"?r.weight:r.state==="partial"?r.weight/2:0),0); return tot?Math.round(got/tot*100):0;}
+function profiles(){return S.goals.filter(p=>SCORED.includes(p)).map(p=>{const reqs=profileReqs(p);return {p,reqs,score:score(reqs)};});}
+const LACK_MAP={ammo:/^(ammo|defammo)/,mags:/^mags/,optic_light:/^(light|optic|link:(light|optic))/,medical:/^ifak/,bag:/^bag/};
+const BUY_MAP={gun:/^(buy_|handgun)/,ammo:/^(ammo|defammo)/,optics:/^(light|optic)/,mags:/^mags/,medical:/^ifak/};
+function fixes(){
+  const map={};
+  profiles().forEach(({p,reqs})=>reqs.forEach(r=>{ if(!r.fix||r.state==="met") return;
+    const f=r.fix, gain=r.state==="missing"?r.weight:r.weight/2;
+    let key=f.key.startsWith("ammo:")?"ammo:"+f.cal:f.key;
+    if(!map[key]) map[key]=Object.assign({},f,{key,gains:{}});
+    const m=map[key];
+    if(key.startsWith("ammo:")&&f.rounds>m.rounds){m.rounds=f.rounds; m.label=`${fmt(f.rounds)} rd of ${f.cal}`;}
+    m.gains[p]=(m.gains[p]||0)+gain; }));
+  return Object.values(map).map(f=>{
+    if(f.key.startsWith("ammo:")||f.key.startsWith("defammo:")) f.est=f.rounds*cpr(f.cal);
+    if(f.key.startsWith("mags:")) f.est=f.n*EST.mag;
+    if(S.plan.est[f.key]!=null) f.est=+S.plan.est[f.key];
+    f.flagged=Object.entries(LACK_MAP).some(([k,re])=>has(S.lacking,k)&&re.test(f.key));
+    f.wanted=Object.entries(BUY_MAP).some(([k,re])=>has(S.buyNext,k)&&re.test(f.key));
+    const pts=Object.values(f.gains).reduce((a,b)=>a+b,0), n=Object.keys(f.gains).length;
+    f.pts=pts; f.prio=(pts*n*(f.flagged?1.5:1)*(f.wanted?1.25:1))/Math.max(f.est,1)+(f.est===0?1e6:0);
+    f.pinned=has(S.plan.pinned,f.key); f.deferred=has(S.plan.deferred,f.key); f.listed=S.list.some(i=>i.fix===f.key&&i.status!=="bought");
+    return f;
+  }).sort((a,b)=>(b.pinned-a.pinned)||(a.deferred-b.deferred)||(b.prio-a.prio)||(isConsumable(b)-isConsumable(a)));
+}
+const isConsumable=f=>/^(ammo|defammo|ifak)/.test(f.key)?1:0;
+function schedule(list){
+  const B=Math.max(+S.budget||0,0), months=[], now=new Date(); let cash=0, i=0, q=list.slice();
+  for(let m=0;m<12&&q.length;m++){
+    const d=new Date(now.getFullYear(),now.getMonth()+m,1); cash+=B; const items=[];
+    while(q.length&&q[0].est<=cash){const it=q.shift(); cash-=it.est; items.push(it);}
+    months.push({label:d.toLocaleString("en-US",{month:"short",year:"numeric"}),items,saving:q.length?{item:q[0],cash}:null});
+    if(B===0) break;
+  }
+  return {months,later:q};
+}
+
+/* ---------- caliber status ---------- */
+function calibers(){
+  const set=new Set(); active().forEach(g=>set.add(g.caliber)); Object.keys(S.ammo).forEach(c=>{if(S.ammo[c].count>0)set.add(c)});
+  return [...set].map(cal=>{const guns=active().filter(g=>g.caliber===cal); const onlyBolt=guns.length&&guns.every(g=>g.type==="bolt");
+    const target=cal===".22 LR"?1000:onlyBolt?200:defTarget(cal); const c=ammoOf(cal).count;
+    const st=!guns.length?"none":c>=target?"met":c>=target*0.25?"partial":"missing"; return {cal,guns,target,count:c,st};})
+    .sort((a,b)=>({missing:0,partial:1,met:2,none:3}[a.st]-{missing:0,partial:1,met:2,none:3}[b.st]));
+}
+
+/* ---------- render: header ---------- */
+function statusChips(){
+  if(!S.setupDone&&!S.guns.length) return `<span class="chip"><span class="dot"></span>Nothing saved yet</span>`;
+  const out=[];
+  out.push(UI.storageOk?`<span class="chip good"><span class="dot"></span>Saved on this device</span>`:`<span class="chip crit"><span class="dot"></span>This browser is not saving</span>`);
+  out.push(UI.persisted?`<span class="chip good"><span class="dot"></span>Protected</span>`:`<span class="chip warn"><span class="dot"></span>Not protected from cleanup</span>`);
+  if(UI.fileHandle) out.push(UI.fileOk?`<span class="chip good"><span class="dot"></span>Auto-saving to file</span>`:`<span class="chip warn"><span class="dot"></span>Auto-save file paused</span>`);
+  const d=daysSince(S.meta.lastBackup);
+  out.push(d==null?`<span class="chip warn"><span class="dot"></span>No backup yet</span>`:`<span class="chip ${d>30?"warn":"good"}"><span class="dot"></span>Backup ${d===0?"today":d+" days ago"}</span>`);
+  return out.join("");
+}
+function renderHeader(){const el=document.getElementById("status"); if(el) el.innerHTML=statusChips();}
+function shell(inner){
+  const tabs=[["overview","Overview"],["inventory","Inventory"],["ammo","Ammo"],["notes","Range notes"],["plan","Buy next"],["backup","Backup & settings"]];
+  return `<header class="top"><div class="wrap"><div class="topbar"><div class="brandwrap"><a class="backlib" href="index.html">← Library</a><div class="brand"><span>Armory</span></div></div><div class="status" id="status">${statusChips()}</div></div>
+  ${S.setupDone?`<nav class="tabs" aria-label="Sections">${tabs.map(([k,n])=>`<button data-act="tab" data-k="${k}" aria-current="${UI.tab===k}">${n}</button>`).join("")}</nav>`:""}</div></header>
+  <main class="wrap">${inner}</main>
+  <footer class="wrap small muted" style="padding-block:0 32px">Armory is an organization and planning tool, not a legal tool. Scores and suggestions are not legal, tactical, or safety advice.</footer>`;
+}
+
+/* ---------- render: setup ---------- */
+function progress(){const i=STEPS.indexOf(S.step); return `<div class="progress" aria-hidden="true">${STEPS.slice(1).map((s,j)=>`<i class="${j<i?"on":""}"></i>`).join("")}</div>`;}
+function picks(list,arr,act,big){return `<div class="chips">${list.map(([k,n])=>`<button class="pick ${big?"big":""}" data-act="${act}" data-k="${k}" aria-pressed="${has(arr,k)}">${esc(n)}</button>`).join("")}</div>`;}
+function qnav(next,label){const i=STEPS.indexOf(S.step); return `<div class="qnav"><button class="btn ghost" data-act="back">← Back</button><div class="row"><button class="btn ghost" data-act="next">Skip</button><button class="btn primary" data-act="${next||"next"}">${label||"Next →"}</button></div></div>`;}
+function setupView(){
+  const d=S.draft, st=S.step, n=STEPS.indexOf(st);
+  if(st==="welcome") return `<div class="setup stack">
+    ${fileNewerBanner()}
+    <div class="banner" role="note"><strong>Organization and planning tool only.</strong><span class="small">Armory is not a legal tool and gives no legal advice. It doesn't tell you what you may own, carry, buy, or transfer where you live. Check your federal, state, and local laws.</span></div>
+    <div class="eyebrow">Free · No account · Stays on this device</div>
+    <h1>Know what you have.<br>Know what's missing.</h1>
+    <p class="muted" style="max-width:60ch">Armory logs your guns, ammo, and gear, scores your setup against the goals you pick, and builds a month-by-month list of what to buy next. Setup takes about two minutes of tapping. You only type a make or model when a feature needs it.</p>
+    <div class="row"><button class="btn primary" data-act="start">Start setup</button><button class="btn" data-act="example">See an example armory</button><label class="btn" for="restoreFile">Restore a backup</label><input id="restoreFile" type="file" accept=".json,application/json" hidden>${typeof window.showOpenFilePicker==="function"?'<button class="btn" data-act="openLink">Open my auto-save file</button>':""}</div>
+    <div class="dropzone small">Have a backup file? Drop it anywhere on this page. Backups are named like <span class="mono">armory-2026-10-28-1452.json</span>.</div>
+    <div class="card small muted">Your data is saved in this browser only. Nothing is sent to a server. A serial number is never required, and the app never asks where you keep anything.</div></div>`;
+  let body="";
+  if(st==="goals") body=`<div class="eyebrow">Step 1 of 7 · Goals</div><h2>What do you want your armory ready for?</h2><p class="muted small">Pick all that apply.</p>${picks(GOALS,S.goals,"goal",true)}
+    ${has(S.goals,"gethome")?`<div class="card row"><label class="f" for="ghmi">How far is home from work, in miles?<input id="ghmi" type="number" min="1" max="200" value="${esc(S.getHomeMi)}" data-bind="getHomeMi"></label></div>`:""}`;
+  if(st==="lacking") body=`<div class="eyebrow">Step 2 of 7 · Gaps you already feel</div><h2>What do you feel is lacking?</h2><p class="muted small">These get extra weight when the app ranks what to buy.</p>${picks(LACKING,S.lacking,"lack",true)}`;
+  if(st==="buy") body=`<div class="eyebrow">Step 3 of 7 · Shopping list</div><h2>What do you want to buy next?</h2>${picks(BUYNEXT,S.buyNext,"buyn",true)}
+    <div class="stack" style="gap:8px"><h3>Monthly gear budget <span class="muted small">(optional)</span></h3><div class="chips">${[50,100,250,500].map(v=>`<button class="pick" data-act="budget" data-k="${v}" aria-pressed="${+S.budget===v}">$${v}</button>`).join("")}<label class="f" for="budgetCustom">Custom<input id="budgetCustom" type="number" min="0" value="${[50,100,250,500].includes(+S.budget)?"":esc(S.budget)}" data-bind="budget" placeholder="$"></label></div></div>`;
+  if(st==="types") body=`<div class="eyebrow">Step 4 of 7 · What you have</div><h2>Do you have a…</h2><p class="muted small">Pick every type you own. You'll pick calibers next.</p>${picks(TYPES,Object.keys(d.types).filter(k=>d.types[k]),"type",true)}`;
+  if(st==="calibers"){ const ts=TYPES.filter(([k])=>d.types[k]);
+    body=`<div class="eyebrow">Step 4a of 7 · Calibers</div><h2>Which calibers, and how many guns in each?</h2>
+    ${ts.length?ts.map(([k,nm])=>{const sel=d.counts[k]||{}; const list=[...new Set([...CAL[k],...Object.keys(sel)])];
+      return `<div class="card stack" style="gap:10px"><h3>${nm}</h3><div class="chips">${list.map(c=>`<button class="pick" data-act="cal" data-t="${k}" data-k="${esc(c)}" aria-pressed="${!!sel[c]}">${esc(c)}</button>`).join("")}</div>
+      ${Object.keys(sel).length?`<div class="stack" style="gap:6px">${Object.entries(sel).map(([c,n])=>`<div class="row small"><span class="mono" style="min-width:120px">${esc(c)}</span><button class="btn sm" data-act="cnt" data-t="${k}" data-k="${esc(c)}" data-d="-1" aria-label="One fewer">−</button><span class="num mono">${n}</span><button class="btn sm" data-act="cnt" data-t="${k}" data-k="${esc(c)}" data-d="1" aria-label="One more">+</button><span class="muted">${n===1?"gun":"guns"}</span></div>`).join("")}</div>`:""}
+      <div class="row"><input type="text" id="own-${k}" placeholder="Enter your own caliber" aria-label="Enter your own ${nm} caliber"><button class="btn sm" data-act="owncal" data-t="${k}">Add</button></div></div>`;}).join(""):`<p class="muted">No types picked. Go back to add some, or skip.</p>`}`;}
+  if(st==="ammo"){ const cals=[...new Set(Object.values(d.counts).flatMap(o=>Object.keys(o)))];
+    body=`<div class="eyebrow">Step 5 of 7 · Ammo</div><h2>Roughly how much ammo for each caliber?</h2><p class="muted small">A rough count is fine. You can make it exact later.</p>
+    ${cals.length?cals.map(c=>`<div class="card stack" style="gap:8px"><h3 class="mono">${esc(c)}</h3><div class="chips">${RANGES.map(([k,n])=>`<button class="pick" data-act="range" data-c="${esc(c)}" data-k="${k}" aria-pressed="${d.ammoRange[c]===k}">${n}</button>`).join("")}</div></div>`).join(""):`<p class="muted">No calibers picked yet.</p>`}`;}
+  if(st==="gear") body=`<div class="eyebrow">Step 6 of 7 · Gear check</div><h2>Do you have any of these?</h2>${picks(GEAR,Object.keys(d.gear).filter(k=>d.gear[k]),"gear",true)}`;
+  if(st==="result"){ const ps=profiles(), fx0=fixes();
+    body=`<div class="eyebrow">Step 7 of 7 · Your first score</div><h2>Here's where you stand</h2>
+    ${ps.length?`<div class="grid">${ps.map(scoreCard).join("")}</div>`:`<p class="muted">You didn't pick a scored goal. Readiness scores cover home defense, get-home, vehicle, hunting, and training.</p>`}
+    ${fx0.length?`<div class="card"><div class="eyebrow">First thing to buy</div><h3 style="margin-top:4px">${esc(fx0[0].label)}</h3><p class="small muted">${whyLine(fx0[0])} · ${fx0[0].est?money0(fx0[0].est)+" est.":"Free"}</p></div>`:""}`;
+    return `<div class="setup stack">${progress()}${body}<div class="qnav"><button class="btn ghost" data-act="back">← Back</button><button class="btn primary" data-act="openArmory">Open my armory →</button></div></div>`; }
+  return `<div class="setup stack">${progress()}${body}${qnav(st==="gear"?"finish":null, st==="gear"?"See my score →":null)}</div>`;
+}
+
+/* ---------- render: overview ---------- */
+function band(s){return s>=75?"":s>=45?"warn":"crit";}
+function scoreCard({p,reqs,score:s}){
+  const gaps=reqs.filter(r=>r.state!=="met").sort((a,b)=>b.weight-a.weight);
+  const top=gaps[0];
+  return `<div class="card stack" style="gap:10px"><div class="row" style="justify-content:space-between;align-items:flex-end"><div><div class="eyebrow">${esc(GOAL_NAME[p])}${p==="gethome"?` · ${S.getHomeMi} mi`:""}</div><div class="pct">${s}%</div></div><span class="small muted">${top?`Main gap: ${esc(top.label)}`:"No gaps"}</span></div>
+  <div class="meter ${band(s)}" role="img" aria-label="${s} percent ready"><b style="width:${s}%"></b></div>
+  <div>${reqs.map(r=>`<div class="gap"><span class="flag ${r.state}">${r.state==="met"?"Met":r.state==="partial"?"Partial":"Missing"}</span><div><div class="small" style="font-weight:600">${esc(r.label)} <span class="muted mono" style="font-weight:400">· ${r.weight} pts</span></div><div class="small muted">${esc(r.detail)}</div></div></div>`).join("")}</div></div>`;
+}
+function whyLine(f){return Object.entries(f.gains).map(([p,v])=>`+${Math.round(v)} pts ${GOAL_NAME[p].toLowerCase()}`).join(", ");}
+function overviewView(){
+  const ps=profiles(), cals=calibers(), g=active();
+  const total=g.reduce((s,x)=>s+allIn(x),0), stock=cals.reduce((s,c)=>s+c.count*cpr(c.cal),0);
+  const nag=backupNag();
+  return `<div class="stack">
+  ${S.example?`<div class="banner"><strong>Example armory.</strong><span class="small">These are sample guns and counts, not yours.</span><button class="btn sm" data-act="clearExample" style="margin-left:auto">Clear it and start my own</button></div>`:""}
+  ${fileNewerBanner()}
+  ${nag}
+  <div class="row" style="justify-content:space-between;align-items:flex-end"><div><div class="eyebrow">${g.length} guns · ${cals.length} calibers</div><h1>Readiness</h1></div>
+  ${S.costTracking?`<div class="split" style="min-width:min(100%,340px)"><div class="stat"><div class="k">All-in, active guns</div><div class="v">${money0(total)}</div></div><div class="stat"><div class="k">Ammo on hand</div><div class="v">${money0(stock)}</div></div></div>`:""}</div>
+  ${ps.length?`<div class="grid">${ps.map(scoreCard).join("")}</div>`:`<div class="card">Pick a scored goal in Backup &amp; settings to see readiness.</div>`}
+  <div class="card"><div class="row" style="justify-content:space-between"><h2>Caliber check</h2><button class="btn sm" data-act="tab" data-k="ammo">Open ammo</button></div>
+  <div class="tbl" style="margin-top:8px"><table><thead><tr><th>Caliber</th><th class="r">On hand</th><th class="r">Target</th><th>Status</th><th>Guns</th></tr></thead><tbody>
+  ${cals.map(c=>`<tr><td class="mono">${esc(c.cal)}</td><td class="r num">${fmt(c.count)}${ammoOf(c.cal).approx&&!ammoOf(c.cal).lots.length?' <span class="muted small">(rough)</span>':""}</td><td class="r num muted">${fmt(c.target)}</td><td>${c.st==="none"?'<span class="small muted">No gun uses it</span>':`<span class="flag ${c.st}">${c.st==="met"?"Good":c.st==="partial"?"Low":"Critical"}</span>`}</td><td class="small muted">${c.guns.length}</td></tr>`).join("")||`<tr><td colspan="5" class="muted">No guns logged yet.</td></tr>`}
+  </tbody></table></div></div>
+  ${has(S.goals,"collecting")?`<div class="card"><h2>Collecting and builds</h2><p class="small muted">${g.filter(x=>x.make||x.model).length} of ${g.length} guns have make and model filled in.${S.costTracking?` All-in cost across active guns: ${money0(total)}.`:" Turn on cost tracking in settings to see what each gun has cost."}</p></div>`:""}
+  </div>`;
+}
+function backupNag(){
+  if(!S.guns.length) return "";
+  const d=daysSince(S.meta.lastBackup);
+  if(S.meta.changes>=10||d==null&&S.meta.changes>=3||(d!=null&&d>=30)) return `<div class="banner ${d==null?"":"crit"}"><strong>${S.meta.changes} changes since your last backup.</strong><span class="small">Clearing site data or switching browsers would lose them.</span><button class="btn sm primary" data-act="download" style="margin-left:auto">Download backup</button></div>`;
+  return "";
+}
+
+/* ---------- render: inventory ---------- */
+function inventoryView(){
+  const q=(UI.invQ||"").toLowerCase().trim(), ct=S.costTracking;
+  const match=g=>!q||[gunName(g),g.make,g.model,...accOf(g).map(a=>a.name+" "+ACC_NAME[a.cat])].join(" ").toLowerCase().includes(q);
+  const groups=TYPES.map(([k,n])=>[k,n,S.guns.filter(g=>g.type===k&&match(g))]).filter(x=>x[2].length);
+  const act=active(), mags=act.reduce((s,g)=>s+(+g.mags||0),0), spares=S.acc.filter(a=>!a.gun);
+  const mounted=S.acc.filter(a=>a.gun).length;
+  const total=act.reduce((s,g)=>s+allIn(g),0)+spares.reduce((s,a)=>s+(+a.cost||0),0);
+  return `<div class="stack"><div class="row" style="justify-content:space-between"><h1>Inventory</h1><div class="row"><button class="btn" data-act="addSpare">Add spare gear</button><button class="btn primary" data-act="addGun">Add a gun</button></div></div>
+  <div class="card split">
+    <div class="stat"><div class="k">Active guns</div><div class="v">${act.length}</div></div>
+    <div class="stat"><div class="k">Accessories mounted</div><div class="v">${mounted}</div></div>
+    <div class="stat"><div class="k">Spare gear</div><div class="v">${spares.length}</div></div>
+    <div class="stat"><div class="k">Magazines</div><div class="v">${mags}</div></div>
+    ${ct?`<div class="stat"><div class="k">Total invested</div><div class="v">${money0(total)}</div></div>`:""}
+  </div>
+  <div class="row"><input type="text" id="inv-q" value="${esc(UI.invQ||"")}" placeholder="Search guns, calibers, or accessories" aria-label="Search inventory" style="flex:1 1 260px"></div>
+  ${groups.length?groups.map(([k,n,list])=>`<div class="stack" style="gap:8px"><div class="eyebrow">${n} · ${list.length}</div>${list.map(gunRow).join("")}</div>`).join(""):`<div class="card">${q?"Nothing matches that search.":"No guns yet. Add your first one."}</div>`}
+  <div class="card stack" style="gap:10px"><div class="row" style="justify-content:space-between"><h2>Spare gear, not mounted</h2><button class="btn sm" data-act="addSpare">Add</button></div>
+  <p class="small muted">Optics, lights, chokes, and other parts sitting in a drawer. Mount one on a gun when you put it on.</p>
+  ${spares.length?`<div class="tbl"><table><thead><tr><th>Type</th><th>Item</th>${ct?'<th class="r">Paid</th>':""}<th>Mount on</th><th></th></tr></thead><tbody>${spares.map(a=>`<tr><td class="small muted">${esc(ACC_NAME[a.cat])}</td><td>${esc(a.name)}</td>${ct?`<td class="r num">${a.cost?money(+a.cost):""}</td>`:""}<td><select id="mnt-${a.id}" data-mount="${a.id}" aria-label="Mount ${esc(a.name)} on a gun"><option value="">Choose a gun</option>${act.filter(g=>CAT_OK(a.cat,g.type)).map(g=>`<option value="${g.id}">${esc(gunLabel(g))} (${esc(g.caliber)})</option>`).join("")}</select></td><td class="r"><button class="btn sm ghost" data-act="accDel" data-id="${a.id}" aria-label="Remove ${esc(a.name)}">✕</button></td></tr>`).join("")}</tbody></table></div>`:`<p class="small muted">None logged.</p>`}</div>
+  ${ct&&S.purchases.length?`<div class="card"><h2>Purchase log</h2><div class="tbl"><table><thead><tr><th>Date</th><th>Item</th><th class="r">Paid</th></tr></thead><tbody>${S.purchases.slice().reverse().slice(0,15).map(p=>`<tr><td class="mono small">${esc(p.date)}</td><td>${esc(p.label)}</td><td class="r num">${money(p.paid)}</td></tr>`).join("")}</tbody></table></div></div>`:""}</div>`;
+}
+function gunRow(g){
+  const serial=g.serialWanted===true&&g.serial?`<span class="badge on">Serial on file</span>`:g.serialWanted===false?"":`<span class="badge" style="border-color:var(--brass);color:var(--brass)">Serial? Yes / No</span>`;
+  const st=g.status!=="active"?`<span class="badge">${esc(g.status)}</span>`:"";
+  const acc=accOf(g), magFed=!["shotgun","revolver"].includes(g.type);
+  return `<button class="gunrow" data-act="editGun" data-id="${g.id}"><span class="ty">${esc(g.caliber)}</span><span class="main"><strong>${esc(gunLabel(g))}</strong>${g.make||g.model?` <span class="muted small">${esc(TYPE_NAME[g.type])}${g.barrel?`, ${esc(g.barrel)} in`:""}</span>`:` <span class="muted small">· add make and model</span>`}
+  ${acc.length?`<span class="small" style="display:block;margin-top:2px">${acc.map(a=>`<span class="muted">${esc(ACC_NAME[a.cat])}:</span> ${esc(a.name)}`).join(" · ")}</span>`:`<span class="small muted" style="display:block;margin-top:2px">No accessories logged</span>`}
+  <span class="badges">${g.primary?'<span class="badge on">Primary</span>':""}${magFed?`<span class="badge ${g.mags>0?"on":""}">${+g.mags||0} mags</span>`:""}${serial}${st}</span></span>
+  ${S.costTracking?`<span class="num mono small">${money0(allIn(g))}</span>`:""}</button>`;
+}
+/* searchable accessory picker: category + dropdown search + "Add your own" */
+function accPicker(ctx,gunType){
+  const st=UI.pick[ctx]||(UI.pick[ctx]={cat:CAT_OK("optic",gunType)?"optic":"light",q:"",cost:""});
+  if(!CAT_OK(st.cat,gunType)) st.cat="light";
+  const cats=ACCCAT.filter(([k])=>CAT_OK(k,gunType));
+  return `<div class="stack" style="gap:8px"><div class="row" style="align-items:flex-end">
+   <label class="f" for="ap-cat-${ctx}">Type<select id="ap-cat-${ctx}" data-pickcat="${ctx}">${cats.map(([k,n])=>`<option value="${k}" ${st.cat===k?"selected":""}>${n}</option>`).join("")}</select></label>
+   <div class="combo"><label class="f" for="ap-q-${ctx}">Search or type your own
+   <input id="ap-q-${ctx}" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="ap-list-${ctx}" autocomplete="off" data-combo="${ctx}" value="${esc(st.q)}" placeholder="e.g. ${esc((CATALOG[st.cat]||[""])[0])}"></label>
+   <div class="combo-list" id="ap-list-${ctx}" role="listbox" hidden></div></div>
+   ${S.costTracking?`<label class="f" for="ap-cost-${ctx}">Paid ($)<input id="ap-cost-${ctx}" type="number" min="0" step="0.01" value="${esc(st.cost)}" data-pickcost="${ctx}" style="width:100px"></label>`:""}
+   <button class="btn primary" data-act="accAdd" data-ctx="${ctx}">Add</button></div></div>`;
+}
+function comboList(ctx){
+  const st=UI.pick[ctx]; const box=document.getElementById("ap-list-"+ctx), inp=document.getElementById("ap-q-"+ctx); if(!st||!box||!inp) return;
+  const q=st.q.trim(), hits=catalogSearch(st.cat,q).slice(0,8);
+  const exact=hits.some(h=>h.toLowerCase()===q.toLowerCase());
+  st.opts=[...hits.map(h=>({v:h})), ...(q&&!exact?[{v:q,own:true}]:[])];
+  if(st.hi==null||st.hi>=st.opts.length) st.hi=0;
+  box.innerHTML=st.opts.length?st.opts.map((o,i)=>`<button type="button" class="opt ${o.own?"own":""}" role="option" id="ap-o-${ctx}-${i}" aria-selected="${i===st.hi}" data-act="comboPick" data-ctx="${ctx}" data-i="${i}">${o.own?`Add your own: “${esc(o.v)}”`:esc(o.v)}</button>`).join(""):`<div class="opt muted">Type a name to add your own</div>`;
+  box.hidden=false; inp.setAttribute("aria-expanded","true"); if(st.opts.length) inp.setAttribute("aria-activedescendant","ap-o-"+ctx+"-"+st.hi);
+}
+function comboClose(ctx){const box=document.getElementById("ap-list-"+ctx), inp=document.getElementById("ap-q-"+ctx); if(box) box.hidden=true; if(inp){inp.setAttribute("aria-expanded","false"); inp.removeAttribute("aria-activedescendant");}}
+function addSpareModal(){
+  return `<div class="overlay" data-act="closeBg"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="sp-h"><div class="row" style="justify-content:space-between"><h2 id="sp-h">Add spare gear</h2><button class="btn ghost" data-act="close" aria-label="Close">✕</button></div>
+  <p class="small muted">For parts you own that aren't on a gun right now. You can mount them later from the Inventory tab.</p>
+  ${accPicker("spare",null)}
+  ${S.acc.filter(a=>!a.gun).length?`<div class="small muted">Spare gear logged: ${S.acc.filter(a=>!a.gun).map(a=>esc(a.name)).join(", ")}</div>`:""}
+  <div class="row" style="justify-content:flex-end"><button class="btn" data-act="close">Done</button></div></div></div>`;
+}
+function gunModal(g){
+  const ct=S.costTracking, nm=gunName(g);
+  const still=fixes().filter(f=>f.gun===g.id).reduce((s,f)=>s+f.est,0);
+  const serialBlock=g.serialWanted==null?`<div class="ask stack" style="gap:8px"><strong>Do you want a serial number associated with this ${esc(nm)}?</strong><span class="small muted">Optional. Handy for insurance or a theft report. It's masked on screen and left out of anything you share.</span><div class="row"><button class="btn sm primary" data-act="serial" data-v="yes">Yes</button><button class="btn sm" data-act="serial" data-v="no">No</button></div></div>`
+    :g.serialWanted?`<div class="stack" style="gap:6px"><label class="f" for="g-serial">Serial number<input id="g-serial" type="text" value="${esc(g.serial||"")}" data-gbind="serial" autocomplete="off" ${UI.showSerial?"":'style="-webkit-text-security:disc"'}></label><div class="row small"><button class="btn sm ghost" data-act="showSerial">${UI.showSerial?"Hide":"Show"}</button><button class="btn sm ghost" data-act="serial" data-v="no">Remove serial</button></div></div>`
+    :`<div class="row small muted">No serial saved. <button class="btn sm ghost" data-act="serial" data-v="ask">Change</button></div>`;
+  const accs=accOf(g);
+  const accBlock=`<div class="card stack" style="gap:10px"><h3>Accessories</h3>
+   ${accs.length?`<div class="stack" style="gap:0">${accs.map(a=>`<div class="row" style="justify-content:space-between;padding:8px 0;border-top:1px solid var(--line)"><div style="min-width:0;flex:1 1 200px"><div class="small muted">${esc(ACC_NAME[a.cat])}</div><div>${esc(a.name)}</div></div>${ct?`<label class="f" for="ac-cost-${a.id}">Paid<input id="ac-cost-${a.id}" type="number" min="0" step="0.01" value="${esc(a.cost||"")}" data-accost="${a.id}" style="width:100px"></label>`:""}<div class="row" style="gap:4px"><button class="btn sm ghost" data-act="accUnmount" data-id="${a.id}">Unmount</button><button class="btn sm ghost" data-act="accDel" data-id="${a.id}" aria-label="Remove ${esc(a.name)}">✕</button></div></div>`).join("")}</div>`:`<p class="small muted">Nothing logged yet. Add optics, lights, lasers, grips, stocks${g.type==="shotgun"?", chokes":""}, and more.</p>`}
+   ${S.acc.some(a=>!a.gun&&CAT_OK(a.cat,g.type))?`<div class="row small"><span class="muted">From your spare gear:</span>${S.acc.filter(a=>!a.gun&&CAT_OK(a.cat,g.type)).map(a=>`<button class="btn sm" data-act="accMountHere" data-id="${a.id}">Mount ${esc(a.name)}</button>`).join("")}</div>`:""}
+   ${accPicker("gun",g.type)}</div>`;
+  return `<div class="overlay" data-act="closeBg"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="gm-h">
+  <div class="row" style="justify-content:space-between"><div><div class="eyebrow">${esc(nm)}</div><h2 id="gm-h">${esc(gunLabel(g))}</h2></div><button class="btn ghost" data-act="close" aria-label="Close">✕</button></div>
+  ${serialBlock}
+  <div class="split"><label class="f" for="g-make">Make<input id="g-make" type="text" value="${esc(g.make||"")}" data-gbind="make" placeholder="e.g. Ruger"></label><label class="f" for="g-model">Model<input id="g-model" type="text" value="${esc(g.model||"")}" data-gbind="model"></label><label class="f" for="g-barrel">Barrel (in)<input id="g-barrel" type="number" min="0" step="0.1" value="${esc(g.barrel||"")}" data-gbind="barrel"></label></div>
+  <div class="row"><button class="pick" data-act="gtog" data-k="primary" aria-pressed="${!!g.primary}">Use as my primary</button>
+  ${["shotgun","revolver"].includes(g.type)?"":`<label class="f" for="g-mags">Magazines<input id="g-mags" type="number" min="0" value="${esc(g.mags||0)}" data-gbind="mags"></label>${ct?`<label class="f" for="g-magCost">Paid for mags<input id="g-magCost" type="number" min="0" step="0.01" value="${esc(g.magCost||"")}" data-gbind="magCost"></label>`:""}`}</div>
+  ${accBlock}
+  <div class="row small" style="justify-content:space-between"><span class="muted">Rounds fired: <strong class="num" style="color:var(--ink)">${fmt(gunRounds(g))}</strong>${lastShot(g)?` · last at the range ${esc(lastShot(g))}`:""}${gunMalf(g)?` · ${gunMalf(g)} malfunctions logged`:""}</span><button class="btn sm" data-act="noteForGun" data-id="${g.id}">Add range note</button></div>
+  ${ct?`<div class="card stack" style="gap:10px"><h3>Cost of this gun</h3><label class="f" for="g-price">Purchase price<input id="g-price" type="number" min="0" step="0.01" value="${esc(g.price||"")}" data-gbind="price"></label>
+    <div class="stack" style="gap:6px"><span class="small muted">Other costs (transfer, tax, NFA stamp, gunsmith)</span>${(g.other||[]).map((o,i)=>`<div class="row"><input type="text" id="g-ol-${i}" value="${esc(o.label)}" data-obind="label" data-i="${i}" aria-label="Cost label" placeholder="Transfer fee"><input type="number" id="g-oa-${i}" min="0" step="0.01" value="${esc(o.amt)}" data-obind="amt" data-i="${i}" aria-label="Amount"><button class="btn sm ghost" data-act="delOther" data-i="${i}" aria-label="Remove">✕</button></div>`).join("")}<button class="btn sm" data-act="addOther" style="align-self:flex-start">Add a cost</button></div>
+    <div class="split"><div class="stat"><div class="k">All-in</div><div class="v">${money(allIn(g))}</div></div><div class="stat"><div class="k">Still to buy</div><div class="v">${money0(still)}</div></div></div></div>`:""}
+  <div class="row"><label class="f" for="g-status">Status<select id="g-status" data-gbind="status">${["active","sold","traded","stored"].map(s=>`<option value="${s}" ${g.status===s?"selected":""}>${s[0].toUpperCase()+s.slice(1)}</option>`).join("")}</select></label>
+  ${ct&&g.status!=="active"&&g.status!=="stored"?`<label class="f" for="g-sold">Received<input id="g-sold" type="number" min="0" step="0.01" value="${esc(g.soldFor||"")}" data-gbind="soldFor"></label>`:""}</div>
+  <div class="row" style="justify-content:space-between">${UI.confirmDel?`<span class="row"><span class="small">Delete this gun and its history?</span><button class="btn sm danger" data-act="delGun">Delete</button><button class="btn sm" data-act="cancelDel">Keep it</button></span>`:`<button class="btn sm ghost" data-act="askDel" style="color:var(--crit)">Delete gun</button>`}<button class="btn primary" data-act="close">Done</button></div>
+  </div></div>`;
+}
+function addGunModal(){const a=UI.add||{};
+  return `<div class="overlay" data-act="closeBg"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="ag-h"><div class="row" style="justify-content:space-between"><h2 id="ag-h">Add a gun</h2><button class="btn ghost" data-act="close" aria-label="Close">✕</button></div>
+  <div class="stack" style="gap:8px"><h3>Type</h3><div class="chips">${TYPES.map(([k,n])=>`<button class="pick" data-act="addType" data-k="${k}" aria-pressed="${a.type===k}">${n}</button>`).join("")}</div></div>
+  ${a.type?`<div class="stack" style="gap:8px"><h3>Caliber</h3><div class="chips">${CAL[a.type].map(c=>`<button class="pick" data-act="addCal" data-k="${esc(c)}" aria-pressed="${a.cal===c}">${esc(c)}</button>`).join("")}</div><div class="row"><input type="text" id="addOwn" placeholder="Enter your own" value="${esc(a.own||"")}" aria-label="Enter your own caliber"></div></div>`:""}
+  <div class="row" style="justify-content:flex-end"><button class="btn primary" data-act="addGo" ${a.type?"":"disabled"}>Add and fill in details</button></div></div></div>`;
+}
+
+/* ---------- render: ammo ---------- */
+function ammoView(){
+  const ct=S.costTracking, cals=calibers(); const list=cals.map(c=>c.cal);
+  const allCals=[...new Set([...list,...Object.values(CAL).flat()])];
+  const rangeCost=S.log.filter(l=>l.reason==="range").reduce((s,l)=>s+(l.cost||0),0);
+  return `<div class="stack"><h1>Ammo</h1>
+  <div class="card"><div class="tbl"><table><thead><tr><th>Caliber</th><th class="r">Rounds</th><th class="r">Defensive</th><th>Status</th>${ct?`<th class="r">¢ / rd</th><th class="r">Stock value</th>`:""}</tr></thead><tbody>
+  ${cals.map(c=>{const a=ammoOf(c.cal);return `<tr><td class="mono">${esc(c.cal)}</td><td class="r num">${fmt(a.count)}</td><td class="r num">${fmt(a.defensive)}</td><td>${c.st==="none"?'<span class="small muted">—</span>':`<span class="flag ${c.st}">${c.st==="met"?"Good":c.st==="partial"?"Low":"Critical"}</span>`}</td>${ct?`<td class="r num">${cents(cpr(c.cal))}${cprIsReal(c.cal)?"":' <span class="muted small" title="Example price until you log a purchase">ex.</span>'}</td><td class="r num">${money0(a.count*cpr(c.cal))}</td>`:""}</tr>`;}).join("")||`<tr><td colspan="6" class="muted">No ammo logged.</td></tr>`}
+  </tbody></table></div>${ct?`<p class="small muted" style="margin-top:8px">"ex." marks an example price used until you log a purchase in that caliber. Range trips logged so far cost ${money0(rangeCost)}.</p>`:""}</div>
+  <div class="grid">
+   <form class="card stack" style="gap:10px" data-form="buyAmmo"><h2>Log a purchase</h2>
+    <label class="f" for="ba-cal">Caliber<select id="ba-cal" name="cal">${allCals.map(c=>`<option>${esc(c)}</option>`).join("")}</select></label>
+    <div class="split"><label class="f" for="ba-rd">Rounds<input id="ba-rd" name="rounds" type="number" min="1" required></label><label class="f" for="ba-paid">Total paid ($)<input id="ba-paid" name="paid" type="number" min="0" step="0.01"></label></div>
+    <div class="split"><label class="f" for="ba-type">Load type<select id="ba-type" name="type"><option value="practice">Practice (FMJ, target)</option><option value="defensive">Defensive (JHP, soft point, buckshot)</option></select></label><label class="f" for="ba-date">Date<input id="ba-date" name="date" type="date" value="${today()}"></label></div>
+    <p class="small muted" id="ba-cpr">Enter rounds and total paid to see ¢ per round.</p>
+    <button class="btn primary" type="submit">Add to stock</button></form>
+   <form class="card stack" style="gap:10px" data-form="range"><h2>Log a range trip</h2>
+    <label class="f" for="rt-cal">Caliber<select id="rt-cal" name="cal">${(list.length?list:allCals).map(c=>`<option>${esc(c)}</option>`).join("")}</select></label>
+    <label class="f" for="rt-rd">Rounds shot<input id="rt-rd" name="rounds" type="number" min="1" required></label>
+    <label class="f" for="rt-date">Date<input id="rt-date" name="date" type="date" value="${today()}"></label>
+    <button class="btn primary" type="submit">Subtract from stock</button>
+    <p class="small muted">Practice rounds come off first. Defensive loads come off only once practice ammo runs out. To keep notes on groups, drills, or malfunctions, use <button class="btn sm ghost" type="button" data-act="tab" data-k="notes" style="padding:0;text-decoration:underline">Range notes</button>.</p></form>
+  </div>
+  <div class="card"><h2>History</h2><div class="tbl"><table><thead><tr><th>Date</th><th>Caliber</th><th class="r">Change</th><th>Reason</th>${ct?`<th class="r">Cost</th>`:""}</tr></thead><tbody>
+  ${S.log.slice().reverse().slice(0,20).map(l=>`<tr><td class="mono small">${esc(l.date)}</td><td class="mono">${esc(l.cal)}</td><td class="r num">${l.delta>0?"+":""}${fmt(l.delta)}</td><td class="small">${l.reason==="range"?"Range trip":l.reason==="bought"?"Bought"+(l.type==="defensive"?", defensive":""):"Adjusted"}</td>${ct?`<td class="r num">${l.cost!=null?money(l.cost):""}</td>`:""}</tr>`).join("")||`<tr><td colspan="5" class="muted">Nothing logged yet.</td></tr>`}
+  </tbody></table></div></div></div>`;
+}
+
+/* ---------- render: range notes ---------- */
+const gunRounds=g=>S.notes.filter(n=>n.gun===g.id).reduce((s,n)=>s+(+n.rounds||0),0);
+const gunMalf=g=>S.notes.filter(n=>n.gun===g.id).reduce((s,n)=>s+(+n.malf||0),0);
+const lastShot=g=>{const d=S.notes.filter(n=>n.gun===g.id).map(n=>n.date).sort().pop(); return d||null;};
+function notesView(){
+  const ed=UI.noteEdit?S.notes.find(n=>n.id===UI.noteEdit):null, n=ed||{date:today(),gun:UI.noteGun||"",cal:"",rounds:"",load:"",dist:"",group:"",drills:"",malf:"",malfNote:"",cond:"",text:""};
+  const gun=S.guns.find(g=>g.id===n.gun), cals=[...new Set([...active().map(g=>g.caliber),...Object.keys(S.ammo)])];
+  const cal=n.cal||(gun?gun.caliber:cals[0]||"");
+  const filt=UI.noteFilter||"", list=S.notes.filter(x=>!filt||x.gun===filt).slice().sort((a,b)=>b.date.localeCompare(a.date));
+  const total=S.notes.reduce((s,x)=>s+(+x.rounds||0),0), last=S.notes.map(x=>x.date).sort().pop();
+  const usedGuns=S.guns.filter(g=>S.notes.some(x=>x.gun===g.id));
+  return `<div class="stack"><div class="row" style="justify-content:space-between;align-items:flex-end"><div><div class="eyebrow">Logbook</div><h1>Range notes</h1></div></div>
+  <div class="card split"><div class="stat"><div class="k">Trips logged</div><div class="v">${S.notes.length}</div></div><div class="stat"><div class="k">Rounds fired</div><div class="v">${fmt(total)}</div></div><div class="stat"><div class="k">Last trip</div><div class="v" style="font-size:22px">${last?esc(last):"None yet"}</div></div><div class="stat"><div class="k">Malfunctions logged</div><div class="v">${fmt(S.notes.reduce((s,x)=>s+(+x.malf||0),0))}</div></div></div>
+  <form class="card stack" style="gap:12px" data-form="note"><div class="row" style="justify-content:space-between"><h2>${ed?"Edit note":"New range note"}</h2>${ed?'<button class="btn sm ghost" type="button" data-act="noteCancel">Cancel edit</button>':""}</div>
+   <div class="split">
+    <label class="f" for="rn-date">Date<input id="rn-date" name="date" type="date" value="${esc(n.date)}" required></label>
+    <label class="f" for="rn-gun">Gun<select id="rn-gun" name="gun" data-notegun="1"><option value="">No specific gun</option>${S.guns.map(g=>`<option value="${g.id}" data-cal="${esc(g.caliber)}" ${n.gun===g.id?"selected":""}>${esc(gunLabel(g))} (${esc(g.caliber)})</option>`).join("")}</select></label>
+    <label class="f" for="rn-cal">Caliber<select id="rn-cal" name="cal">${(cals.length?cals:Object.values(CAL).flat()).map(c=>`<option ${c===cal?"selected":""}>${esc(c)}</option>`).join("")}</select></label>
+    <label class="f" for="rn-rd">Rounds fired<input id="rn-rd" name="rounds" type="number" min="0" value="${esc(n.rounds)}"></label>
+   </div>
+   <div class="split">
+    <label class="f" for="rn-load">Ammo / load<input id="rn-load" name="load" type="text" value="${esc(n.load)}" placeholder="e.g. 55 gr FMJ"></label>
+    <label class="f" for="rn-dist">Distance (yd)<input id="rn-dist" name="dist" type="text" value="${esc(n.dist)}" placeholder="e.g. 25, 50, 100"></label>
+    <label class="f" for="rn-group">Best group (in)<input id="rn-group" name="group" type="number" min="0" step="0.05" value="${esc(n.group)}"></label>
+    <label class="f" for="rn-cond">Conditions<input id="rn-cond" name="cond" type="text" value="${esc(n.cond)}" placeholder="e.g. 48°F, 10 mph wind from 9 o'clock"></label>
+   </div>
+   <label class="f" for="rn-drills">What you worked on<input id="rn-drills" name="drills" type="text" value="${esc(n.drills)}" placeholder="e.g. Zero confirm, Bill drill, reloads, offset at 7 yd"></label>
+   <div class="split"><label class="f" for="rn-malf">Malfunctions<input id="rn-malf" name="malf" type="number" min="0" value="${esc(n.malf)}"></label><label class="f" for="rn-malfn" style="grid-column:span 2">What happened<input id="rn-malfn" name="malfNote" type="text" value="${esc(n.malfNote)}" placeholder="e.g. 2 failures to feed, steel-case ammo"></label></div>
+   <label class="f" for="rn-text">Notes<textarea id="rn-text" name="text" style="min-height:90px;font-family:var(--f-body);font-size:14px" placeholder="Sight adjustments, what felt off, what to work on next time">${esc(n.text)}</textarea></label>
+   ${ed?`<p class="small muted">Editing a note doesn't change your ammo stock again.</p>`:`<label class="row small" for="rn-sub" style="gap:8px"><input id="rn-sub" name="sub" type="checkbox" checked> Subtract these rounds from my ammo stock</label>`}
+   <div class="row" style="justify-content:flex-end"><button class="btn primary" type="submit">${ed?"Save changes":"Save note"}</button></div></form>
+  ${usedGuns.length?`<div class="card"><h2>Round count by gun</h2><div class="tbl" style="margin-top:6px"><table><thead><tr><th>Gun</th><th class="r">Rounds</th><th class="r">Malfunctions</th><th>Last shot</th></tr></thead><tbody>${usedGuns.map(g=>`<tr><td>${esc(gunLabel(g))} <span class="muted small">${esc(g.caliber)}</span></td><td class="r num">${fmt(gunRounds(g))}</td><td class="r num">${fmt(gunMalf(g))}</td><td class="mono small">${esc(lastShot(g)||"")}</td></tr>`).join("")}</tbody></table></div></div>`:""}
+  <div class="stack" style="gap:10px"><div class="row" style="justify-content:space-between"><h2>Past trips</h2>${S.notes.length?`<label class="f" for="rn-filter">Show<select id="rn-filter" data-notefilter="1"><option value="">All guns</option>${usedGuns.map(g=>`<option value="${g.id}" ${filt===g.id?"selected":""}>${esc(gunLabel(g))}</option>`).join("")}</select></label>`:""}</div>
+  ${list.length?list.map(noteCard).join(""):`<div class="card muted">No range notes yet. Log your next trip above.</div>`}</div></div>`;
+}
+function noteCard(n){
+  const g=S.guns.find(x=>x.id===n.gun);
+  const facts=[n.rounds?`${fmt(n.rounds)} rd`:"",n.cal&&!g?esc(n.cal):"",n.load?esc(n.load):"",n.dist?`${esc(n.dist)} yd`:"",n.group?`${esc(n.group)} in group`:"",n.cond?esc(n.cond):""].filter(Boolean);
+  return `<article class="card stack" style="gap:6px"><div class="row" style="justify-content:space-between"><div><span class="mono small muted">${esc(n.date)}</span> <strong>${g?esc(gunLabel(g)):"Range trip"}</strong>${g?` <span class="muted small">${esc(g.caliber)}</span>`:""}</div>
+   <div class="row" style="gap:4px">${+n.malf?`<span class="flag partial">${n.malf} malfunction${+n.malf>1?"s":""}</span>`:""}<button class="btn sm ghost" data-act="noteEdit" data-id="${n.id}">Edit</button>${UI.noteDel===n.id?`<button class="btn sm danger" data-act="noteDel" data-id="${n.id}">Delete</button><button class="btn sm" data-act="noteKeep">Keep</button>`:`<button class="btn sm ghost" data-act="noteAskDel" data-id="${n.id}" aria-label="Delete note">✕</button>`}</div></div>
+   ${facts.length?`<div class="small">${facts.join(" · ")}</div>`:""}
+   ${n.drills?`<div class="small"><span class="muted">Worked on:</span> ${esc(n.drills)}</div>`:""}
+   ${n.malfNote?`<div class="small"><span class="muted">Malfunctions:</span> ${esc(n.malfNote)}</div>`:""}
+   ${n.text?`<div style="white-space:pre-wrap;max-width:70ch">${esc(n.text)}</div>`:""}</article>`;
+}
+
+/* ---------- render: plan ---------- */
+const LISTCAT=[["firearm","Firearms"],["ammo","Ammo"],["optics","Optics & accessories"],["mags","Magazines"],["medical","Medical"],["gear","Gear & carry"],["parts","Parts & builds"],["other","Other"]];
+const LISTCAT_NAME=Object.fromEntries(LISTCAT);
+const PRIO=[["high","High"],["med","Medium"],["low","Low"]];
+const GEARFLAG={medical:[["ifak","IFAK / tourniquets"],["","Other medical"]],gear:[["holster","Holster"],["bag","Get-home bag"],["radios","Radios"],["sling","Sling"],["","Other gear"]]};
+const ym=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+function windowMonths(){const n=new Date(); return [0,1,2].map(i=>{const d=new Date(n.getFullYear(),n.getMonth()+i,1); return {key:ym(d),label:d.toLocaleString("en-US",{month:"long",year:"numeric"}),short:d.toLocaleString("en-US",{month:"short"})};});}
+function effMonth(it){ if(!it.month||it.month==="someday") return "someday"; const cur=windowMonths()[0].key; return it.month<cur?cur:it.month; }
+const itemCost=it=>(+it.est||0)*(it.cat==="ammo"?1:Math.max(1,+it.qty||1));
+function fixToItem(f,month){
+  const it={id:uid(),fix:f.key,name:f.label,est:Math.round(f.est*100)/100,qty:1,prio:f.flagged||f.wanted?"high":"med",month:month||windowMonths()[0].key,url:"",notes:"",status:"want"};
+  const k=f.key;
+  if(k.startsWith("ammo:")||k.startsWith("defammo:")) Object.assign(it,{cat:"ammo",cal:f.cal,rounds:f.rounds,load:f.def?"defensive":"practice"});
+  else if(k.startsWith("mags:")) Object.assign(it,{cat:"mags",gun:f.gun,qty:f.n,est:EST.mag});
+  else if(/^(light|optic|sling):/.test(k)) Object.assign(it,{cat:"optics",accCat:k.split(":")[0],gun:f.gun});
+  else if(k==="ifak") Object.assign(it,{cat:"medical",gearFlag:"ifak"});
+  else if(["holster","bag","radios"].includes(k)) Object.assign(it,{cat:"gear",gearFlag:k});
+  else if(f.kind==="gun") Object.assign(it,{cat:"firearm",gunType:k==="handgun"?"pistol":k==="buy_hunting"?"bolt":"rifle"});
+  else it.cat="other";
+  return it;
+}
+function planView(){
+  const months=windowMonths(), B=Math.max(+S.budget||0,0), lead=profiles()[0];
+  const sugg=fixes().filter(f=>!f.listed&&!f.deferred), deferred=fixes().filter(f=>f.deferred&&!f.listed);
+  const open=S.list.filter(i=>i.status!=="bought");
+  if(!UI.openMonths) UI.openMonths={[months[0].key]:true};
+  let cash=0, q=sugg.filter(f=>!f.free), proj=lead?lead.score:0;
+  const freeOnes=sugg.filter(f=>f.free);
+  const monthBlocks=months.map((m,mi)=>{
+    cash+=B; const planned=open.filter(i=>effMonth(i)===m.key); const pc=planned.reduce((s,i)=>s+itemCost(i),0); cash-=pc;
+    const picks=[]; while(q.length&&q[0].est<=cash){const f=q.shift(); cash-=f.est; picks.push(f);}
+    const gain=lead?planned.reduce((s,i)=>{const f=fixes().find(x=>x.key===i.fix); return s+(f&&f.gains[lead.p]||0);},0)+picks.reduce((s,f)=>s+(f.gains[lead.p]||0),0):0;
+    proj=Math.min(100,Math.round(proj+gain));
+    const over=cash<0;
+    const isOpen=!!UI.openMonths[m.key];
+    return `<details class="card month-card" ${isOpen?"open":""} data-month="${m.key}"><summary><div class="row" style="justify-content:space-between;flex:1"><span><span class="eyebrow">${mi===0?"This month":mi===1?"Next month":"In 2 months"}</span><br><strong class="h2like">${m.label}</strong></span>
+      <span class="small mono" style="text-align:right">${planned.length} planned · ${money0(pc)}${B?` of ${money0(B)}`:""}${picks.length?` · ${picks.length} suggested`:""}${over?` <span class="flag missing">Over by ${money0(-cash)}</span>`:""}${lead?`<br><span class="muted">${esc(GOAL_NAME[lead.p])} → ${proj}%</span>`:""}</span></div></summary>
+      <div class="stack" style="gap:4px;margin-top:10px">
+      <div class="eyebrow" style="color:var(--muted)">Planned</div>
+      ${planned.length?planned.map(i=>itemRow(i,true)).join(""):`<p class="small muted">Nothing planned. Add a suggestion below or set an item from your purchase list to ${m.short}.</p>`}
+      ${mi===0&&freeOnes.length?`<div class="eyebrow" style="color:var(--muted);margin-top:10px">Free fixes</div>${freeOnes.map(f=>suggRow(f,m.key)).join("")}`:""}
+      ${picks.length?`<div class="eyebrow" style="color:var(--muted);margin-top:10px">Suggested to fit your budget</div>${picks.map(f=>suggRow(f,m.key)).join("")}`:""}
+      ${q.length&&mi===2?"":""}
+      ${q.length&&cash>0&&q[0]?`<div class="small muted" style="padding-top:8px">Saving toward <strong>${esc(q[0].label)}</strong>: ${money0(cash)} of ${money0(q[0].est)}</div>`:""}
+      </div></details>`;}).join("");
+  const later=open.filter(i=>effMonth(i)==="someday"||effMonth(i)>months[2].key);
+  const bought=S.list.filter(i=>i.status==="bought").sort((a,b)=>String(b.boughtDate).localeCompare(String(a.boughtDate)));
+  return `<div class="stack"><div class="row" style="justify-content:space-between;align-items:flex-end"><div><div class="eyebrow">Rolling 90 days</div><h1>Buy next</h1></div>
+  <label class="f" for="plan-budget">Monthly budget ($)<input id="plan-budget" type="number" min="0" value="${esc(S.budget)}" data-bind="budget"></label></div>
+  <p class="small muted" style="max-width:68ch">You decide what goes on the list. The app suggests what would raise your readiness most per dollar and fits suggestions into whatever budget your planned items leave. Add a suggestion to make it yours, or put it off.</p>
+  ${monthBlocks}
+  ${q.length||deferred.length?`<details class="card" ${UI.openMore?"open":""} data-more="1"><summary><strong>More suggestions</strong> <span class="small muted">· ${q.length} past this window${deferred.length?`, ${deferred.length} put off`:""}</span></summary><div class="stack" style="gap:4px;margin-top:8px">${q.map(f=>suggRow(f,"someday")).join("")}${deferred.map(f=>suggRow(f,"someday")).join("")}</div></details>`:""}
+  <div class="row" style="justify-content:space-between;align-items:flex-end;margin-top:10px"><div><div class="eyebrow">Your list</div><h1>Purchase list</h1></div><button class="btn primary" data-act="itemNew" data-cat="">Add an item</button></div>
+  <div class="split">${LISTCAT.map(([k,n])=>{const c=open.filter(i=>i.cat===k).length; return `<button class="pick" data-act="itemNew" data-cat="${k}"><span class="small muted">${c?c+" on list":"Add"}</span><br><strong>${n}</strong></button>`;}).join("")}</div>
+  ${LISTCAT.map(([k,n])=>{const items=open.filter(i=>i.cat===k); if(!items.length) return ""; const tot=items.reduce((s,i)=>s+itemCost(i),0);
+    return `<details class="card" ${UI.openCats[k]===false?"":"open"} data-cat="${k}"><summary><div class="row" style="justify-content:space-between;flex:1"><strong class="h2like">${n}</strong><span class="small mono">${items.length} · ${money0(tot)}</span></div></summary>
+    <div class="stack" style="gap:4px;margin-top:8px">${items.sort((a,b)=>"hml".indexOf(a.prio[0])-"hml".indexOf(b.prio[0])).map(i=>itemRow(i,false)).join("")}<button class="btn sm" data-act="itemNew" data-cat="${k}" style="align-self:flex-start;margin-top:6px">Add to ${n}</button></div></details>`;}).join("")}
+  ${!open.length?`<div class="card muted">Your purchase list is empty. Pick a section above, or add a suggestion from the months.</div>`:""}
+  ${later.length?`<p class="small muted">${later.length} item${later.length>1?"s":""} set to Someday or past this window.</p>`:""}
+  ${bought.length?`<details class="card"><summary><strong>Bought</strong> <span class="small muted">· ${bought.length}</span></summary><div class="tbl" style="margin-top:8px"><table><thead><tr><th>Date</th><th>Item</th><th>Section</th>${S.costTracking?'<th class="r">Paid</th>':""}</tr></thead><tbody>${bought.map(i=>`<tr><td class="mono small">${esc(i.boughtDate||"")}</td><td>${esc(i.name)}</td><td class="small muted">${esc(LISTCAT_NAME[i.cat])}</td>${S.costTracking?`<td class="r num">${money(+i.paid||0)}</td>`:""}</tr>`).join("")}</tbody></table></div></details>`:""}
+  <p class="small muted">Gear estimates are example prices until you enter your own. Ammo estimates use your own ¢ per round once you log a purchase.</p></div>`;
+}
+function monthOptions(cur){const ms=windowMonths(); return ms.map(m=>`<option value="${m.key}" ${cur===m.key?"selected":""}>${m.label}</option>`).join("")+`<option value="someday" ${cur==="someday"||!ms.some(m=>m.key===cur)?"selected":""}>Someday</option>`;}
+function itemRow(i,inMonth){
+  const g=i.gun&&S.guns.find(x=>x.id===i.gun);
+  const sub=[i.cat==="ammo"&&i.rounds?`${fmt(i.rounds)} rd ${esc(i.cal||"")}${i.load==="defensive"?", defensive":""}`:"", i.cat!=="ammo"&&+i.qty>1?`×${i.qty}`:"", g?`for ${esc(gunLabel(g))}`:"", i.accCat?esc(ACC_NAME[i.accCat]):"", i.notes?esc(i.notes):""].filter(Boolean).join(" · ");
+  return `<div class="planrow"><span class="pri ${i.prio}" title="${esc((PRIO.find(p=>p[0]===i.prio)||[])[1]||"")} priority"></span><div style="min-width:0"><strong>${esc(i.name)}</strong>${i.status==="ordered"?' <span class="flag partial">Ordered</span>':""}${i.fix?' <span class="tag">FROM SUGGESTION</span>':""}
+   ${sub?`<div class="small muted">${sub}</div>`:""}${i.url?`<div class="small"><a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.url.replace(/^https?:\/\//,"").slice(0,48))}</a></div>`:""}
+   <div class="row small" style="gap:6px;margin-top:6px"><label class="f" for="im-${i.id}" style="flex-direction:row;align-items:center;gap:6px">${inMonth?"Move to":"Month"}<select id="im-${i.id}" data-itemmonth="${i.id}">${monthOptions(effMonth(i))}</select></label>${inMonth?`<span class="muted">${esc(LISTCAT_NAME[i.cat])}</span>`:""}</div></div>
+   <div class="stack" style="gap:6px;align-items:flex-end"><span class="mono small">${money0(itemCost(i))}</span><div class="row" style="gap:4px;justify-content:flex-end"><button class="btn sm" data-act="itemBuy" data-id="${i.id}">Bought</button><button class="btn sm ghost" data-act="itemOrdered" data-id="${i.id}">${i.status==="ordered"?"Not ordered":"Ordered"}</button><button class="btn sm ghost" data-act="itemEdit" data-id="${i.id}">Edit</button></div></div></div>`;
+}
+function suggRow(f,month){
+  return `<div class="planrow sugg"><span class="rk">${f.pinned?"★":"+"}</span><div style="min-width:0"><span>${esc(f.label)}</span><div class="small muted">${whyLine(f)}</div>
+  <div class="row small" style="gap:6px;margin-top:4px">${f.flagged?'<span class="tag">YOU FLAGGED THIS</span>':""}${f.wanted?'<span class="tag">ON YOUR BUY LIST</span>':""}</div></div>
+  <div class="stack" style="gap:6px;align-items:flex-end"><span class="mono small">${f.free?"Free":money0(f.est)+" est."}</span><div class="row" style="gap:4px;justify-content:flex-end">${f.free?`<button class="btn sm" data-act="bought" data-k="${esc(f.key)}">Do it</button>`:`<button class="btn sm primary" data-act="suggAdd" data-k="${esc(f.key)}" data-m="${month}">Add to list</button><button class="btn sm ghost" data-act="bought" data-k="${esc(f.key)}">Already bought</button>`}<button class="btn sm ghost" data-act="defer" data-k="${esc(f.key)}">${f.deferred?"Restore":"Not now"}</button></div></div></div>`;
+}
+function itemModal(){
+  const d=UI.itemDraft, ms=windowMonths();
+  const nameList=d.cat==="optics"||d.cat==="parts"?(CATALOG[d.accCat||"optic"]||[]):d.cat==="medical"?["IFAK","CAT tourniquet","SOF-T tourniquet","QuikClot gauze","Israeli bandage","Chest seal (pair)","Trauma shears"]:d.cat==="gear"?["Holster","Mag pouch","Plate carrier","Get-home bag","Handheld radios (pair)","Hearing protection","Shooting glasses","Gun safe","Cleaning kit"]:d.cat==="firearm"?[]:[];
+  const cals=[...new Set([...active().map(g=>g.caliber),...Object.values(CAL).flat()])];
+  return `<div class="overlay" data-act="closeBg"><form class="modal" data-form="item" role="dialog" aria-modal="true" aria-labelledby="it-h"><div class="row" style="justify-content:space-between"><h2 id="it-h">${d.id?"Edit item":"Add to purchase list"}</h2><button class="btn ghost" type="button" data-act="close" aria-label="Close">✕</button></div>
+  <label class="f" for="it-cat">Section<select id="it-cat" name="cat" data-itemcat="1">${LISTCAT.map(([k,n])=>`<option value="${k}" ${d.cat===k?"selected":""}>${n}</option>`).join("")}</select></label>
+  ${d.cat==="optics"||d.cat==="parts"?`<label class="f" for="it-acc">Accessory type<select id="it-acc" name="accCat" data-itemcat="1">${ACCCAT.map(([k,n])=>`<option value="${k}" ${(d.accCat||"optic")===k?"selected":""}>${n}</option>`).join("")}</select></label>`:""}
+  ${d.cat==="ammo"?`<div class="split"><label class="f" for="it-cal">Caliber<select id="it-cal" name="cal">${cals.map(c=>`<option ${d.cal===c?"selected":""}>${esc(c)}</option>`).join("")}</select></label><label class="f" for="it-rd">Rounds<input id="it-rd" name="rounds" type="number" min="1" value="${esc(d.rounds||"")}"></label><label class="f" for="it-load">Load<select id="it-load" name="load"><option value="practice" ${d.load!=="defensive"?"selected":""}>Practice</option><option value="defensive" ${d.load==="defensive"?"selected":""}>Defensive</option></select></label></div>`:""}
+  ${d.cat==="firearm"?`<label class="f" for="it-gt">Type<select id="it-gt" name="gunType">${TYPES.map(([k,n])=>`<option value="${k}" ${d.gunType===k?"selected":""}>${n}</option>`).join("")}</select></label>`:""}
+  <label class="f" for="it-name">Item<input id="it-name" name="name" type="text" value="${esc(d.name||"")}" list="it-dl" autocomplete="off" placeholder="${d.cat==="ammo"?"e.g. Federal HST 124 gr":d.cat==="firearm"?"e.g. PSA Sabre 14.5 in":"Pick from the list or type your own"}" ${d.cat==="ammo"?"":"required"}><datalist id="it-dl">${nameList.map(n=>`<option value="${esc(n)}">`).join("")}</datalist></label>
+  ${["mags","optics","parts"].includes(d.cat)?`<label class="f" for="it-gun">For which gun<select id="it-gun" name="gun"><option value="">Not for a specific gun</option>${active().map(g=>`<option value="${g.id}" ${d.gun===g.id?"selected":""}>${esc(gunLabel(g))} (${esc(g.caliber)})</option>`).join("")}</select></label>`:""}
+  ${GEARFLAG[d.cat]?`<label class="f" for="it-flag">Counts toward<select id="it-flag" name="gearFlag">${GEARFLAG[d.cat].map(([k,n])=>`<option value="${k}" ${(d.gearFlag||"")===k?"selected":""}>${n}</option>`).join("")}</select></label>`:""}
+  <div class="split">
+   <label class="f" for="it-est">${d.cat==="ammo"?"Estimated total ($)":"Estimated price each ($)"}<input id="it-est" name="est" type="number" min="0" step="0.01" value="${esc(d.est||"")}"></label>
+   ${d.cat==="ammo"?"":`<label class="f" for="it-qty">Quantity<input id="it-qty" name="qty" type="number" min="1" value="${esc(d.qty||1)}"></label>`}
+   <label class="f" for="it-prio">Priority<select id="it-prio" name="prio">${PRIO.map(([k,n])=>`<option value="${k}" ${(d.prio||"med")===k?"selected":""}>${n}</option>`).join("")}</select></label>
+   <label class="f" for="it-month">When<select id="it-month" name="month">${monthOptions(d.month||ms[0].key)}</select></label>
+  </div>
+  <label class="f" for="it-url">Link <span class="muted">(optional)</span><input id="it-url" name="url" type="text" value="${esc(d.url||"")}" placeholder="https://"></label>
+  <label class="f" for="it-notes">Notes <span class="muted">(optional)</span><input id="it-notes" name="notes" type="text" value="${esc(d.notes||"")}" placeholder="e.g. Wait for a sale, check local shop first"></label>
+  <div class="row" style="justify-content:space-between">${d.id?(UI.confirmItemDel?`<span class="row"><button class="btn sm danger" type="button" data-act="itemDel">Remove from list</button><button class="btn sm" type="button" data-act="itemKeep">Keep it</button></span>`:`<button class="btn sm ghost" type="button" data-act="itemAskDel" style="color:var(--crit)">Remove</button>`):"<span></span>"}<button class="btn primary" type="submit">${d.id?"Save":"Add to list"}</button></div></form></div>`;
+}
+function itemBuyModal(i){
+  return `<div class="overlay" data-act="closeBg"><form class="modal" data-form="itemBuy" role="dialog" aria-modal="true" aria-labelledby="ib-h"><div class="row" style="justify-content:space-between"><h2 id="ib-h">Mark as bought</h2><button class="btn ghost" type="button" data-act="close" aria-label="Close">✕</button></div>
+  <p><strong>${esc(i.name)}</strong> <span class="muted small">${esc(LISTCAT_NAME[i.cat])}</span></p>
+  ${i.cat==="ammo"?`<div class="split"><label class="f" for="ib-rd">Rounds<input id="ib-rd" name="rounds" type="number" min="1" value="${esc(i.rounds||"")}" required></label><label class="f" for="ib-load">Load<select id="ib-load" name="load"><option value="practice" ${i.load!=="defensive"?"selected":""}>Practice</option><option value="defensive" ${i.load==="defensive"?"selected":""}>Defensive</option></select></label></div>`:""}
+  <div class="split"><label class="f" for="ib-paid">Total paid ($)<input id="ib-paid" name="paid" type="number" min="0" step="0.01" value="${Math.round(itemCost(i)*100)/100}"></label><label class="f" for="ib-date">Date<input id="ib-date" name="date" type="date" value="${today()}"></label></div>
+  <p class="small muted">${i.cat==="ammo"?"Adds these rounds to your ammo stock.":i.cat==="mags"?"Adds the magazines to the gun you picked.":(i.cat==="optics"||i.cat==="parts")&&i.accCat?(i.gun?"Mounts it on the gun you picked.":"Adds it to spare gear."):i.cat==="firearm"?"Opens Add a gun next so you can log it.":"Logs the purchase."} Scores update right away.</p>
+  <div class="row" style="justify-content:flex-end"><button class="btn primary" type="submit">Save</button></div></form></div>`;
+}
+function boughtModal(f){
+  const ammo=f.key.startsWith("ammo:")||f.key.startsWith("defammo:");
+  return `<div class="overlay" data-act="closeBg"><form class="modal" data-form="bought" role="dialog" aria-modal="true" aria-labelledby="bm-h"><div class="row" style="justify-content:space-between"><h2 id="bm-h">Mark as bought</h2><button class="btn ghost" type="button" data-act="close" aria-label="Close">✕</button></div>
+  <p><strong>${esc(f.label)}</strong></p>
+  ${ammo?`<div class="split"><label class="f" for="bm-rd">Rounds<input id="bm-rd" name="rounds" type="number" min="1" value="${f.rounds}"></label><label class="f" for="bm-type">Load type<select id="bm-type" name="type"><option value="practice" ${f.def?"":"selected"}>Practice</option><option value="defensive" ${f.def?"selected":""}>Defensive</option></select></label></div>`:""}
+  ${/^(light|optic|sling):/.test(f.key)?`<label class="f" for="bm-name">Which one? <span class="muted">(pick from the list or type your own)</span><input id="bm-name" name="name" type="text" list="bm-dl" autocomplete="off"><datalist id="bm-dl">${(CATALOG[f.key.split(":")[0]]||[]).map(n=>`<option value="${esc(n)}">`).join("")}</datalist></label>`:""}
+  ${f.key.startsWith("mags:")?`<label class="f" for="bm-n">How many magazines<input id="bm-n" name="n" type="number" min="1" value="${f.n}"></label>`:""}
+  <div class="split"><label class="f" for="bm-paid">Price paid ($)<input id="bm-paid" name="paid" type="number" min="0" step="0.01" value="${Math.round(f.est*100)/100}"></label><label class="f" for="bm-date">Date<input id="bm-date" name="date" type="date" value="${today()}"></label></div>
+  <p class="small muted">This updates your inventory and re-scores every goal.</p>
+  <div class="row" style="justify-content:flex-end"><button class="btn primary" type="submit">Save</button></div></form></div>`;
+}
+
+/* ---------- render: backup & settings ---------- */
+function backupView(){
+  const fsOK=typeof window.showSaveFilePicker==="function";
+  return `<div class="stack"><h1>Backup &amp; settings</h1>
+  <div class="card stack" style="gap:12px"><h2>Keep your data safe</h2>
+  <p class="small muted" style="max-width:65ch">Your armory lives in this browser. A browser update won't erase it. Clearing site data, a private window, Safari's cleanup of sites unused for 7 days, or a new device will. Use the layers below.</p>
+  <div class="tbl"><table><tbody>
+   <tr><td><strong>Saved on this device</strong><div class="small muted">Two copies in the browser, written on every change.</div></td><td>${UI.storageOk?'<span class="flag met">On</span>':'<span class="flag missing">Blocked</span>'}</td><td></td></tr>
+   <tr><td><strong>Protected from cleanup</strong><div class="small muted">Asks the browser not to delete this site's data when space runs low.</div></td><td>${UI.persisted?'<span class="flag met">Granted</span>':'<span class="flag partial">Not yet</span>'}</td><td>${UI.persisted?"":'<button class="btn sm" data-act="persist">Ask browser</button>'}</td></tr>
+   <tr><td><strong>Installed as an app</strong><div class="small muted">Add to home screen (iPhone: Share, then Add to Home Screen). Safari's 7-day cleanup doesn't touch installed apps.</div></td><td>${matchMedia("(display-mode: standalone)").matches?'<span class="flag met">Installed</span>':'<span class="flag partial">In browser</span>'}</td><td></td></tr>
+   <tr><td><strong>Auto-save to a file</strong><div class="small muted">${fsOK?"Pick a file once. The app rewrites it after every change.":"Available in Chrome and Edge on a computer."}</div></td><td>${UI.fileHandle?(UI.fileOk?'<span class="flag met">On</span>':'<span class="flag partial">Paused</span>'):'<span class="flag partial">Off</span>'}</td><td>${fsOK?`<button class="btn sm" data-act="${UI.fileHandle&&!UI.fileOk?"reconnect":"pickFile"}">${UI.fileHandle&&!UI.fileOk?"Reconnect":"Choose file"}</button>`:""}</td></tr>
+   <tr><td><strong>Backup file</strong><div class="small muted">Plain JSON with everything in it. Keep it on a USB stick or your own cloud drive.</div></td><td class="small mono">${S.meta.lastBackup?esc(S.meta.lastBackup.slice(0,10)):"Never"}</td><td><button class="btn sm primary" data-act="download">Download</button></td></tr>
+  </tbody></table></div>
+  <div class="row"><button class="btn" data-act="copyBackup">Copy backup as text</button><label class="btn" for="restoreFile2">Restore from file</label><input id="restoreFile2" type="file" accept=".json,application/json" hidden>${typeof window.showOpenFilePicker==="function"?'<button class="btn" data-act="openLink">Restore and auto-save to that file</button>':""}<button class="btn" data-act="csv">Copy guns as CSV</button></div>
+  <div class="dropzone small">Or drop a backup file anywhere on this page. Before anything is replaced, you'll see which copy is newer.</div>
+  ${UI.showPaste?`<textarea id="pasteBox" aria-label="Paste a backup">${esc(UI.copied||"")}</textarea><div class="row"><button class="btn sm primary" data-act="restorePaste">Restore from pasted text</button><button class="btn sm ghost" data-act="hidePaste">Hide</button></div>`:`<button class="btn sm ghost" data-act="showPaste" style="align-self:flex-start">Paste a backup instead</button>`}
+  </div>
+  <div class="card stack" style="gap:12px"><h2>Goals</h2>${picks(GOALS,S.goals,"goal",false)}
+  <div class="row">${has(S.goals,"gethome")?`<label class="f" for="s-mi">Get-home distance (mi)<input id="s-mi" type="number" min="1" value="${esc(S.getHomeMi)}" data-bind="getHomeMi"></label>`:""}<label class="f" for="s-budget">Monthly budget ($)<input id="s-budget" type="number" min="0" value="${esc(S.budget)}" data-bind="budget"></label></div>
+  <h3>Gear on hand</h3>${picks(GEAR,Object.keys(S.gear).filter(k=>S.gear[k]),"sgear",false)}</div>
+  <div class="card stack" style="gap:10px"><h2>Cost tracking</h2><p class="small muted">Shows purchase price, other costs, and accessory prices on each gun, the all-in cost per gun, and ¢ per round for ammo. Turning it off hides those fields and keeps what you entered.</p>
+  <div class="row"><button class="pick" data-act="costTog" aria-pressed="${S.costTracking}">${S.costTracking?"Cost tracking is on":"Turn on cost tracking"}</button></div></div>
+  <div class="card stack" style="gap:10px"><h2>Start over</h2><p class="small muted">Deletes everything in this browser. Download a backup first if you might want it back.</p>
+  ${UI.confirmWipe?`<div class="row"><span class="small">Delete all guns, ammo, and settings?</span><button class="btn sm danger" data-act="wipe">Delete everything</button><button class="btn sm" data-act="cancelWipe">Keep my data</button></div>`:`<button class="btn sm danger" data-act="askWipe" style="align-self:flex-start">Delete all data</button>`}</div>
+  <p class="small muted">Readiness scores are planning aids, not tactical, legal, or safety advice.</p></div>`;
+}
+
+/* ---------- main render ---------- */
+function render(){
+  const app=document.getElementById("app");
+  const focusId=document.activeElement&&document.activeElement.id, sel=document.activeElement&&document.activeElement.selectionStart;
+  let inner;
+  if(!S.setupDone) inner=setupView();
+  else inner={overview:overviewView,inventory:inventoryView,ammo:ammoView,notes:notesView,plan:planView,backup:backupView}[UI.tab]();
+  let modal="";
+  if(UI.modal&&UI.modal.t==="gun"){const g=S.guns.find(x=>x.id===UI.modal.id); if(g) modal=gunModal(g); else UI.modal=null;}
+  if(UI.modal&&UI.modal.t==="add") modal=addGunModal();
+  if(UI.modal&&UI.modal.t==="spare") modal=addSpareModal();
+  if(UI.modal&&UI.modal.t==="item") modal=itemModal();
+  if(UI.modal&&UI.modal.t==="restore"&&UI.pendingRestore) modal=restoreModal();
+  if(UI.modal&&UI.modal.t==="itemBuy"){const it=S.list.find(x=>x.id===UI.modal.id); if(it) modal=itemBuyModal(it); else UI.modal=null;}
+  if(UI.modal&&UI.modal.t==="bought"){const f=fixes().find(x=>x.key===UI.modal.k); if(f) modal=boughtModal(f); else UI.modal=null;}
+  app.innerHTML=shell(inner)+modal+(UI.toast?`<div class="toast" role="status">${esc(UI.toast)}</div>`:"");
+  if(focusId){const el=document.getElementById(focusId); if(el){el.focus(); try{if(sel!=null&&el.setSelectionRange&&el.type==="text") el.setSelectionRange(sel,sel);}catch(e){}}}
+}
+function toast(msg){UI.toast=msg; render(); clearTimeout(toast.t); toast.t=setTimeout(()=>{UI.toast=null;render();},2600);}
+
+/* ---------- setup actions ---------- */
+function go(d){const i=STEPS.indexOf(S.step)+d; S.step=STEPS[Math.max(0,Math.min(STEPS.length-1,i))]; if(S.step==="calibers"&&!Object.values(S.draft.types).some(Boolean)) S.step=STEPS[STEPS.indexOf(S.step)+d]||S.step; commit(false); window.scrollTo(0,0);}
+function finishSetup(){
+  const d=S.draft; S.guns=[]; S.ammo={};
+  Object.entries(d.counts).forEach(([t,cals])=>{ if(!d.types[t]) return; Object.entries(cals).forEach(([c,n])=>{ for(let i=0;i<n;i++) S.guns.push(newGun(t,c)); if(!S.ammo[c]){const r=RANGES.find(x=>x[0]===d.ammoRange[c]); S.ammo[c]={count:r?r[2]:0,defensive:0,lots:[],approx:!!r};} }); });
+  S.gear=Object.assign({},d.gear); S.setupDone=false; S.step="result"; commit(); askPersist();
+}
+function newGun(t,c){return {id:uid(),type:t,caliber:c,make:"",model:"",barrel:"",mags:0,primary:false,serialWanted:null,serial:"",status:"active",price:"",other:[],soldFor:""};}
+function loadExample(){
+  S=fresh(); S.example=true; S.setupDone=true; S.costTracking=true; S.goals=["home","gethome","training"]; S.lacking=["ammo"]; S.buyNext=["ammo","optics"]; S.budget=250; S.getHomeMi=30;
+  const g=(t,c,o)=>Object.assign(newGun(t,c),o);
+  S.guns=[g("rifle","5.56 / .223",{make:"Example",model:"AR-15",barrel:16,mags:6,price:850,magCost:72,serialWanted:false,primary:true,other:[{label:"Transfer fee",amt:25}]}),
+    g("shotgun","12 ga",{make:"Example",model:"Pump action",barrel:18.5,price:420,serialWanted:true,serial:"EX1234567"}),
+    g("pistol","9mm",{make:"Example",model:"Striker 9mm",mags:3,price:480,magCost:60,serialWanted:null}),
+    g("rifle","30-30",{make:"Example",model:"Lever action",barrel:16.5,price:900}),
+    g("revolver",".22 LR",{price:300})];
+  const [ar,sg,pi,lv]=S.guns; const ac=(cat,name,gun,cost)=>({id:uid(),cat,name,gun:gun?gun.id:null,cost});
+  S.acc=[ac("optic","Vortex Strikefire II",ar,180),ac("sling","Magpul MS4",ar,45),ac("grip","BCM Gunfighter Mod 3",ar,25),ac("muzzle","A2 Birdcage",ar,0),
+    ac("stock","Magpul SGA (870 / 500)",sg,90),ac("other","Mesa Tactical Sidesaddle",sg,40),ac("choke","Improved Cylinder",sg,0),
+    ac("sights","Trijicon HD Night Sights",pi,110),ac("sling","Leather rifle sling",lv,40),ac("light","Streamlight TLR-7A",null,130),ac("choke","Modified",null,25)];
+  const lot=(c,r,p,t,dt)=>({rounds:r,paid:p,type:t,date:dt});
+  S.ammo={"5.56 / .223":{count:500,defensive:0,lots:[lot("5.56 / .223",500,199.99,"practice","2026-08-14")]},
+    "12 ga":{count:480,defensive:80,lots:[lot("12 ga",400,239,"practice","2026-06-02"),lot("12 ga",80,72,"defensive","2026-06-02")]},
+    "9mm":{count:1000,defensive:100,lots:[lot("9mm",900,234,"practice","2026-07-20"),lot("9mm",100,55,"defensive","2026-07-20")]},
+    "30-30":{count:120,defensive:0,lots:[lot("30-30",120,156,"practice","2026-05-11")]},
+    ".22 LR":{count:3500,defensive:0,lots:[lot(".22 LR",3500,245,"practice","2026-04-03")]}};
+  S.log=[{date:"2026-09-21",cal:"9mm",delta:-150,reason:"range",cost:150*0.289}];
+  const wm=windowMonths();
+  S.list=[{id:uid(),cat:"ammo",name:"Federal HST 9mm 124 gr, 50 rd",cal:"9mm",rounds:50,load:"defensive",est:38,qty:1,prio:"med",month:wm[1].key,url:"",notes:"Carry ammo refresh",status:"want"},
+    {id:uid(),cat:"optics",accCat:"light",name:"SureFire X300U-A",gun:pi.id,est:330,qty:1,prio:"low",month:"someday",url:"",notes:"Wait for a holiday sale",status:"want"},
+    {id:uid(),cat:"gear",gearFlag:"",name:"Hearing protection",est:60,qty:1,prio:"high",month:wm[0].key,url:"",notes:"",status:"want"}];
+  S.notes=[{id:uid(),date:"2026-09-21",gun:pi.id,cal:"9mm",rounds:150,load:"115 gr FMJ",dist:"7, 15",group:2.5,drills:"Draw to first shot, Bill drill, slide-lock reloads",malf:0,malfNote:"",cond:"72°F, light wind",text:"Bill drill best 2.9 s. Shots drifting low left at 15 yd, likely trigger press. Dry fire this week."},
+    {id:uid(),date:"2026-08-30",gun:ar.id,cal:"5.56 / .223",rounds:60,load:"55 gr FMJ",dist:"50, 100",group:1.75,drills:"Zero confirm, prone and kneeling",malf:1,malfNote:"1 failure to extract, steel-case ammo",cond:"88°F, 5 mph wind from 3 o'clock",text:"Zero holds at 50/200. Clean and lube before next trip."}];
+  S.gear={holster:true,radios:true,light:true,spareMags:true};
+  S.meta.changes=0; UI.tab="overview"; commit(false);
+}
+
+/* ---------- inventory/plan actions ---------- */
+function applyBought(f,fd){
+  const paid=+fd.get("paid")||0, date=fd.get("date")||today();
+  const k=f.key;
+  if(k.startsWith("ammo:")||k.startsWith("defammo:")){ const r=+fd.get("rounds")||f.rounds, type=fd.get("type"); addAmmo(f.cal,r,paid,type,date); }
+  else if(k.startsWith("mags:")){ const g=S.guns.find(x=>x.id===f.gun); const n=+fd.get("n")||f.n; if(g){g.mags=(+g.mags||0)+n; g.magCost=(+g.magCost||0)+paid;} }
+  else if(/^(light|optic|sling):/.test(k)){ const part=k.split(":")[0]; const g=S.guns.find(x=>x.id===f.gun); const name=String(fd.get("name")||"").trim()||ACC_NAME[part]; S.acc.push({id:uid(),cat:part,name,gun:g?g.id:null,cost:paid||""}); S.gear[part]=true; }
+  else if(["holster","ifak","radios","bag"].includes(k)) S.gear[k]=true;
+  if(!k.startsWith("ammo:")&&!k.startsWith("defammo:")) S.purchases.push({date,label:f.label,paid});
+  S.plan.pinned=S.plan.pinned.filter(x=>x!==k); delete S.plan.est[k];
+}
+function addAmmo(cal,rounds,paid,type,date){
+  const a=S.ammo[cal]||(S.ammo[cal]={count:0,defensive:0,lots:[]});
+  a.count+=rounds; if(type==="defensive") a.defensive+=rounds; a.lots.push({rounds,paid,type,date}); a.approx=false;
+  S.log.push({date,cal,delta:rounds,reason:"bought",type,cost:paid||null});
+  if(paid) S.purchases.push({date,label:`${fmt(rounds)} rd ${cal}${type==="defensive"?" (defensive)":""}`,paid});
+}
+function backupName(){const d=new Date(); return `armory-${today()}-${String(d.getHours()).padStart(2,"0")}${String(d.getMinutes()).padStart(2,"0")}.json`;}
+function backupJSON(){return JSON.stringify(Object.assign({},S,{exportedAt:new Date().toISOString(),app:"Armory"}),null,2);}
+function markBackedUp(){S.meta.lastBackup=new Date().toISOString(); S.meta.changes=0; commit(false);}
+function parseBackup(text){ try{const o=JSON.parse(text); if(!o||o.v!==1||!Array.isArray(o.guns)) return null; return o;}catch(e){return null} }
+const hasData=st=>!!(st&&((st.guns||[]).length||(st.notes||[]).length||(st.list||[]).length||Object.keys(st.ammo||{}).length));
+const savedAtOf=o=>(o.meta&&o.meta.savedAt)||o.exportedAt||null;
+function fmtWhen(iso){ if(!iso) return "an unknown date"; const d=new Date(iso); return d.toLocaleString("en-US",{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"}); }
+function counts(st){ return `${(st.guns||[]).length} guns, ${(st.acc||[]).length} accessories, ${(st.notes||[]).length} range notes, ${(st.list||[]).filter(i=>i.status!=="bought").length} list items`; }
+/* meta: {name, source:"file"|"drop"|"paste"|"autosave", handle?} */
+function restore(text,meta){
+  meta=meta||{};
+  const o=parseBackup(text);
+  if(!o){ toast(meta.name&&!/armory/i.test(meta.name)?`"${meta.name}" isn't an Armory backup. Backups are named like armory-2026-10-28-1452.json.`:"That file isn't an Armory backup. Pick the .json file you saved from this app."); return; }
+  if(!hasData(S)){ applyRestore(o,meta); return; }
+  UI.pendingRestore={o,meta}; UI.modal={t:"restore"}; render();
+}
+function applyRestore(o,meta){
+  delete o.exportedAt; delete o.app;
+  S=migrate(Object.assign(fresh(),o)); S.meta.lastBackup=S.meta.lastBackup||new Date().toISOString();
+  UI.pendingRestore=null; UI.fileNewer=null; UI.tab="overview"; UI.modal=null;
+  if(meta&&meta.handle){ UI.fileHandle=meta.handle; UI.fileOk=true; idbSet("fileHandle",meta.handle); }
+  UI.fileChecked=true;
+  commit(false); askPersist(); toast(meta&&meta.handle?"Restored. Auto-saving to that file again.":"Backup restored");
+}
+function restoreModal(){
+  const {o,meta}=UI.pendingRestore, bAt=savedAtOf(o), mine=S.meta.savedAt, older=bAt&&mine&&bAt<mine;
+  return `<div class="overlay" data-act="closeBg"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="rs-h"><div class="row" style="justify-content:space-between"><h2 id="rs-h">Replace this browser's data?</h2><button class="btn ghost" data-act="restoreKeep" aria-label="Close">✕</button></div>
+  ${older?`<div class="banner crit"><strong>The backup is older than what's in this browser.</strong><span class="small">Restoring it would undo changes made after ${esc(fmtWhen(bAt))}.</span></div>`:bAt&&mine?`<div class="banner"><strong>The backup is newer than this browser's copy.</strong></div>`:""}
+  <div class="tbl"><table><thead><tr><th></th><th>Saved</th><th>Contains</th></tr></thead><tbody>
+   <tr><td><strong>${meta.source==="autosave"?"Auto-save file":"Backup"}</strong>${meta.name?`<div class="small muted mono">${esc(meta.name)}</div>`:""}</td><td class="small">${esc(fmtWhen(bAt))}</td><td class="small">${esc(counts(o))}</td></tr>
+   <tr><td><strong>This browser</strong></td><td class="small">${esc(fmtWhen(mine))}</td><td class="small">${esc(counts(S))}</td></tr>
+  </tbody></table></div>
+  <p class="small muted">Restoring replaces everything in this browser with the backup. ${older?"Download a backup of this browser first if you might want it.":""}</p>
+  <div class="row" style="justify-content:flex-end">${older?'<button class="btn" data-act="download">Back up this browser first</button>':""}<button class="btn" data-act="restoreKeep">Keep this browser's data</button><button class="btn ${older?"danger":"primary"}" data-act="restoreGo">Replace with ${meta.source==="autosave"?"the file":"the backup"}</button></div></div></div>`;
+}
+/* the auto-save file: read it before ever writing to it, and offer it when it's newer */
+async function checkAutoFile(){
+  if(!UI.fileHandle||!UI.fileOk){ UI.fileChecked=false; return; }
+  try{ const f=await UI.fileHandle.getFile(); const o=parseBackup(await f.text());
+    UI.fileChecked=true;
+    if(o&&hasData(o)&&(!hasData(S)||String(savedAtOf(o))>String(S.meta.savedAt))) UI.fileNewer={o,name:UI.fileHandle.name};
+    else { UI.fileNewer=null; await persistNow(); }
+  }catch(e){ UI.fileOk=false; UI.fileChecked=false; }
+  render();
+}
+function fileNewerBanner(){
+  if(UI.fileNewer) return `<div class="banner"><strong>Your auto-save file has newer data.</strong><span class="small"><span class="mono">${esc(UI.fileNewer.name)}</span> was saved ${esc(fmtWhen(savedAtOf(UI.fileNewer.o)))}. This browser's copy is from ${esc(fmtWhen(S.meta.savedAt))}. Auto-save is paused until you choose.</span><div class="row" style="margin-left:auto"><button class="btn sm primary" data-act="loadAutoFile">Load the file</button><button class="btn sm" data-act="keepBrowser">Keep this browser's copy</button></div></div>`;
+  if(UI.fileHandle&&!UI.fileOk) return `<div class="banner"><strong>Auto-save to your file is paused.</strong><span class="small">The browser needs your OK again after a restart. Reconnecting also checks the file for newer data.</span><button class="btn sm primary" data-act="reconnect" style="margin-left:auto">Reconnect</button></div>`;
+  return "";
+}
+function csvGuns(){const rows=[["type","caliber","make","model","barrel_in","mags","accessories","status","price","all_in"]];
+  S.guns.forEach(g=>rows.push([TYPE_NAME[g.type],g.caliber,g.make,g.model,g.barrel,g.mags,accOf(g).map(a=>`${ACC_NAME[a.cat]}: ${a.name}`).join("; "),g.status,g.price,allIn(g)]));
+  return rows.map(r=>r.map(v=>`"${String(v==null?"":v).replace(/"/g,'""')}"`).join(",")).join("\n");}
+async function copyText(t){ try{await navigator.clipboard.writeText(t); return true;}catch(e){ UI.copied=t; UI.showPaste=true; render(); const b=document.getElementById("pasteBox"); if(b){b.focus();b.select();} return false;} }
+
+/* ---------- events ---------- */
+const A={
+  start(){S.step="goals"; commit(false);}, example(){loadExample(); toast("Example armory loaded");},
+  next(){go(1);}, back(){go(-1);}, finish(){finishSetup();},
+  openArmory(){S.setupDone=true; UI.tab="overview"; commit(false); window.scrollTo(0,0);},
+  goal(d){toggle(S.goals,d.k); commit();}, lack(d){toggle(S.lacking,d.k); commit();}, buyn(d){toggle(S.buyNext,d.k); commit();},
+  budget(d){S.budget=+d.k; commit();},
+  type(d){S.draft.types[d.k]=!S.draft.types[d.k]; commit();},
+  cal(d){const o=S.draft.counts[d.t]||(S.draft.counts[d.t]={}); if(o[d.k]) delete o[d.k]; else o[d.k]=1; commit();},
+  cnt(d){const o=S.draft.counts[d.t]; o[d.k]=Math.max(0,(o[d.k]||0)+(+d.d)); if(!o[d.k]) delete o[d.k]; commit();},
+  owncal(d){const el=document.getElementById("own-"+d.t); const v=el&&el.value.trim(); if(!v) return; const o=S.draft.counts[d.t]||(S.draft.counts[d.t]={}); o[v]=o[v]||1; commit();},
+  range(d){S.draft.ammoRange[d.c]=d.k; commit();},
+  gear(d){S.draft.gear[d.k]=!S.draft.gear[d.k]; commit();},
+  sgear(d){S.gear[d.k]=!S.gear[d.k]; commit();},
+  tab(d){UI.tab=d.k; UI.modal=null; render(); window.scrollTo(0,0);},
+  clearExample(){S=fresh(); UI.tab="overview"; commit(false);},
+  addGun(){UI.add={}; UI.modal={t:"add"}; render();},
+  addType(d){UI.add={type:d.k}; render();}, addCal(d){UI.add.cal=d.k; render();},
+  addGo(){const own=(document.getElementById("addOwn")||{}).value; const c=(own&&own.trim())||UI.add.cal; if(!UI.add.type||!c){toast("Pick a caliber, or type your own."); return;}
+    const g=newGun(UI.add.type,c); S.guns.push(g); if(!S.ammo[c]) S.ammo[c]={count:0,defensive:0,lots:[]}; if(UI.pendingFix){S.purchases.push({date:today(),label:gunName(g),paid:0}); UI.pendingFix=null;}
+    UI.modal={t:"gun",id:g.id}; UI.confirmDel=false; commit();},
+  itemNew(d){UI.itemDraft={cat:d.cat||"other",month:windowMonths()[0].key,prio:"med",qty:1}; if(d.cat==="ammo") UI.itemDraft.cal=(primaryLong()||active()[0]||{}).caliber; UI.confirmItemDel=false; UI.modal={t:"item"}; render();},
+  itemEdit(d){const it=S.list.find(x=>x.id===d.id); UI.itemDraft=Object.assign({},it,{month:effMonth(it)}); UI.confirmItemDel=false; UI.modal={t:"item"}; render();},
+  itemAskDel(){UI.confirmItemDel=true; render();}, itemKeep(){UI.confirmItemDel=false; render();},
+  itemDel(){S.list=S.list.filter(x=>x.id!==UI.itemDraft.id); UI.modal=null; commit(); toast("Removed from list");},
+  itemOrdered(d){const it=S.list.find(x=>x.id===d.id); it.status=it.status==="ordered"?"want":"ordered"; commit();},
+  itemBuy(d){const it=S.list.find(x=>x.id===d.id); if(it.cat==="firearm"&&false) return; UI.modal={t:"itemBuy",id:d.id}; render();},
+  suggAdd(d){const f=fixes().find(x=>x.key===d.k); if(!f) return; S.list.push(fixToItem(f,d.m)); S.plan.deferred=S.plan.deferred.filter(x=>x!==d.k); commit(); toast(`Added to ${LISTCAT_NAME[fixToItem(f).cat]}`);},
+  noteForGun(d){UI.noteGun=d.id; UI.noteEdit=null; UI.modal=null; UI.tab="notes"; render(); window.scrollTo(0,0);},
+  noteEdit(d){UI.noteEdit=d.id; render(); window.scrollTo(0,0);}, noteCancel(){UI.noteEdit=null; render();},
+  noteAskDel(d){UI.noteDel=d.id; render();}, noteKeep(){UI.noteDel=null; render();},
+  noteDel(d){S.notes=S.notes.filter(n=>n.id!==d.id); UI.noteDel=null; commit(); toast("Note deleted. Ammo stock was left as is.");},
+  addSpare(){UI.pick.spare=null; UI.modal={t:"spare"}; render();},
+  accAdd(d){const st=UI.pick[d.ctx]; const inp=document.getElementById("ap-q-"+d.ctx); const name=((inp&&inp.value)||(st&&st.q)||"").trim(); if(!name){toast("Search for an accessory or type your own name."); return;}
+    const gun=d.ctx==="gun"&&UI.modal?UI.modal.id:null; const costEl=document.getElementById("ap-cost-"+d.ctx);
+    S.acc.push({id:uid(),cat:st.cat,name,gun,cost:costEl&&costEl.value!==""?+costEl.value:""}); UI.pick[d.ctx]={cat:st.cat,q:"",cost:""}; commit(); toast(`Added ${name}`);},
+  comboPick(d){const st=UI.pick[d.ctx]; const o=st.opts[+d.i]; if(!o) return; st.q=o.v; const inp=document.getElementById("ap-q-"+d.ctx); if(inp){inp.value=o.v; inp.focus();} comboClose(d.ctx);},
+  accDel(d){S.acc=S.acc.filter(a=>a.id!==d.id); commit();},
+  accUnmount(d){const a=S.acc.find(x=>x.id===d.id); if(a) a.gun=null; commit(); toast("Moved to spare gear");},
+  accMountHere(d){const a=S.acc.find(x=>x.id===d.id); if(a&&UI.modal) a.gun=UI.modal.id; commit();},
+  editGun(d){UI.pick.gun=null; UI.modal={t:"gun",id:d.id}; UI.confirmDel=false; UI.showSerial=false; render();},
+  close(){UI.modal=null; render();}, closeBg(d,el,e){if(e.target===el){UI.modal=null; render();}},
+  serial(d){const g=S.guns.find(x=>x.id===UI.modal.id); if(d.v==="yes") g.serialWanted=true; else if(d.v==="no"){g.serialWanted=false; g.serial="";} else g.serialWanted=null; commit();},
+  showSerial(){UI.showSerial=!UI.showSerial; render();},
+  gtog(d){const g=S.guns.find(x=>x.id===UI.modal.id); if(d.k==="primary"){const v=!g.primary; S.guns.forEach(x=>{if((HAND.includes(x.type))===(HAND.includes(g.type))) x.primary=false;}); g.primary=v;} else g[d.k]=!g[d.k]; commit();},
+  addOther(){const g=S.guns.find(x=>x.id===UI.modal.id); (g.other=g.other||[]).push({label:"",amt:""}); commit();},
+  delOther(d){const g=S.guns.find(x=>x.id===UI.modal.id); g.other.splice(+d.i,1); commit();},
+  askDel(){UI.confirmDel=true; render();}, cancelDel(){UI.confirmDel=false; render();},
+  delGun(){S.guns=S.guns.filter(x=>x.id!==UI.modal.id); UI.modal=null; UI.confirmDel=false; commit(); toast("Gun deleted");},
+  pin(d){toggle(S.plan.pinned,d.k); commit();}, defer(d){toggle(S.plan.deferred,d.k); commit();},
+  bought(d){const f=fixes().find(x=>x.key===d.k); if(!f) return;
+    if(f.kind==="gun"){UI.pendingFix=f.key; UI.add={type:f.key==="handgun"?"pistol":f.key==="buy_hunting"?"bolt":"rifle"}; UI.modal={t:"add"}; render(); return;}
+    if(f.free){ if(f.nav){UI.tab=f.nav; render(); return;} const [,part,id]=f.key.split(":"); const sp=spare(part); if(sp) sp.gun=id; else S.acc.push({id:uid(),cat:part,name:ACC_NAME[part],gun:id,cost:""}); commit(); toast("Linked. Score updated."); return;}
+    UI.modal={t:"bought",k:d.k}; render();},
+  persist(){askPersist().then(()=>toast(UI.persisted?"Browser agreed to protect your data":"The browser declined. Install the app or keep a backup file."));},
+  async download(){const json=backupJSON(); let ok=false;
+    const dl=window.claude&&window.claude.use?await window.claude.use("downloads").catch(()=>null):null;
+    if(dl){ try{await dl.save({filename:backupName(),data:json}); markBackedUp(); toast("Backup saved"); }catch(e){ toast(e&&e.code==="declined"?"Backup not saved":"Couldn't save here. Use Copy backup as text."); } return; }
+    try{const blob=new Blob([json],{type:"application/json"}); const u=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=u; a.download=backupName(); document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),2000); ok=true;}catch(e){}
+    markBackedUp(); toast(ok?"Backup downloaded. If no file appeared, use Copy backup as text.":"Download blocked. Use Copy backup as text.");},
+  async copyBackup(){const ok=await copyText(backupJSON()); markBackedUp(); toast(ok?"Backup copied. Paste it into a note or file and keep it safe.":"Select the text below and copy it.");},
+  async csv(){const ok=await copyText(csvGuns()); toast(ok?"Guns copied as CSV":"Select the text below and copy it.");},
+  showPaste(){UI.showPaste=true; UI.copied=""; render();}, hidePaste(){UI.showPaste=false; render();},
+  restorePaste(){const t=(document.getElementById("pasteBox")||{}).value||""; restore(t,{source:"paste"});},
+  async pickFile(){try{const h=await window.showSaveFilePicker({suggestedName:"armory-autosave.json",types:[{description:"Armory backup",accept:{"application/json":[".json"]}}]}); UI.fileHandle=h; UI.fileOk=true; UI.fileChecked=true; UI.fileNewer=null; await idbSet("fileHandle",h); await persistNow(); markBackedUp(); toast("Auto-saving to that file after every change");}catch(e){ if(e&&e.name!=="AbortError") toast("This browser won't let the page save to a file. Use Download instead."); }},
+  async reconnect(){try{const p=await UI.fileHandle.requestPermission({mode:"readwrite"}); UI.fileOk=p==="granted"; if(UI.fileOk){await checkAutoFile(); toast(UI.fileNewer?"Reconnected. The file has newer data, so choose which to keep.":"Reconnected. Auto-saving again.");} else {render(); toast("The browser didn't allow it. Choose the file again.");}}catch(e){toast("Couldn't reconnect. Choose the file again.");}},
+  loadAutoFile(){ if(UI.fileNewer) applyRestore(UI.fileNewer.o,{source:"autosave"}); },
+  async keepBrowser(){ UI.fileNewer=null; UI.fileChecked=true; await persistNow(); render(); toast("Kept this browser's copy and updated the file."); },
+  restoreGo(){ const r=UI.pendingRestore; if(r) applyRestore(r.o,r.meta); },
+  restoreKeep(){ UI.pendingRestore=null; UI.modal=null; render(); },
+  async openLink(){ try{ const [h]=await window.showOpenFilePicker({types:[{description:"Armory backup",accept:{"application/json":[".json"]}}]}); const text=await (await h.getFile()).text();
+      let handle=null; try{ const p=await h.requestPermission({mode:"readwrite"}); if(p==="granted") handle=h; }catch(e){}
+      restore(text,{name:h.name,source:"file",handle}); }catch(e){ if(e&&e.name!=="AbortError") toast("This browser couldn't open that file. Use Restore from file instead."); } },
+  costTog(){S.costTracking=!S.costTracking; commit();},
+  askWipe(){UI.confirmWipe=true; render();}, cancelWipe(){UI.confirmWipe=false; render();},
+  async wipe(){S=fresh(); UI.confirmWipe=false; UI.fileHandle=null; UI.fileOk=false; try{localStorage.removeItem(LS_KEY)}catch(e){} await idbSet("state",""); await idbSet("fileHandle",null); render(); toast("All data deleted");}
+};
+document.addEventListener("click",e=>{const el=e.target.closest("[data-act]"); if(!el) return; const fn=A[el.dataset.act]; if(!fn) return; if(el.tagName==="BUTTON"&&el.type!=="submit") e.preventDefault(); fn(el.dataset,el,e);});
+document.addEventListener("change",e=>{const t=e.target;
+  if(t.dataset.bind){S[t.dataset.bind]=t.type==="number"?(+t.value||0):t.value; commit(); return;}
+  if(t.dataset.gbind&&UI.modal){const g=S.guns.find(x=>x.id===UI.modal.id); g[t.dataset.gbind]=t.type==="number"?(t.value===""?"":+t.value):t.value; commit(); return;}
+  if(t.dataset.obind&&UI.modal){const g=S.guns.find(x=>x.id===UI.modal.id); g.other[+t.dataset.i][t.dataset.obind]=t.type==="number"?(t.value===""?"":+t.value):t.value; commit(); return;}
+  if(t.dataset.itemmonth){const it=S.list.find(x=>x.id===t.dataset.itemmonth); it.month=t.value; commit(); return;}
+  if(t.dataset.itemcat){const fd=new FormData(t.form); const d=UI.itemDraft; for(const [k,v] of fd.entries()) d[k]=v; render(); return;}
+  if(t.dataset.notegun){const o=t.selectedOptions[0], c=o&&o.dataset.cal, sel=document.getElementById("rn-cal"); if(c&&sel){ if(![...sel.options].some(x=>x.value===c)) sel.add(new Option(c,c)); sel.value=c; } return;}
+  if(t.dataset.notefilter){UI.noteFilter=t.value; render(); return;}
+  if(t.dataset.pickcat){const st=UI.pick[t.dataset.pickcat]; st.cat=t.value; st.q=""; st.hi=0; render(); const i=document.getElementById("ap-q-"+t.dataset.pickcat); if(i) i.focus(); return;}
+  if(t.dataset.pickcost){UI.pick[t.dataset.pickcost].cost=t.value; return;}
+  if(t.dataset.accost){const a=S.acc.find(x=>x.id===t.dataset.accost); if(a){a.cost=t.value===""?"":+t.value; commit();} return;}
+  if(t.dataset.mount){const a=S.acc.find(x=>x.id===t.dataset.mount); if(a&&t.value){a.gun=t.value; commit(); toast(`Mounted ${a.name}`);} return;}
+  if(t.dataset.est){S.plan.est[t.dataset.est]=+t.value||0; commit(); return;}
+  if(t.id==="restoreFile"||t.id==="restoreFile2"){const f=t.files&&t.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>restore(String(r.result),{name:f.name,source:"file"}); r.readAsText(f); t.value="";}
+});
+document.addEventListener("input",e=>{const t=e.target;
+  if(t.dataset.combo){const st=UI.pick[t.dataset.combo]; st.q=t.value; st.hi=0; comboList(t.dataset.combo); return;}
+  if(t.id==="inv-q"){UI.invQ=t.value; render(); return;} if(t.form&&t.form.dataset.form==="buyAmmo"){const fd=new FormData(t.form); const r=+fd.get("rounds"), p=+fd.get("paid"); const out=document.getElementById("ba-cpr"); if(out) out.textContent=r>0&&p>0?`${money(p)} for ${fmt(r)} rd = ${cents(p/r)} per round`:"Enter rounds and total paid to see ¢ per round.";}});
+document.addEventListener("submit",e=>{e.preventDefault(); const f=e.target, fd=new FormData(f);
+  if(f.dataset.form==="buyAmmo"){const r=+fd.get("rounds"); if(!r){toast("Enter how many rounds you bought."); return;} addAmmo(fd.get("cal"),r,+fd.get("paid")||0,fd.get("type"),fd.get("date")||today()); commit(); toast(`Added ${fmt(r)} rd of ${fd.get("cal")}`);}
+  if(f.dataset.form==="range"){const cal=fd.get("cal"), r=+fd.get("rounds"); if(!r){toast("Enter how many rounds you shot."); return;} const a=S.ammo[cal]||(S.ammo[cal]={count:0,defensive:0,lots:[]}); const used=Math.min(r,a.count); const practice=a.count-a.defensive; if(used>practice) a.defensive=Math.max(0,a.defensive-(used-practice)); a.count-=used; S.log.push({date:fd.get("date")||today(),cal,delta:-used,reason:"range",cost:used*cpr(cal)}); commit(); toast(`Logged ${fmt(used)} rd of ${cal}${S.costTracking?`, about ${money(used*cpr(cal))}`:""}`);}
+  if(f.dataset.form==="item"){const d=UI.itemDraft; const v=k=>{const x=fd.get(k); return x==null?undefined:String(x).trim();};
+    ["cat","accCat","cal","load","gunType","name","gun","gearFlag","prio","month","url","notes"].forEach(k=>{const x=v(k); if(x!==undefined) d[k]=x;});
+    ["rounds","est","qty"].forEach(k=>{const x=v(k); if(x!==undefined) d[k]=x===""?"":+x;});
+    if(d.cat==="ammo"&&!d.name) d.name=`${d.rounds?fmt(d.rounds)+" rd ":""}${d.cal||"ammo"}${d.load==="defensive"?" (defensive)":""}`;
+    if(!d.name){toast("Give the item a name."); return;}
+    if(d.url&&!/^https?:\/\//.test(d.url)) d.url="https://"+d.url;
+    if(d.cat==="ammo"&&!d.est&&d.rounds&&d.cal) d.est=Math.round(d.rounds*cpr(d.cal)*100)/100;
+    if(d.id){Object.assign(S.list.find(x=>x.id===d.id),d);} else S.list.push(Object.assign({id:uid(),status:"want"},d));
+    UI.modal=null; commit(); toast(d.id?"Saved":`Added to ${LISTCAT_NAME[d.cat]}`); return;}
+  if(f.dataset.form==="itemBuy"){const it=S.list.find(x=>x.id===UI.modal.id); const paid=+fd.get("paid")||0, date=fd.get("date")||today();
+    if(it.cat==="ammo"){const r=+fd.get("rounds")||+it.rounds||0; if(r&&it.cal) addAmmo(it.cal,r,paid,fd.get("load")||it.load,date); else S.purchases.push({date,label:it.name,paid});}
+    else { S.purchases.push({date,label:it.name,paid});
+      if(it.cat==="mags"){const g=S.guns.find(x=>x.id===it.gun); if(g){g.mags=(+g.mags||0)+Math.max(1,+it.qty||1); g.magCost=(+g.magCost||0)+paid;}}
+      else if((it.cat==="optics"||it.cat==="parts")&&it.accCat){S.acc.push({id:uid(),cat:it.accCat,name:it.name,gun:it.gun||null,cost:paid||""}); if(["optic","light","sling"].includes(it.accCat)) S.gear[it.accCat]=true;}
+      else if(it.gearFlag) S.gear[it.gearFlag]=true; }
+    it.status="bought"; it.boughtDate=date; it.paid=paid;
+    if(it.cat==="firearm"){UI.add={type:it.gunType||"rifle"}; UI.modal={t:"add"}; commit(); toast("Bought. Now log the gun."); return;}
+    UI.modal=null; commit(); toast("Saved. Scores updated."); return;}
+  if(f.dataset.form==="note"){const v=k=>String(fd.get(k)||"").trim(); const rec={date:v("date")||today(),gun:v("gun"),cal:v("cal"),rounds:v("rounds")===""?"":+v("rounds"),load:v("load"),dist:v("dist"),group:v("group"),drills:v("drills"),malf:v("malf")===""?"":+v("malf"),malfNote:v("malfNote"),cond:v("cond"),text:v("text")};
+    if(!rec.rounds&&!rec.text&&!rec.drills){toast("Add rounds fired, what you worked on, or a note."); return;}
+    if(UI.noteEdit){const n=S.notes.find(x=>x.id===UI.noteEdit); Object.assign(n,rec); UI.noteEdit=null; commit(); toast("Note updated"); return;}
+    const n=Object.assign({id:uid()},rec); S.notes.push(n);
+    let msg="Range note saved";
+    if(fd.get("sub")&&rec.rounds&&rec.cal){const a=S.ammo[rec.cal]||(S.ammo[rec.cal]={count:0,defensive:0,lots:[]}); const used=Math.min(rec.rounds,a.count); const practice=a.count-a.defensive; if(used>practice) a.defensive=Math.max(0,a.defensive-(used-practice)); a.count-=used; S.log.push({date:rec.date,cal:rec.cal,delta:-used,reason:"range",cost:used*cpr(rec.cal),note:n.id}); msg+=`, ${fmt(used)} rd taken off ${rec.cal}`;}
+    UI.noteGun=null; commit(); toast(msg); window.scrollTo(0,0); return;}
+  if(f.dataset.form==="bought"){const fx0=fixes().find(x=>x.key===UI.modal.k); if(fx0){applyBought(fx0,fd); UI.modal=null; commit(); toast("Saved. Scores updated.");}}
+});
+document.addEventListener("toggle",e=>{const t=e.target; if(!t.dataset) return; if(t.dataset.month){UI.openMonths=UI.openMonths||{}; UI.openMonths[t.dataset.month]=t.open;} if(t.dataset.cat) UI.openCats[t.dataset.cat]=t.open; if(t.dataset.more) UI.openMore=t.open;},true);
+let dragDepth=0;
+const isFileDrag=e=>e.dataTransfer&&[...(e.dataTransfer.types||[])].includes("Files");
+document.addEventListener("dragenter",e=>{ if(!isFileDrag(e)) return; e.preventDefault(); dragDepth++; document.body.classList.add("dragging"); });
+document.addEventListener("dragover",e=>{ if(!isFileDrag(e)) return; e.preventDefault(); e.dataTransfer.dropEffect="copy"; });
+document.addEventListener("dragleave",e=>{ if(!isFileDrag(e)) return; dragDepth=Math.max(0,dragDepth-1); if(!dragDepth) document.body.classList.remove("dragging"); });
+document.addEventListener("drop",e=>{ if(!isFileDrag(e)) return; e.preventDefault(); dragDepth=0; document.body.classList.remove("dragging");
+  const f=e.dataTransfer.files&&e.dataTransfer.files[0]; if(!f) return;
+  if(!/\.json$/i.test(f.name)&&f.type!=="application/json"){ toast(`"${f.name}" isn't a backup file. Backups end in .json.`); return; }
+  const r=new FileReader(); r.onload=()=>restore(String(r.result),{name:f.name,source:"drop"}); r.readAsText(f); });
+document.addEventListener("focusin",e=>{const t=e.target; if(t.dataset&&t.dataset.combo) comboList(t.dataset.combo);});
+document.addEventListener("mousedown",e=>{ if(!e.target.closest(".combo")) Object.keys(UI.pick).forEach(comboClose); });
+document.addEventListener("keydown",e=>{const t=e.target;
+  if(t.dataset&&t.dataset.combo){const ctx=t.dataset.combo, st=UI.pick[ctx]; if(!st) return;
+    if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault(); if(document.getElementById("ap-list-"+ctx).hidden) comboList(ctx); const n=(st.opts||[]).length; if(n){st.hi=(st.hi+(e.key==="ArrowDown"?1:-1)+n)%n; comboList(ctx);} return;}
+    if(e.key==="Enter"){e.preventDefault(); const box=document.getElementById("ap-list-"+ctx); if(!box.hidden&&st.opts&&st.opts.length){A.comboPick({ctx,i:st.hi});} else A.accAdd({ctx}); return;}
+    if(e.key==="Escape"){comboClose(ctx); e.preventDefault(); return;}
+    if(e.key==="Tab") comboClose(ctx);
+  }
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&UI.modal&&!e.defaultPrevented){UI.modal=null; render();}});
+
+loadState().then(async()=>{render(); if(S.guns.length&&!UI.persisted) askPersist(); if(UI.fileHandle&&UI.fileOk) await checkAutoFile();});
+render();
+})();
+</script>
+
+</body>
+</html>

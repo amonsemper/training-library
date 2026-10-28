@@ -13,6 +13,7 @@ Files:
   medical.html               Field Medical (MARCH, hemorrhage, IFAK, CPR, cold and heat)
   cover.html                 Cover and Concealment
   calculator.html            Ballistics Calculator (all cartridges; data in assets/ballistics.js)
+  armory.html                Armory Planner (local-only kit/ammo/gear planner; self-contained app)
   rifle.html, shotgun.html, handgun.html, bolt-rifle.html
   defensive-rifle.html, defensive-shotgun.html, defensive-handgun.html, defensive-bolt-rifle.html
   modifications.html         Common Weapon Modifications
