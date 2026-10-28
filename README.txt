@@ -10,6 +10,7 @@ Files:
   cqb.html                   Recon & CQB Primer
   scenarios.html             Scenario-Based Engagement Breakdowns
   fieldcraft.html            Fieldcraft (land nav, hide sites, signature, drones, recon)
+  medical.html               Field Medical (MARCH, hemorrhage, IFAK, CPR, cold and heat)
   cover.html                 Cover and Concealment
   calculator.html            Ballistics Calculator (all cartridges; data in assets/ballistics.js)
   rifle.html, shotgun.html, handgun.html, bolt-rifle.html
