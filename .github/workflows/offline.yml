@@ -41,6 +41,7 @@ jobs:
           Get the newest copy any time from https://amonsemper.github.io/training-library/
           TXT
           sed -i 's/^          //' "dist/training-library/Open Training Library.html" dist/training-library/OFFLINE-README.txt
+          python3 .github/scripts/vendor_fonts.py dist/training-library
           echo "Built $(date -u +%Y-%m-%d) from ${GITHUB_SHA::7}" > dist/training-library/VERSION.txt
           cd dist && zip -qr training-library-offline.zip training-library && ls -l training-library-offline.zip
       - name: Publish to the offline release
