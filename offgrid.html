@@ -84,7 +84,7 @@
 
 <section id="batteries">
   <h2><span class="n">03</span>Battery backup</h2>
-  <p>Batteries are silent, make no fumes, and can run indoors, so they're the only option for apartments and for running through the night without a generator outside. They store a fixed amount of energy: when it's gone, you need sun, a generator, or the grid to refill it.</p>
+  <p>Battery power stations, often sold as "solar generators" when they're bundled with panels, have two big advantages over a fuel generator: they're <b>silent</b>, and they need <b>no fuel</b>. No exhaust, so they can run indoors and right next to a bed; no fuel to buy, store, rotate, or run out of; no engine to start or maintain; and nothing to hear from outside the house. Paired with solar, they refill themselves every sunny day. The trade-off is that they store a fixed amount of energy: when it's gone, you need sun, a generator, or the grid to refill it.</p>
   <div class="tbl"><table>
     <thead><tr><th>Type</th><th>Typical capacity</th><th>Output</th><th>Best for</th></tr></thead>
     <tbody>
@@ -99,6 +99,22 @@
     <div class="box"><h4>NMC lithium</h4><p>Lighter for its capacity, so common in smaller portables, but fewer cycles and less tolerant of heat and abuse than LiFePO4.</p></div>
     <div class="box"><h4>Lead-acid (AGM, flooded)</h4><p>Cheap and familiar, but heavy, and you should only use about half the rated capacity or the battery wears out fast. Flooded batteries vent hydrogen while charging and need ventilation and topping up.</p></div>
     <div class="box"><h4>Sizing rule</h4><p>Battery kWh needed is roughly your daily kWh times the number of days, divided by about 0.8 to cover inverter losses and keep some reserve. The estimator above does this for you.</p></div>
+  </div>
+  <h3>Common brands</h3>
+  <p>These are the brands you'll see most on Amazon and in the big-box stores. Every one makes LiFePO4 models, sells matching solar panels, and has a range from small to home-backup size. Model lines change every year, so treat the models below as examples of each size and check the maker's current spec sheet before you buy.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Brand</th><th>Small (about 250–800 Wh)</th><th>Mid (about 1–2 kWh)</th><th>Home backup (3+ kWh)</th></tr></thead>
+    <tbody>
+      <tr><td><b>Anker SOLIX</b></td><td>C300, C800 series</td><td>C1000 (about 1,056 Wh, 1,800 W), F2000</td><td>F3800 (about 3,840 Wh, 6,000 W, 120/240 V), expandable with extra batteries and a home panel</td></tr>
+      <tr><td><b>BLUETTI</b></td><td>EB3A, AC70</td><td>AC180; AC200L (about 2,048 Wh, 2,400 W, expandable); Elite 200</td><td>AC300 and AC500 with B300 battery modules; Apex home systems</td></tr>
+      <tr><td><b>EcoFlow</b></td><td>River series</td><td>DELTA 2 (about 1,024 Wh, 1,800 W); DELTA 3 series</td><td>DELTA Pro series with the Smart Home Panel for whole-circuit backup</td></tr>
+      <tr><td><b>Jackery</b></td><td>Explorer 300, 500</td><td>Explorer 1000 v2 (about 1,070 Wh, 1,500 W); 1000 Plus</td><td>Explorer 2000 Plus and 3000 series, expandable</td></tr>
+      <tr><td><b>Goal Zero</b></td><td>Yeti 500 class</td><td>Yeti 1500 class</td><td>Yeti 6000 class with a home integration kit</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="box"><h4>What to compare</h4><p>Capacity in watt-hours (how long it runs), continuous and surge output in watts (what it can start and run), LiFePO4 chemistry and rated cycle count, solar input in watts and its voltage range, and whether it can add expansion batteries.</p></div>
+    <div class="box"><h4>For home backup</h4><p>Look for a UPS or pass-through mode (switches over in milliseconds when the grid drops), 120/240 V output if you need a well pump or other 240 V load, and a transfer switch or home panel kit from the same maker for hardwired circuits.</p></div>
   </div>
 </section>
 
@@ -155,13 +171,22 @@
 
 <section id="solar">
   <h2><span class="n">07</span>Solar and recharging</h2>
-  <p>Solar is what turns a battery from a one-time reserve into something that keeps going. It needs no fuel, but it only produces when the sun is up and much less in winter, under cloud, and in shade.</p>
+  <p>Solar is what turns a battery from a one-time reserve into something that keeps going: silent, fuel-free power every day the sun is up. It only produces when the sun is up and much less in winter, under cloud, and in shade.</p>
   <div class="grid2">
     <div class="box"><h4>What to expect</h4><p>A panel delivers roughly its rated watts times 3–5 "peak sun hours" a day, less losses. A 400 W panel is good for about 1–2 kWh on a decent day, and much less on a gray winter day.</p></div>
     <div class="box"><h4>Portable panels</h4><p>Folding panels plug into most power stations. Enough to keep phones, radios, a router, and lights going; usually not enough to run a fridge and freezer indefinitely.</p></div>
     <div class="box"><h4>Charge controller</h4><p>Panels feed a battery through a charge controller (MPPT is the efficient type). Power stations and whole-home systems have one built in; a 12 V DIY system needs its own.</p></div>
     <div class="box"><h4>Grid-tied panels go dark</h4><p>Ordinary grid-tied solar shuts off during an outage for lineworker safety, even in full sun. To run from your panels in an outage, the system needs a battery or an inverter with a backup or islanding mode.</p></div>
   </div>
+  <h3>Panel brands</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Type</th><th>Common brands</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td><b>Folding portable panels (100–400 W)</b></td><td>Anker SOLIX, BLUETTI, EcoFlow, Jackery SolarSaga, Renogy</td><td>Set out in the sun when needed and plugged into a power station; pack away between uses</td></tr>
+      <tr><td><b>Rigid panels (100–450 W)</b></td><td>Renogy, plus the power-station brands' own rigid panels</td><td>Permanent mounting on a roof, shed, or ground rack for a 12 V system or a power station that stays put</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Panels and stations from the same brand plug together without adapters. Mixing brands works if the panel's open-circuit voltage stays inside the station's solar input range and you have the right connector (most use MC4 or XT60, some Anderson or DC7909). Two panels wired in series double the voltage: check that against the input limit first.</p>
 </section>
 
 <section id="safety">
