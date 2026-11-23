@@ -235,7 +235,7 @@ const accOf=g=>S.acc.filter(a=>a.gun===g.id);
 const gHas=(g,cat)=>!!g&&S.acc.some(a=>a.gun===g.id&&a.cat===cat);
 const spare=cat=>S.acc.find(a=>!a.gun&&a.cat===cat)||null;
 function allIn(g){ return (+g.price||0)+(g.other||[]).reduce((s,o)=>s+(+o.amt||0),0)+accOf(g).reduce((s,a)=>s+(+a.cost||0),0)+(+g.magCost||0); }
-function migrate(st){ st.acc=st.acc||[]; st.notes=st.notes||[]; st.list=st.list||[]; (st.guns||[]).forEach(g=>["optic","light","sling"].forEach(c=>{ if(g[c]===true&&!st.acc.some(a=>a.gun===g.id&&a.cat===c)) st.acc.push({id:uid(),cat:c,name:ACC_NAME[c],gun:g.id,cost:g[c+"Cost"]||""}); delete g[c]; delete g[c+"Cost"]; })); return st; }
+function migrate(st){ (st.guns||[]).forEach(g=>{if("serial" in g||"serialWanted" in g){delete g.serial; delete g.serialWanted; UI.scrubbed=true;}}); st.acc=st.acc||[]; st.notes=st.notes||[]; st.list=st.list||[]; (st.guns||[]).forEach(g=>["optic","light","sling"].forEach(c=>{ if(g[c]===true&&!st.acc.some(a=>a.gun===g.id&&a.cat===c)) st.acc.push({id:uid(),cat:c,name:ACC_NAME[c],gun:g.id,cost:g[c+"Cost"]||""}); delete g[c]; delete g[c+"Cost"]; })); return st; }
 function catalogSearch(cat,q){ const list=CATALOG[cat]||[]; const t=q.toLowerCase().split(/\s+/).filter(Boolean); return list.filter(n=>t.every(w=>n.toLowerCase().includes(w))); }
 function daysSince(iso){ if(!iso) return null; return Math.floor((Date.now()-Date.parse(iso))/864e5); }
 
@@ -408,7 +408,7 @@ function setupView(){
     <p class="muted" style="max-width:60ch">Armory logs your guns, ammo, and gear, scores your setup against the goals you pick, and builds a month-by-month list of what to buy next. Setup takes about two minutes of tapping. You only type a make or model when a feature needs it.</p>
     <div class="row"><button class="btn primary" data-act="start">Start setup</button><button class="btn" data-act="example">See an example armory</button><label class="btn" for="restoreFile">Restore a backup</label><input id="restoreFile" type="file" accept=".json,application/json" hidden>${typeof window.showOpenFilePicker==="function"?'<button class="btn" data-act="openLink">Open my auto-save file</button>':""}</div>
     <div class="dropzone small">Have a backup file? Drop it anywhere on this page. Backups are named like <span class="mono">armory-2026-10-28-1452.json</span>.</div>
-    <div class="card small muted">Your data is saved in this browser only. Nothing is sent to a server. A serial number is never required, and the app never asks where you keep anything.</div></div>`;
+    <div class="card small muted">Your data is saved in this browser only. Nothing is sent to a server. The app never asks where you keep anything.</div></div>`;
   let body="";
   if(st==="goals") body=`<div class="eyebrow">Step 1 of 7 · Goals</div><h2>What do you want your armory ready for?</h2><p class="muted small">Pick all that apply.</p>${picks(GOALS,S.goals,"goal",true)}
     ${has(S.goals,"gethome")?`<div class="card row"><label class="f" for="ghmi">How far is home from work, in miles?<input id="ghmi" type="number" min="1" max="200" value="${esc(S.getHomeMi)}" data-bind="getHomeMi"></label></div>`:""}`;
@@ -493,12 +493,11 @@ function inventoryView(){
   ${ct&&S.purchases.length?`<div class="card"><h2>Purchase log</h2><div class="tbl"><table><thead><tr><th>Date</th><th>Item</th><th class="r">Paid</th></tr></thead><tbody>${S.purchases.slice().reverse().slice(0,15).map(p=>`<tr><td class="mono small">${esc(p.date)}</td><td>${esc(p.label)}</td><td class="r num">${money(p.paid)}</td></tr>`).join("")}</tbody></table></div></div>`:""}</div>`;
 }
 function gunRow(g){
-  const serial=g.serialWanted===true&&g.serial?`<span class="badge on">Serial on file</span>`:g.serialWanted===false?"":`<span class="badge" style="border-color:var(--brass);color:var(--brass)">Serial? Yes / No</span>`;
   const st=g.status!=="active"?`<span class="badge">${esc(g.status)}</span>`:"";
   const acc=accOf(g), magFed=!["shotgun","revolver"].includes(g.type);
   return `<button class="gunrow" data-act="editGun" data-id="${g.id}"><span class="ty">${esc(g.caliber)}</span><span class="main"><strong>${esc(gunLabel(g))}</strong>${g.make||g.model?` <span class="muted small">${esc(TYPE_NAME[g.type])}${g.barrel?`, ${esc(g.barrel)} in`:""}</span>`:` <span class="muted small">· add make and model</span>`}
   ${acc.length?`<span class="small" style="display:block;margin-top:2px">${acc.map(a=>`<span class="muted">${esc(ACC_NAME[a.cat])}:</span> ${esc(a.name)}`).join(" · ")}</span>`:`<span class="small muted" style="display:block;margin-top:2px">No accessories logged</span>`}
-  <span class="badges">${g.primary?'<span class="badge on">Primary</span>':""}${magFed?`<span class="badge ${g.mags>0?"on":""}">${+g.mags||0} mags</span>`:""}${serial}${st}</span></span>
+  <span class="badges">${g.primary?'<span class="badge on">Primary</span>':""}${magFed?`<span class="badge ${g.mags>0?"on":""}">${+g.mags||0} mags</span>`:""}${st}</span></span>
   ${S.costTracking?`<span class="num mono small">${money0(allIn(g))}</span>`:""}</button>`;
 }
 /* searchable accessory picker: category + dropdown search + "Add your own" */
@@ -534,9 +533,6 @@ function addSpareModal(){
 function gunModal(g){
   const ct=S.costTracking, nm=gunName(g);
   const still=fixes().filter(f=>f.gun===g.id).reduce((s,f)=>s+f.est,0);
-  const serialBlock=g.serialWanted==null?`<div class="ask stack" style="gap:8px"><strong>Do you want a serial number associated with this ${esc(nm)}?</strong><span class="small muted">Optional. Handy for insurance or a theft report. It's masked on screen and left out of anything you share.</span><div class="row"><button class="btn sm primary" data-act="serial" data-v="yes">Yes</button><button class="btn sm" data-act="serial" data-v="no">No</button></div></div>`
-    :g.serialWanted?`<div class="stack" style="gap:6px"><label class="f" for="g-serial">Serial number<input id="g-serial" type="text" value="${esc(g.serial||"")}" data-gbind="serial" autocomplete="off" ${UI.showSerial?"":'style="-webkit-text-security:disc"'}></label><div class="row small"><button class="btn sm ghost" data-act="showSerial">${UI.showSerial?"Hide":"Show"}</button><button class="btn sm ghost" data-act="serial" data-v="no">Remove serial</button></div></div>`
-    :`<div class="row small muted">No serial saved. <button class="btn sm ghost" data-act="serial" data-v="ask">Change</button></div>`;
   const accs=accOf(g);
   const accBlock=`<div class="card stack" style="gap:10px"><h3>Accessories</h3>
    ${accs.length?`<div class="stack" style="gap:0">${accs.map(a=>`<div class="row" style="justify-content:space-between;padding:8px 0;border-top:1px solid var(--line)"><div style="min-width:0;flex:1 1 200px"><div class="small muted">${esc(ACC_NAME[a.cat])}</div><div>${esc(a.name)}</div></div>${ct?`<label class="f" for="ac-cost-${a.id}">Paid<input id="ac-cost-${a.id}" type="number" min="0" step="0.01" value="${esc(a.cost||"")}" data-accost="${a.id}" style="width:100px"></label>`:""}<div class="row" style="gap:4px"><button class="btn sm ghost" data-act="accUnmount" data-id="${a.id}">Unmount</button><button class="btn sm ghost" data-act="accDel" data-id="${a.id}" aria-label="Remove ${esc(a.name)}">✕</button></div></div>`).join("")}</div>`:`<p class="small muted">Nothing logged yet. Add optics, lights, lasers, grips, stocks${g.type==="shotgun"?", chokes":""}, and more.</p>`}
@@ -544,7 +540,6 @@ function gunModal(g){
    ${accPicker("gun",g.type)}</div>`;
   return `<div class="overlay" data-act="closeBg"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="gm-h">
   <div class="row" style="justify-content:space-between"><div><div class="eyebrow">${esc(nm)}</div><h2 id="gm-h">${esc(gunLabel(g))}</h2></div><button class="btn ghost" data-act="close" aria-label="Close">✕</button></div>
-  ${serialBlock}
   <div class="split"><label class="f" for="g-make">Make<input id="g-make" type="text" value="${esc(g.make||"")}" data-gbind="make" placeholder="e.g. Ruger"></label><label class="f" for="g-model">Model<input id="g-model" type="text" value="${esc(g.model||"")}" data-gbind="model"></label><label class="f" for="g-barrel">Barrel (in)<input id="g-barrel" type="number" min="0" step="0.1" value="${esc(g.barrel||"")}" data-gbind="barrel"></label></div>
   <div class="row"><button class="pick" data-act="gtog" data-k="primary" aria-pressed="${!!g.primary}">Use as my primary</button>
   ${["shotgun","revolver"].includes(g.type)?"":`<label class="f" for="g-mags">Magazines<input id="g-mags" type="number" min="0" value="${esc(g.mags||0)}" data-gbind="mags"></label>${ct?`<label class="f" for="g-magCost">Paid for mags<input id="g-magCost" type="number" min="0" step="0.01" value="${esc(g.magCost||"")}" data-gbind="magCost"></label>`:""}`}</div>
@@ -811,13 +806,13 @@ function finishSetup(){
   Object.entries(d.counts).forEach(([t,cals])=>{ if(!d.types[t]) return; Object.entries(cals).forEach(([c,n])=>{ for(let i=0;i<n;i++) S.guns.push(newGun(t,c)); if(!S.ammo[c]){const r=RANGES.find(x=>x[0]===d.ammoRange[c]); S.ammo[c]={count:r?r[2]:0,defensive:0,lots:[],approx:!!r};} }); });
   S.gear=Object.assign({},d.gear); S.setupDone=false; S.step="result"; commit(); askPersist();
 }
-function newGun(t,c){return {id:uid(),type:t,caliber:c,make:"",model:"",barrel:"",mags:0,primary:false,serialWanted:null,serial:"",status:"active",price:"",other:[],soldFor:""};}
+function newGun(t,c){return {id:uid(),type:t,caliber:c,make:"",model:"",barrel:"",mags:0,primary:false,status:"active",price:"",other:[],soldFor:""};}
 function loadExample(){
   S=fresh(); S.example=true; S.setupDone=true; S.costTracking=true; S.goals=["home","gethome","training"]; S.lacking=["ammo"]; S.buyNext=["ammo","optics"]; S.budget=250; S.getHomeMi=30;
   const g=(t,c,o)=>Object.assign(newGun(t,c),o);
-  S.guns=[g("rifle","5.56 / .223",{make:"Example",model:"AR-15",barrel:16,mags:6,price:850,magCost:72,serialWanted:false,primary:true,other:[{label:"Transfer fee",amt:25}]}),
-    g("shotgun","12 ga",{make:"Example",model:"Pump action",barrel:18.5,price:420,serialWanted:true,serial:"EX1234567"}),
-    g("pistol","9mm",{make:"Example",model:"Striker 9mm",mags:3,price:480,magCost:60,serialWanted:null}),
+  S.guns=[g("rifle","5.56 / .223",{make:"Example",model:"AR-15",barrel:16,mags:6,price:850,magCost:72,primary:true,other:[{label:"Transfer fee",amt:25}]}),
+    g("shotgun","12 ga",{make:"Example",model:"Pump action",barrel:18.5,price:420}),
+    g("pistol","9mm",{make:"Example",model:"Striker 9mm",mags:3,price:480,magCost:60}),
     g("rifle","30-30",{make:"Example",model:"Lever action",barrel:16.5,price:900}),
     g("revolver",".22 LR",{price:300})];
   const [ar,sg,pi,lv]=S.guns; const ac=(cat,name,gun,cost)=>({id:uid(),cat,name,gun:gun?gun.id:null,cost});
@@ -953,10 +948,8 @@ const A={
   accDel(d){S.acc=S.acc.filter(a=>a.id!==d.id); commit();},
   accUnmount(d){const a=S.acc.find(x=>x.id===d.id); if(a) a.gun=null; commit(); toast("Moved to spare gear");},
   accMountHere(d){const a=S.acc.find(x=>x.id===d.id); if(a&&UI.modal) a.gun=UI.modal.id; commit();},
-  editGun(d){UI.pick.gun=null; UI.modal={t:"gun",id:d.id}; UI.confirmDel=false; UI.showSerial=false; render();},
+  editGun(d){UI.pick.gun=null; UI.modal={t:"gun",id:d.id}; UI.confirmDel=false; render();},
   close(){UI.modal=null; render();}, closeBg(d,el,e){if(e.target===el){UI.modal=null; render();}},
-  serial(d){const g=S.guns.find(x=>x.id===UI.modal.id); if(d.v==="yes") g.serialWanted=true; else if(d.v==="no"){g.serialWanted=false; g.serial="";} else g.serialWanted=null; commit();},
-  showSerial(){UI.showSerial=!UI.showSerial; render();},
   gtog(d){const g=S.guns.find(x=>x.id===UI.modal.id); if(d.k==="primary"){const v=!g.primary; S.guns.forEach(x=>{if((HAND.includes(x.type))===(HAND.includes(g.type))) x.primary=false;}); g.primary=v;} else g[d.k]=!g[d.k]; commit();},
   addOther(){const g=S.guns.find(x=>x.id===UI.modal.id); (g.other=g.other||[]).push({label:"",amt:""}); commit();},
   delOther(d){const g=S.guns.find(x=>x.id===UI.modal.id); g.other.splice(+d.i,1); commit();},
@@ -1061,7 +1054,7 @@ document.addEventListener("keydown",e=>{const t=e.target;
 });
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&UI.modal&&!e.defaultPrevented){UI.modal=null; render();}});
 
-loadState().then(async()=>{render(); if(S.guns.length&&!UI.persisted) askPersist(); if(UI.fileHandle&&UI.fileOk) await checkAutoFile();});
+loadState().then(async()=>{render(); if(UI.scrubbed){UI.scrubbed=false; persistNow();} if(S.guns.length&&!UI.persisted) askPersist(); if(UI.fileHandle&&UI.fileOk) await checkAutoFile();});
 render();
 })();
 </script>
