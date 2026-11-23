@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Off-Grid Environment Configurations</title>
+<meta name="description" content="Backup power when the grid is down: sizing loads, battery backup from power stations to whole-home systems, portable and standby generators, fuel types and storage life, transfer switches, solar recharging, safety, and four configurations.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;700;800&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<nav class="site" aria-label="Library"><div class="in"><a class="brand" href="index.html">Training <span>Library</span></a><div class="dds"><div class="dd cur"><button class="dt" type="button" aria-expanded="false" aria-controls="dd-tac">Tactics<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="dm" id="dd-tac"><a href="cqb.html">CQB Primer</a><a href="scenarios.html">Scenarios</a><a href="fieldcraft.html">Fieldcraft</a><a href="medical.html">Field Medical</a><a href="comms.html">Analogue Comms</a><a href="offgrid.html" aria-current="page">Off-Grid Configurations</a><a href="cover.html">Cover & Concealment</a><a href="calculator.html">Ballistics Calculator</a><a href="modifications.html">Modifications</a><a href="drills.html">Drills</a></div></div><span class="sep" aria-hidden="true"></span><div class="dd pro"><button class="dt" type="button" aria-expanded="false" aria-controls="dd-pro">Professional<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="dm" id="dd-pro"><a href="rifle.html">Rifle</a><a href="shotgun.html">Shotgun</a><a href="handgun.html">Handgun</a><a href="bolt-rifle.html">Bolt Rifle</a></div></div><span class="sep" aria-hidden="true"></span><div class="dd def"><button class="dt" type="button" aria-expanded="false" aria-controls="dd-def">Defensive<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="dm" id="dd-def"><a href="defensive-rifle.html">Defensive Rifle</a><a href="defensive-shotgun.html">Defensive Shotgun</a><a href="defensive-handgun.html">Defensive Handgun</a><a href="defensive-bolt-rifle.html">Defensive Bolt Rifle</a></div></div><span class="sep" aria-hidden="true"></span><div class="dd arm"><a class="dt" href="armory.html">Armory</a></div></div></div></nav>
+<main class="wrap">
+<header class="page">
+  <div class="eyebrow">Tactics · Power</div>
+  <h1>Off-Grid Environment Configurations</h1>
+  <p class="lede">Keeping a home running when the grid is down: knowing your loads, battery backup from a portable power station to a whole-home system, portable and standby generators, the fuels that run them and how long each keeps, connecting it all to the house safely, recharging from solar, and four configurations from a single room to a fully off-grid property.</p>
+  <p class="warn">This is a reference, not electrical or fire-code advice. Connecting a generator or battery to house wiring is work for a licensed electrician and usually needs a permit. Generators make carbon monoxide, which kills quietly: never run one indoors, in a garage, or near a window, door, or vent, and keep battery-powered CO alarms in the house. Check your local fire code before storing fuel.</p>
+  <nav class="toc" aria-label="Contents">
+    <a href="#think"><span>01</span>Three numbers</a>
+    <a href="#loads"><span>02</span>Know your loads</a>
+    <a href="#batteries"><span>03</span>Battery backup</a>
+    <a href="#generators"><span>04</span>Generators</a>
+    <a href="#fuel"><span>05</span>Fuel types</a>
+    <a href="#connect"><span>06</span>Connecting to the house</a>
+    <a href="#solar"><span>07</span>Solar and recharging</a>
+    <a href="#safety"><span>08</span>Safety</a>
+    <a href="#configs"><span>09</span>Configurations</a>
+    <a href="#maintain"><span>10</span>Maintenance and testing</a>
+    <a href="#src"><span>11</span>Sources</a>
+  </nav>
+</header>
+
+<section id="think">
+  <h2><span class="n">01</span>Three numbers</h2>
+  <p>Every backup power decision comes down to three numbers about the things you need to keep running. Work them out first, then buy equipment to match. Buying a generator or battery first and hoping it covers the house is how people end up with a freezer that won't start or a battery that's flat by midnight.</p>
+  <div class="grid2">
+    <div class="box"><h4>Running watts</h4><p>What everything you want on at the same time draws while it's running. This sets the continuous output your inverter or generator needs.</p></div>
+    <div class="box"><h4>Starting (surge) watts</h4><p>Motors and compressors (refrigerators, freezers, well and sump pumps, air conditioners) draw two to three times their running watts for a second or two as they start. Your source has to carry everything already running plus the biggest motor starting.</p></div>
+    <div class="box"><h4>Energy per day</h4><p>Watts multiplied by hours, in kilowatt-hours (kWh). A 100 W load for 10 hours is 1 kWh. This sets battery size and how much fuel you burn. A typical U.S. home uses around 29 kWh a day; a backup plan usually covers a fraction of that.</p></div>
+    <div class="box"><h4>Cut the list</h4><p>The cheapest kilowatt-hour is the one you don't need. Decide what's critical (refrigeration, water, heat, medical devices, communications, a few lights) and what waits for the grid (electric heat, water heater, dryer, oven, central air).</p></div>
+  </div>
+</section>
+
+<section id="loads">
+  <h2><span class="n">02</span>Know your loads</h2>
+  <p>Typical figures for common household loads. Your own appliances' nameplates, or a plug-in watt meter, are better than any table: read them and use your numbers.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Load</th><th>Running watts</th><th>Starting watts</th><th>Typical energy per day</th></tr></thead>
+    <tbody>
+      <tr><td><b>Refrigerator</b></td><td>100–250 W while the compressor runs</td><td>800–1,500 W</td><td>1–2 kWh</td></tr>
+      <tr><td><b>Chest freezer</b></td><td>50–150 W while running</td><td>500–800 W</td><td>0.5–1 kWh</td></tr>
+      <tr><td><b>Well pump, ½–1 HP (240 V)</b></td><td>750–1,500 W</td><td>2,000–4,000 W</td><td>Depends on water use; 1–3 kWh</td></tr>
+      <tr><td><b>Sump pump, ⅓–½ HP</b></td><td>800–1,000 W</td><td>1,300–2,200 W</td><td>Depends on rain and water table</td></tr>
+      <tr><td><b>Gas furnace blower</b></td><td>300–800 W</td><td>Up to 2× running</td><td>2–6 kWh in cold weather</td></tr>
+      <tr><td><b>Window air conditioner</b></td><td>500–1,200 W</td><td>1,200–2,500 W</td><td>4–10 kWh in summer</td></tr>
+      <tr><td><b>Central air, 3 ton</b></td><td>3,000–4,000 W</td><td>6,000–9,000 W (less with a soft starter)</td><td>20+ kWh on a hot day</td></tr>
+      <tr><td><b>Space heater</b></td><td>1,500 W</td><td>None</td><td>Very high: avoid on backup power</td></tr>
+      <tr><td><b>Electric water heater</b></td><td>4,500 W</td><td>None</td><td>Very high: avoid on backup power</td></tr>
+      <tr><td><b>Microwave</b></td><td>1,000–1,500 W</td><td>None</td><td>Short bursts; under 0.5 kWh</td></tr>
+      <tr><td><b>CPAP (no heated humidifier)</b></td><td>30–60 W</td><td>None</td><td>0.3–0.5 kWh a night</td></tr>
+      <tr><td><b>Internet modem and router</b></td><td>10–20 W</td><td>None</td><td>0.3–0.5 kWh</td></tr>
+      <tr><td><b>HF radio (100 W) transmitting</b></td><td>250–300 W while transmitting</td><td>None</td><td>Low; receiving draws far less</td></tr>
+      <tr><td><b>Laptop, phones, handheld radios</b></td><td>10–65 W each while charging</td><td>None</td><td>Under 0.3 kWh</td></tr>
+      <tr><td><b>LED bulb</b></td><td>8–12 W</td><td>None</td><td>About 0.05 kWh for 5 hours</td></tr>
+      <tr><td><b>Television</b></td><td>50–150 W</td><td>None</td><td>0.2–0.6 kWh</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Load estimator</h3>
+  <p class="small muted">Set how many of each you'll run and for how many hours a day. Refrigeration and pumps cycle on and off, so their daily energy uses an average draw, not the running figure. The result is a planning estimate, not a design: check it against your own appliances.</p>
+  <div class="box" id="og-est">
+    <div class="tbl"><table>
+      <thead><tr><th>Load</th><th>How many</th><th>Hours a day</th></tr></thead>
+      <tbody id="og-rows"></tbody>
+    </table></div>
+    <form class="calc" onsubmit="return false" style="margin-top:12px">
+      <label for="og-days">Days on battery<input id="og-days" type="number" min="0.5" step="0.5" value="1"></label>
+    </form>
+    <div class="grid2" id="og-out" aria-live="polite" style="margin-top:12px"></div>
+  </div>
+</section>
+
+<section id="batteries">
+  <h2><span class="n">03</span>Battery backup</h2>
+  <p>Batteries are silent, make no fumes, and can run indoors, so they're the only option for apartments and for running through the night without a generator outside. They store a fixed amount of energy: when it's gone, you need sun, a generator, or the grid to refill it.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Type</th><th>Typical capacity</th><th>Output</th><th>Best for</th></tr></thead>
+    <tbody>
+      <tr><td><b>Portable power station</b></td><td>0.5–5 kWh</td><td>Built-in AC outlets, USB and 12 V; 300–3,600 W</td><td>Phones, radios, CPAP, router, lights, a fridge for part of a day. Plug-and-play, no installation.</td></tr>
+      <tr><td><b>Whole-home battery system</b></td><td>About 10–15 kWh per unit, stackable</td><td>Wired into the house panel; typically 5–11+ kW continuous</td><td>Critical-load panels or the whole house, switching over automatically, usually paired with solar.</td></tr>
+      <tr><td><b>12 V DC system (DIY or kit)</b></td><td>1–10+ kWh of LiFePO4</td><td>Fused 12 V DC plus an inverter if needed</td><td>Radio stations, lighting, and small loads; vehicles, sheds and cabins.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Chemistry</h3>
+  <div class="grid2">
+    <div class="box"><h4>LiFePO4 (lithium iron phosphate)</h4><p>The usual choice for home backup now. Thousands of charge cycles, most of the capacity usable, stable and hard to set on fire compared with other lithium types. Most can't safely charge below freezing unless they have built-in heaters: keep them inside, or buy a self-heating model.</p></div>
+    <div class="box"><h4>NMC lithium</h4><p>Lighter for its capacity, so common in smaller portables, but fewer cycles and less tolerant of heat and abuse than LiFePO4.</p></div>
+    <div class="box"><h4>Lead-acid (AGM, flooded)</h4><p>Cheap and familiar, but heavy, and you should only use about half the rated capacity or the battery wears out fast. Flooded batteries vent hydrogen while charging and need ventilation and topping up.</p></div>
+    <div class="box"><h4>Sizing rule</h4><p>Battery kWh needed is roughly your daily kWh times the number of days, divided by about 0.8 to cover inverter losses and keep some reserve. The estimator above does this for you.</p></div>
+  </div>
+</section>
+
+<section id="generators">
+  <h2><span class="n">04</span>Generators</h2>
+  <p>A generator turns fuel into power for as long as you can feed it, so it covers long outages and heavy loads that a battery can't. The trade-offs are noise, exhaust, fuel storage, and maintenance.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Type</th><th>Typical output</th><th>Strengths</th><th>Weaknesses</th></tr></thead>
+    <tbody>
+      <tr><td><b>Inverter portable</b></td><td>1,000–7,000 W</td><td>Quiet, fuel-efficient at light load (it throttles down), clean power that's safe for electronics, often parallel-capable</td><td>Costs more per watt; smaller units can't start a well pump or central air</td></tr>
+      <tr><td><b>Open-frame portable</b></td><td>3,000–12,000 W</td><td>Lots of watts for the money; can start big motors</td><td>Loud, runs at full speed whatever the load, so it burns more fuel; rougher power on some models</td></tr>
+      <tr><td><b>Home standby</b></td><td>10–26+ kW</td><td>Permanently installed, runs on natural gas or propane, starts itself with an automatic transfer switch, exercises itself weekly</td><td>Expensive, needs permits and professional installation, and depends on a gas supply or a large propane tank</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="box"><h4>Sizing</h4><p>Pick a generator whose running watts cover your running load with some headroom (plan to use no more than about 80% continuously), and whose starting watts cover the running load plus your largest motor starting.</p></div>
+    <div class="box"><h4>Dual and tri-fuel</h4><p>Many portables run on gasoline and propane, and some on natural gas as well. Expect roughly 10–20% less output on propane or natural gas than on gasoline. Being able to switch fuels is worth a lot in a long outage.</p></div>
+    <div class="box"><h4>Run it less</h4><p>A generator burns fuel even at light load. Pairing it with a battery lets you run the generator hard for a few hours to charge the battery and run big loads, then shut it off and run quietly on the battery. That saves fuel, noise, and engine hours.</p></div>
+    <div class="box"><h4>Fuel burn</h4><p>A portable generator at half load typically burns somewhere around 0.3–0.8 gallons of gasoline an hour depending on size. Check your model's runtime figures and plan fuel from them, not from a guess.</p></div>
+  </div>
+</section>
+
+<section id="fuel">
+  <h2><span class="n">05</span>Fuel types</h2>
+  <p>The fuel decides how long you can keep going, how you store it, and what happens in cold weather. Approximate energy content is per U.S. gallon (natural gas per 100 cubic feet).</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Fuel</th><th>Energy</th><th>Storage life</th><th>Cold weather</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><b>Gasoline</b></td><td>About 114,000–120,000 BTU</td><td>3–6 months untreated; about 1–2 years with stabilizer, longer if ethanol-free</td><td>Starts well</td><td>Easy to buy and the most common generator fuel. Degrades and gums up carburetors; ethanol blends absorb water. Very flammable vapor: store in approved cans, outside the living space.</td></tr>
+      <tr><td><b>Diesel</b></td><td>About 137,000 BTU</td><td>About 6–12 months; longer with stabilizer and biocide, kept cool, dry and full</td><td>Gels in hard cold unless it's a winter blend or treated</td><td>Most energy per gallon and much less flammable than gasoline. Used by larger and longer-running generators. Water and microbial growth in the tank are the main problems.</td></tr>
+      <tr><td><b>Propane</b></td><td>About 91,500 BTU</td><td>Doesn't go bad</td><td>Pressure drops in deep cold, which limits what small tanks can deliver</td><td>Stores indefinitely in cylinders or a large tank, burns clean, and keeps carburetors clean. Less energy per gallon, so you burn more of it. Cylinders need periodic requalification; never store them indoors.</td></tr>
+      <tr><td><b>Natural gas</b></td><td>About 103,000 BTU per 100 cu ft</td><td>No storage: piped in</td><td>Reliable</td><td>Unlimited runtime while the utility keeps gas flowing, which is why standby generators use it. Supply can be shut off after earthquakes, floods, or line damage, and output is lower than on gasoline.</td></tr>
+      <tr><td><b>Kerosene</b></td><td>About 135,000 BTU</td><td>Several years if sealed and kept clean</td><td>Good</td><td>Mainly for kerosene heaters and lamps, not most generators. Use only heaters rated for indoor use, with ventilation and a CO alarm.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="box"><h4>Rotate, don't hoard</h4><p>Use stored gasoline and diesel in vehicles and replace it on a schedule (write the fill date on every can) so the reserve is always fresh.</p></div>
+    <div class="box"><h4>Storage rules</h4><p>Fire codes often limit how much gasoline you can keep at a home and where. Store fuel in approved containers in a detached shed or well-ventilated space away from ignition sources, never in the house or attached living space.</p></div>
+    <div class="box"><h4>Plan the quantity</h4><p>Work out gallons per day from your generator's runtime figures at your expected load, then multiply by the days you want to cover. Remember fuel stations need power to pump too.</p></div>
+    <div class="box"><h4>Have a second fuel</h4><p>A dual-fuel generator with both gasoline and propane on hand means one fuel running short or going stale doesn't stop you.</p></div>
+  </div>
+</section>
+
+<section id="connect">
+  <h2><span class="n">06</span>Connecting to the house</h2>
+  <p>There are three ways to get backup power to your loads. Only two of them are safe.</p>
+  <div class="grid2">
+    <div class="box"><h4>Extension cords</h4><p>The simplest: run heavy-duty outdoor cords from the generator or power station straight to the appliances. Fine for a fridge, a freezer, and some lights. Can't reach hardwired loads like a well pump or furnace. Use cords rated for the load, and don't run them through doors or windows that then can't close.</p></div>
+    <div class="box"><h4>Transfer switch or interlock</h4><p>An electrician installs a power inlet outside and either a transfer switch or an interlock kit on the main panel. The house is disconnected from the grid before the generator feeds it, so you can run hardwired circuits safely. Required by electrical code for connecting a generator to house wiring.</p></div>
+    <div class="box"><h4>Never backfeed</h4><p>Never plug a generator into a wall outlet with a double-male cord. It sends power back out through your meter into the utility lines, where it can kill a lineworker or a neighbor, and it can burn up your wiring or generator when the grid comes back.</p></div>
+    <div class="box"><h4>Whole-home batteries</h4><p>Installed systems include their own disconnect and switch over automatically. They're tied into the panel by an installer, usually on a backed-up subpanel of critical circuits.</p></div>
+  </div>
+</section>
+
+<section id="solar">
+  <h2><span class="n">07</span>Solar and recharging</h2>
+  <p>Solar is what turns a battery from a one-time reserve into something that keeps going. It needs no fuel, but it only produces when the sun is up and much less in winter, under cloud, and in shade.</p>
+  <div class="grid2">
+    <div class="box"><h4>What to expect</h4><p>A panel delivers roughly its rated watts times 3–5 "peak sun hours" a day, less losses. A 400 W panel is good for about 1–2 kWh on a decent day, and much less on a gray winter day.</p></div>
+    <div class="box"><h4>Portable panels</h4><p>Folding panels plug into most power stations. Enough to keep phones, radios, a router, and lights going; usually not enough to run a fridge and freezer indefinitely.</p></div>
+    <div class="box"><h4>Charge controller</h4><p>Panels feed a battery through a charge controller (MPPT is the efficient type). Power stations and whole-home systems have one built in; a 12 V DIY system needs its own.</p></div>
+    <div class="box"><h4>Grid-tied panels go dark</h4><p>Ordinary grid-tied solar shuts off during an outage for lineworker safety, even in full sun. To run from your panels in an outage, the system needs a battery or an inverter with a backup or islanding mode.</p></div>
+  </div>
+</section>
+
+<section id="safety">
+  <h2><span class="n">08</span>Safety</h2>
+  <div class="grid2">
+    <div class="box"><h4>Carbon monoxide</h4><p>Run generators outside only, at least 20 feet from the house, with the exhaust pointed away from doors, windows, and vents. Never in a garage, even with the door open. Battery-powered CO alarms on every level, and get to fresh air at the first headache, dizziness, or nausea.</p></div>
+    <div class="box"><h4>Refueling</h4><p>Shut the generator off and let it cool before you refuel. Gasoline spilled on a hot engine can ignite.</p></div>
+    <div class="box"><h4>Weather</h4><p>Keep generators dry, under an open canopy or a purpose-made cover, and never touch one with wet hands or while standing in water.</p></div>
+    <div class="box"><h4>Batteries</h4><p>Use chargers made for the battery chemistry, fuse every DC circuit near the battery, keep batteries out of extreme heat, and give lead-acid batteries ventilation.</p></div>
+  </div>
+</section>
+
+<section id="configs">
+  <h2><span class="n">09</span>Configurations</h2>
+  <p>Four setups, from smallest to largest. Each one builds on the one before.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Configuration</th><th>Equipment</th><th>Covers</th><th>Limits</th></tr></thead>
+    <tbody>
+      <tr><td><b>1. Essentials (apartment or single room)</b></td><td>Portable power station (1–3 kWh) and a folding solar panel; spare batteries for lights and radios</td><td>Phones, radios, router, CPAP, lights, a fan, short fridge runs</td><td>No heat or air conditioning; won't keep a fridge and freezer going for days without sun</td></tr>
+      <tr><td><b>2. Critical loads (house)</b></td><td>Inverter or dual-fuel portable generator (3–7 kW), inlet with transfer switch or interlock, stored fuel, plus the Level 1 battery</td><td>Refrigeration, furnace blower, well or sump pump, lights, communications</td><td>Needs refueling and someone to run it; noise; fuel storage</td></tr>
+      <tr><td><b>3. Whole home, automatic</b></td><td>Home standby generator on natural gas or propane with an automatic transfer switch, or a whole-home battery with solar</td><td>Most or all of the house, switching over by itself within seconds</td><td>Cost and installation; standby depends on gas supply; batteries depend on sun for long outages</td></tr>
+      <tr><td><b>4. Off grid (property)</b></td><td>Solar array sized for winter, a large LiFePO4 bank, a generator as backup charger, propane for cooking and heat, wood heat</td><td>Indefinite operation with careful load management</td><td>Highest cost; needs ongoing attention to loads, weather, and maintenance</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Whatever you choose, pair it with heat and water plans that don't need electricity, and with the communications on the <a href="comms.html">Analogue Comms</a> page.</p>
+</section>
+
+<section id="maintain">
+  <h2><span class="n">10</span>Maintenance and testing</h2>
+  <div class="grid2">
+    <div class="box"><h4>Monthly</h4><p>Start the generator and run it under load for 20–30 minutes. Check that the power station and batteries are charged. Test the CO alarms.</p></div>
+    <div class="box"><h4>Every few months</h4><p>Rotate stored fuel. Top up stabilizer. Charge stored batteries to the level the manufacturer recommends for storage.</p></div>
+    <div class="box"><h4>Yearly, or by hours</h4><p>Change the generator's oil, air filter, and spark plug per the manual (the first oil change comes early, after break-in). Inspect cords, inlets, and the transfer equipment.</p></div>
+    <div class="box"><h4>Test it for real</h4><p>Once or twice a year, shut off the main breaker and run the house on backup for a few hours. You'll find the circuit you forgot and the load that trips the generator before an outage finds them for you.</p></div>
+  </div>
+</section>
+
+<section id="src">
+  <h2><span class="n">11</span>Sources</h2>
+  <ul>
+    <li>U.S. Centers for Disease Control and Prevention (CDC): carbon monoxide poisoning prevention and generator safety</li>
+    <li>OSHA and the U.S. Consumer Product Safety Commission: portable generator hazards and safe use</li>
+    <li>NFPA 70, National Electrical Code: Article 702 (optional standby systems) and transfer equipment; NFPA 30 (flammable and combustible liquids) and NFPA 58 (LP-gas)</li>
+    <li>U.S. Energy Information Administration: household electricity consumption and fuel energy content</li>
+    <li>U.S. Department of Energy, Energy Saver: appliance energy use and estimating loads</li>
+  </ul>
+</section>
+
+<footer class="page">Training reference, not electrical advice. Size from your own loads, have an electrician connect anything to house wiring, and keep generators outside.</footer>
+</main>
+<script src="assets/sim.js"></script>
+<script>
+(function(){
+  // load estimator: run = running watts, surge = starting watts, avg = average draw over the hours it's "on" (for cycling loads)
+  var L=[
+    ["Refrigerator",180,1200,60,1,24],["Chest freezer",100,650,35,0,24],["Well pump",1000,3000,1000,0,1.5],["Sump pump",900,1800,900,0,1],
+    ["Furnace blower",500,1000,350,0,12],["Window AC",900,1800,600,0,8],["Microwave",1200,1200,1200,1,0.3],["CPAP",45,45,45,0,8],
+    ["Modem and router",15,15,15,1,24],["Laptop / phone charging",45,45,45,2,4],["LED bulbs",10,10,10,4,5],["Television",100,100,100,0,4],
+    ["HF radio station",80,80,80,0,3]];
+  var rows=document.getElementById("og-rows"),out=document.getElementById("og-out"),days=document.getElementById("og-days");
+  rows.innerHTML=L.map(function(l,i){return '<tr><td>'+l[0]+' <span class="muted small">'+l[1]+' W</span></td><td><input type="number" min="0" step="1" value="'+l[4]+'" data-q="'+i+'" aria-label="'+l[0]+' count" style="width:5em"></td><td><input type="number" min="0" max="24" step="0.5" value="'+l[5]+'" data-h="'+i+'" aria-label="'+l[0]+' hours a day" style="width:5em"></td></tr>';}).join("");
+  function f(n){return Math.round(n).toLocaleString();}
+  function calc(){
+    var run=0,jump=0,kwh=0;
+    L.forEach(function(l,i){
+      var q=+rows.querySelector('[data-q="'+i+'"]').value||0,h=Math.min(24,+rows.querySelector('[data-h="'+i+'"]').value||0);
+      if(q<=0)return; run+=q*l[1]; jump=Math.max(jump,l[2]-l[1]); kwh+=q*l[3]*h/1000;});
+    var d=Math.max(0.5,+days.value||1),surge=run+jump,gen=Math.ceil(Math.max(surge,run/0.8)/500)*500,batt=kwh*d/0.8;
+    out.innerHTML='<div class="box"><h4>Running load</h4><p><b>'+f(run)+' W</b> if everything is on at once.</p></div>'+
+      '<div class="box"><h4>Starting surge</h4><p><b>'+f(surge)+' W</b> with the biggest motor starting.</p></div>'+
+      '<div class="box"><h4>Energy per day</h4><p><b>'+kwh.toFixed(1)+' kWh</b></p></div>'+
+      '<div class="box"><h4>Battery for '+d+' day'+(d==1?'':'s')+'</h4><p><b>About '+batt.toFixed(1)+' kWh</b> of battery, with no recharging.</p></div>'+
+      '<div class="box"><h4>Generator</h4><p><b>About '+f(gen)+' W</b> running and starting capacity or more.</p></div>'+
+      '<div class="box"><h4>Fuel per day</h4><p>Roughly <b>'+(kwh/8).toFixed(1)+'–'+(kwh/4).toFixed(1)+' gal</b> of gasoline or <b>'+(kwh/6).toFixed(1)+'–'+(kwh/3).toFixed(1)+' gal</b> of propane if the generator only runs long enough to cover this energy (for example, charging a battery). Running it around the clock at light load burns more.</p></div>';
+  }
+  document.getElementById("og-est").addEventListener("input",calc); calc();
+})();
+</script>
+</body>
+</html>
