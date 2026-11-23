@@ -1,0 +1,51 @@
+# Builds the offline copy of the library on every push to main and attaches it to the "offline" release.
+# Download link used on the home page: releases/download/offline/training-library-offline.zip
+name: Offline download
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: offline
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the zip
+        run: |
+          mkdir -p dist/training-library
+          rsync -a --exclude .git --exclude .github --exclude .nojekyll --exclude dist ./ dist/training-library/
+          cat > "dist/training-library/Open Training Library.html" <<'HTML'
+          <!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=index.html"><title>Training Library</title>
+          <p style="font:16px system-ui;margin:40px">Opening the library&hellip; If nothing happens, open <a href="index.html">index.html</a>.</p>
+          HTML
+          cat > dist/training-library/OFFLINE-README.txt <<'TXT'
+          Training Library - offline copy
+          ===============================
+          1. Unzip this file anywhere: your computer, a USB stick, an SD card.
+          2. Double-click "Open Training Library.html" (or index.html).
+          3. It opens in your web browser and works with no internet connection.
+
+          Every page, animation, the ballistics calculator, the drills timer and the
+          Armory planner work offline. Videos play from YouTube, so they need an
+          internet connection; offline, their links are kept so you can watch later.
+
+          The Armory planner saves to the browser you open it in. Data saved on the
+          website is separate from data saved in this offline copy: use Export in the
+          Armory to move it between them.
+
+          Get the newest copy any time from https://amonsemper.github.io/training-library/
+          TXT
+          sed -i 's/^          //' "dist/training-library/Open Training Library.html" dist/training-library/OFFLINE-README.txt
+          echo "Built $(date -u +%Y-%m-%d) from ${GITHUB_SHA::7}" > dist/training-library/VERSION.txt
+          cd dist && zip -qr training-library-offline.zip training-library && ls -l training-library-offline.zip
+      - name: Publish to the offline release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view offline >/dev/null 2>&1 || gh release create offline --title "Offline copy" --notes "The whole Training Library as a zip, rebuilt on every update. Unzip, then open \"Open Training Library.html\". Works with no internet connection; videos need internet." --latest=false
+          gh release upload offline dist/training-library-offline.zip --clobber

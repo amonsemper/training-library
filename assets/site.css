@@ -209,3 +209,17 @@ dialog.vmodal::backdrop{background:rgba(8,12,14,.72)}
 .watch.in .vlink{font-size:13px;padding:3px 10px 3px 4px}
 .watch.in .vlink i{width:18px;height:18px}
 .watch.in .vlink i::after{left:6px;top:4px;border-left-width:7px;border-top-width:5px;border-bottom-width:5px}
+
+/* offline copy: video placeholders */
+.voff{display:flex;flex-direction:column;justify-content:center;height:100%;padding:24px;color:#e3e1d6;text-align:center}
+.vthumb .voffthumb{height:100%;align-items:flex-start;justify-content:flex-start;padding:10px 12px}
+.voffthumb{display:flex;align-items:center;justify-content:center;aspect-ratio:16/9;width:100%;background:var(--floor);border:1px dashed var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+/* home: offline download */
+.offline{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
+.offline h3{margin:0 0 6px}
+.offline p{margin:0}
+a.dl{display:inline-flex;align-items:center;gap:10px;font:700 15px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--bg);background:var(--accent);padding:12px 18px;border-radius:4px;text-decoration:none;white-space:nowrap}
+a.dl:hover{filter:brightness(1.08)}
+a.dl:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+a.dl svg{width:18px;height:18px}
+@media (max-width:640px){.offline{grid-template-columns:1fr}}

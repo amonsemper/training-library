@@ -1,6 +1,10 @@
 Training Library - static site
 
-Open index.html in any browser, or upload this whole folder to any static host:
+Open index.html in any browser, or upload this whole folder to any static host.
+An offline zip is rebuilt on every push by .github/workflows/offline.yml and attached to the
+"offline" release (linked from the home page).
+
+Static hosts:
   - Netlify Drop: https://app.netlify.com/drop  (drag this folder onto the page)
   - Cloudflare Pages: https://pages.cloudflare.com/
   - GitHub Pages: https://pages.github.com/
@@ -11,6 +15,8 @@ Files:
   scenarios.html             Scenario-Based Engagement Breakdowns
   fieldcraft.html            Fieldcraft (land nav, hide sites, signature, drones, recon)
   medical.html               Field Medical (MARCH, hemorrhage, IFAK, CPR, cold and heat)
+  comms.html                 Analogue Comms (simplex radio, licensing, field phones, HF)
+  offgrid.html               Off-Grid Environment Configurations (batteries, generators, fuel, heating and cooling)
   cover.html                 Cover and Concealment
   calculator.html            Ballistics Calculator (all cartridges; data in assets/ballistics.js)
   armory.html                Armory Planner (local-only kit/ammo/gear planner; self-contained app)
