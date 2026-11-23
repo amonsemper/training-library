@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Analogue Comms</title>
+<meta name="description" content="Communications when the internet, cell network, or grid is down: radio simplex and range planning, licensing, field telephones and wired Morse, HF and NVIS, receive-only news and weather, independent power, and operating procedures.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;700;800&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<nav class="site" aria-label="Library"><div class="in"><a class="brand" href="index.html">Training <span>Library</span></a><div class="dds"><div class="dd cur"><button class="dt" type="button" aria-expanded="false" aria-controls="dd-tac">Tactics<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="dm" id="dd-tac"><a href="cqb.html">CQB Primer</a><a href="scenarios.html">Scenarios</a><a href="fieldcraft.html">Fieldcraft</a><a href="medical.html">Field Medical</a><a href="comms.html" aria-current="page">Analogue Comms</a><a href="cover.html">Cover & Concealment</a><a href="calculator.html">Ballistics Calculator</a><a href="modifications.html">Modifications</a><a href="drills.html">Drills</a></div></div><span class="sep" aria-hidden="true"></span><div class="dd pro"><button class="dt" type="button" aria-expanded="false" aria-controls="dd-pro">Professional<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="dm" id="dd-pro"><a href="rifle.html">Rifle</a><a href="shotgun.html">Shotgun</a><a href="handgun.html">Handgun</a><a href="bolt-rifle.html">Bolt Rifle</a></div></div><span class="sep" aria-hidden="true"></span><div class="dd def"><button class="dt" type="button" aria-expanded="false" aria-controls="dd-def">Defensive<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="dm" id="dd-def"><a href="defensive-rifle.html">Defensive Rifle</a><a href="defensive-shotgun.html">Defensive Shotgun</a><a href="defensive-handgun.html">Defensive Handgun</a><a href="defensive-bolt-rifle.html">Defensive Bolt Rifle</a></div></div><span class="sep" aria-hidden="true"></span><div class="dd arm"><a class="dt" href="armory.html">Armory</a></div></div></div></nav>
+<main class="wrap">
+<header class="page">
+  <div class="eyebrow">Tactics · Communications</div>
+  <h1>Analogue Comms</h1>
+  <p class="lede">Keeping local, regional, and long-distance communication going when the internet, the cell network, or the power grid is down: radio simplex, field telephones and wired Morse, HF radio, receive-only news and weather, independent power, and the procedures that make it all work.</p>
+  <p class="warn">This is a reference, not legal advice. Radio transmission in the U.S. is licensed and regulated by the FCC: check which service each radio is authorized for, get the license your service requires, and verify the current rules before you transmit. Receiving is generally unrestricted; transmitting is not.</p>
+  <nav class="toc" aria-label="Contents">
+    <a href="#principles"><span>01</span>Design principles</a>
+    <a href="#layers"><span>02</span>Communications layers</a>
+    <a href="#handhelds"><span>03</span>Handheld radios in simplex</a>
+    <a href="#license"><span>04</span>Licensing</a>
+    <a href="#wired"><span>05</span>Wired communications</a>
+    <a href="#hf"><span>06</span>HF and Morse</a>
+    <a href="#receive"><span>07</span>Receive-only information</a>
+    <a href="#power"><span>08</span>Power and physical resilience</a>
+    <a href="#procedures"><span>09</span>Operating procedures</a>
+    <a href="#checklist"><span>10</span>Readiness checklist</a>
+    <a href="#src"><span>11</span>Sources</a>
+  </nav>
+</header>
+
+<section id="principles">
+  <h2><span class="n">01</span>Design principles</h2>
+  <p>The goal is communication that keeps working when the infrastructure doesn't: no internet, no cell towers, no grid power. Every choice below follows from a few rules.</p>
+  <div class="grid2">
+    <div class="box"><h4>Direct links first</h4><p>Prefer links that depend on nothing in between: radio in simplex, one set talking straight to another, and field wire you installed yourself.</p></div>
+    <div class="box"><h4>Own your power</h4><p>Give each essential station its own battery and a way to recharge it that doesn't need the grid.</p></div>
+    <div class="box"><h4>Two ways to every contact</h4><p>Keep at least two different ways to reach each important contact, where practical, so one failure doesn't cut them off.</p></div>
+    <div class="box"><h4>Paper, not screens</h4><p>Keep printed channel plans, operating instructions, contact schedules, maps, and logs where every operator can reach them.</p></div>
+    <div class="box"><h4>Test in your terrain</h4><p>Manufacturer range claims are not planning figures. Find out what actually works by testing with your own equipment, on your own ground.</p></div>
+    <div class="box"><h4>Stay legal</h4><p>Follow the FCC licensing and equipment-certification rules for every radio service you transmit on.</p></div>
+  </div>
+</section>
+
+<section id="layers">
+  <h2><span class="n">02</span>Communications layers</h2>
+  <p>No single system covers every distance and every failure, so the plan is built in layers. Each one has its own job and its own weak point.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Layer</th><th>Equipment</th><th>Primary use</th><th>Depends on</th></tr></thead>
+    <tbody>
+      <tr><td><b>Local</b></td><td>GMRS, MURS, FRS, or properly licensed amateur VHF/UHF radios</td><td>Property, vehicles, nearby contacts</td><td>Batteries and compatible radios; no repeater in simplex</td></tr>
+      <tr><td><b>Local / road</b></td><td>CB radio</td><td>Vehicles and nearby public contacts</td><td>Power, an antenna, and other CB operators</td></tr>
+      <tr><td><b>Fixed-point</b></td><td>Two field telephones with two-conductor cable</td><td>House to shop, or other fixed stations</td><td>Intact cable, compatible sets, local power as required</td></tr>
+      <tr><td><b>Fixed-point messaging</b></td><td>Wired Morse key and sounder or buzzer</td><td>Simple point-to-point messages</td><td>A dedicated circuit, a receiver, a battery</td></tr>
+      <tr><td><b>Regional / long distance</b></td><td>HF amateur radio, SSB voice and CW Morse</td><td>Contacts beyond local radio range</td><td>Power, an antenna, licensed operators, suitable propagation</td></tr>
+      <tr><td><b>Information</b></td><td>AM/FM/shortwave and NOAA weather radio</td><td>News, warnings, outside information</td><td>Broadcast stations still on the air</td></tr>
+      <tr><td><b>Last resort</b></td><td>Flags, signal lamps, written messages</td><td>Line-of-sight or hand-delivered messages</td><td>Visibility or physical access</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="handhelds">
+  <h2><span class="n">03</span>Handheld radios in simplex</h2>
+  <p><b>Handheld radios such as Baofengs work without internet, cell towers, GPS, or grid power.</b> In <b>simplex</b>, one radio transmits straight to another on the same frequency. All they need is charged batteries, matching frequencies and settings, and a usable radio path between them. A repeater extends range, but it is optional, and it is one more thing that can fail.</p>
+  <h3>Range planning</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Environment</th><th>Illustrative handheld-to-handheld range</th></tr></thead>
+    <tbody>
+      <tr><td>Dense woods, uneven terrain</td><td>About 0.5 to 2 miles</td></tr>
+      <tr><td>Rolling rural terrain</td><td>About 1 to 5 miles</td></tr>
+      <tr><td>Open ground</td><td>About 3 to 8 miles</td></tr>
+      <tr><td>Favorable elevated-to-elevated path</td><td>10 to 20+ miles possible</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">These are rough examples, not guaranteed performance. Real range depends heavily on line of sight, hills, vegetation, antenna height, interference, and how the radio is set up. Survey the area you need to cover with the real equipment.</p>
+  <h3>Handheld checklist</h3>
+  <div class="grid2">
+    <div class="box"><h4>Know your radios</h4><p>Write down the exact model of every unit and check which radio service each one is authorized to transmit on.</p></div>
+    <div class="box"><h4>Program for simplex</h4><p>Program compatible, authorized simplex channels and don't build the plan around repeaters. Label every radio and keep a printed channel plan that matches it.</p></div>
+    <div class="box"><h4>Walk the coverage</h4><p>Test from the house, the workshop, the property boundaries, the roads, and the low spots. The low spots are where it fails.</p></div>
+    <div class="box"><h4>Antenna before power</h4><p>A properly installed, elevated base antenna usually buys more range than a higher-power handheld. Fix the antenna first.</p></div>
+    <div class="box"><h4>Batteries and charging</h4><p>Keep spare batteries and a 12 V or solar-backed way to charge them.</p></div>
+    <div class="box"><h4>Assume you're heard</h4><p>Use plain-language procedures and assume anyone with a receiver can hear your traffic. Radio is not private.</p></div>
+  </div>
+</section>
+
+<section id="license">
+  <h2><span class="n">04</span>Licensing</h2>
+  <p>Common UV-5R-type radios are usually amateur-service transceivers. They are <b>not</b> automatically authorized to transmit on GMRS, FRS, or MURS, even though they can tune those frequencies.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Service</th><th>License</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><b>Amateur (ham)</b></td><td>Individual license, by exam</td><td>Each operator needs their own license. Technician covers local VHF/UHF; General opens most HF voice privileges.</td></tr>
+      <tr><td><b>GMRS</b></td><td>FCC license, no exam</td><td>One license covers eligible family members. Radios must be certified for GMRS.</td></tr>
+      <tr><td><b>FRS</b></td><td>None</td><td>Use compliant, certified FRS radios; low power, fixed antennas.</td></tr>
+      <tr><td><b>MURS</b></td><td>None</td><td>Use compliant, certified MURS radios on the five VHF MURS channels.</td></tr>
+      <tr><td><b>CB</b></td><td>None</td><td>Use certified CB radios within the power limits.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Rules change. Verify the current FCC rules for your service and equipment before you transmit.</p>
+</section>
+
+<section id="wired">
+  <h2><span class="n">05</span>Wired communications</h2>
+  <p>A wire you lay yourself can't be jammed, doesn't depend on propagation, and doesn't need a phone company.</p>
+  <div class="grid2">
+    <div class="box"><h4>Field telephones</h4><p>Military-style field telephones such as the TA-312/PT set up a point-to-point voice circuit over two-conductor field wire, with no phone company or internet service involved. Turning the crank rings the other station; internal batteries typically power the speech circuit.</p></div>
+    <div class="box"><h4>Wired telegraph</h4><p>A wired Morse circuit needs a key, a battery, the wire and its return circuit, and a sounder or buzzer at the far end. A Morse key by itself can't reach a distant station: it's only the switch.</p></div>
+  </div>
+</section>
+
+<section id="hf">
+  <h2><span class="n">06</span>HF and Morse</h2>
+  <p>An HF transceiver with a suitable antenna can reach regional or long-distance contacts by SSB voice or CW Morse, well past anything a handheld can do. Range and reliability change with frequency, time of day, season, and ionospheric conditions, so a contact that works at night may not work at noon.</p>
+  <p><b>NVIS</b> (near-vertical incidence skywave) techniques send the signal almost straight up so it comes down over a wide area around you, which can fill the gap between handheld range and long-distance skip for some regional contacts.</p>
+  <p>A <b>General-class</b> amateur license is the practical target for broad U.S. HF voice privileges; check the band-specific rules. CW Morse gets through on weaker signals and simpler equipment than voice, which is why it's worth learning.</p>
+</section>
+
+<section id="receive">
+  <h2><span class="n">07</span>Receive-only information</h2>
+  <p>Keep a standalone AM/FM/shortwave receiver and a NOAA weather-alert radio. A scanner can add local situational awareness where those transmissions continue. None of these need the internet to receive, but all of them depend on the stations they listen to staying on the air.</p>
+</section>
+
+<section id="power">
+  <h2><span class="n">08</span>Power and physical resilience</h2>
+  <div class="grid2">
+    <div class="box"><h4>One standard</h4><p>Standardize fixed stations on fused 12 V DC where practical, so radios, chargers, and lights share one power system.</p></div>
+    <div class="box"><h4>Battery and solar</h4><p>Use a suitably rated LiFePO4 battery with a compatible charger and a solar charge controller.</p></div>
+    <div class="box"><h4>Handheld spares</h4><p>Keep independent spare handheld batteries and the charging cables to go with them.</p></div>
+    <div class="box"><h4>Antennas and lightning</h4><p>Install outdoor antennas with proper grounding, lightning protection, and safe cable routing.</p></div>
+    <div class="box"><h4>Protected documents</h4><p>Store printed documentation and essential spares somewhere protected that you can still get to.</p></div>
+  </div>
+</section>
+
+<section id="procedures">
+  <h2><span class="n">09</span>Operating procedures</h2>
+  <p>Equipment matters, but prearranged contacts, procedures, and regular tests are what make a working network.</p>
+  <div class="grid2">
+    <div class="box"><h4>Agree in advance</h4><p>Set primary and backup channels, scheduled check-in times, contact priorities, and simple message formats before you need them.</p></div>
+    <div class="box"><h4>Log it</h4><p>Keep written logs of contacts, times, and what was passed.</p></div>
+    <div class="box"><h4>Train everyone</h4><p>Every intended operator should be able to power up, find the right channel, and pass a message without help.</p></div>
+    <div class="box"><h4>Test it dark</h4><p>Run a monthly test with phones and internet deliberately unavailable, and test on battery power only from time to time.</p></div>
+  </div>
+</section>
+
+<section id="checklist">
+  <h2><span class="n">10</span>Readiness checklist</h2>
+  <p>Work down the list in order: the first steps make what you already own reliable before you buy anything new.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>#</th><th>Step</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Inventory your handheld models, batteries, chargers, and antennas.</td></tr>
+      <tr><td>2</td><td>Verify which service each radio is authorized for, and get operator licenses.</td></tr>
+      <tr><td>3</td><td>Set up and test a local simplex radio network.</td></tr>
+      <tr><td>4</td><td>Improve base-station antenna placement and weather protection.</td></tr>
+      <tr><td>5</td><td>Build a two-station wired field-telephone circuit where it's useful.</td></tr>
+      <tr><td>6</td><td>Add independent AM/FM/shortwave and NOAA weather reception.</td></tr>
+      <tr><td>7</td><td>Set up fused battery and solar-backed power.</td></tr>
+      <tr><td>8</td><td>Add CB if nearby vehicle or community contacts justify it.</td></tr>
+      <tr><td>9</td><td>Work toward an amateur HF license, an HF station, and Morse proficiency.</td></tr>
+      <tr><td>10</td><td>Prepare passive signaling and printed message procedures.</td></tr>
+      <tr><td>11</td><td>Run a full off-grid communications exercise and write down the coverage gaps.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Priority order</h3>
+  <div class="grid2">
+    <div class="box"><h4>First</h4><p>Make the handheld radios you already have reliable in simplex: batteries, matched programming, and an elevated base antenna.</p></div>
+    <div class="box"><h4>Second</h4><p>Set up a fixed wired link and receive-only news and weather.</p></div>
+    <div class="box"><h4>Third</h4><p>Add HF radio and CW for longer-range contacts.</p></div>
+  </div>
+</section>
+
+<section id="src">
+  <h2><span class="n">11</span>Sources</h2>
+  <ul>
+    <li>FCC, 47 CFR Part 95 (Personal Radio Services): GMRS (Subpart E), FRS (Subpart B), CB (Subpart D), and MURS (Subpart J) rules and equipment certification</li>
+    <li>FCC, 47 CFR Part 97 (Amateur Radio Service): licensing classes and operating privileges</li>
+    <li>ARRL (American Radio Relay League): amateur licensing, HF operating, and NVIS references</li>
+    <li>NOAA Weather Radio All Hazards (National Weather Service)</li>
+    <li>U.S. Army TM 11-5805-201-10: Telephone Set TA-312/PT operator's manual</li>
+  </ul>
+</section>
+
+<footer class="page">Training reference, not legal advice. Check FCC rules before you transmit, test your plan in your own terrain, and practice it before you need it.</footer>
+</main>
+<script src="assets/sim.js"></script>
+</body>
+</html>
