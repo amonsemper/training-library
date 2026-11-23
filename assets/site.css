@@ -39,17 +39,28 @@ nav.site .dd.open .dt svg{transform:rotate(180deg)}
 nav.site .dd.open .dt{border-bottom-color:var(--accent)}
 nav.site .dds:has(.dd.open) .dd.cur:not(.open) .dt{border-bottom-color:transparent;opacity:.8}
 nav.site .dm{display:none;position:absolute;top:100%;left:0;min-width:220px;background:var(--dd1);border-top:2px solid var(--accent);box-shadow:0 14px 28px rgba(0,0,0,.35);padding:6px 0;z-index:25}
-nav.site .dd.def .dm{background:var(--dd2)}
-nav.site .dd.pro .dm{background:var(--dd3)}
-nav.site .dd.pro .dm a:hover{background:rgba(255,220,225,.08)}
+/* Firearm Training: one menu, three labeled columns (professional on the dark red panel, defensive on the lighter one) */
+nav.site .dm.mega{padding:0;min-width:640px;grid-template-columns:repeat(3,minmax(0,1fr))}
+nav.site .dd.open .dm.mega{display:grid}
+nav.site .dg{padding:6px 0 10px}
+nav.site .dg.pro{background:var(--dd3)}
+nav.site .dg.pro a:hover{background:rgba(255,220,225,.08)}
+nav.site .dg.def{background:var(--dd2)}
+nav.site .dh{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);padding:10px 18px 4px}
+nav.site .ls{display:none}
 nav.site .dd:last-child .dm{left:auto;right:0}
 nav.site .dd.open .dm{display:block}
-@media (hover:hover) and (min-width:641px){nav.site .dd:hover .dm{display:block}nav.site .dd:hover .dt svg{transform:rotate(180deg)}nav.site .dd:hover .dt{border-bottom-color:var(--accent)}nav.site .dds:has(.dd:hover) .dd.cur:not(:hover) .dt{border-bottom-color:transparent;opacity:.8}}
+@media (hover:hover) and (min-width:641px){nav.site .dd:hover .dm{display:block}nav.site .dd:hover .dm.mega{display:grid}nav.site .dd:hover .dt svg{transform:rotate(180deg)}nav.site .dd:hover .dt{border-bottom-color:var(--accent)}nav.site .dds:has(.dd:hover) .dd.cur:not(:hover) .dt{border-bottom-color:transparent;opacity:.8}}
 nav.site .dm a{display:block;font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--navink);text-decoration:none;padding:11px 18px;border-left:3px solid transparent;white-space:nowrap;opacity:.85}
 nav.site .dm a:hover{opacity:1;background:rgba(227,225,214,.07)}
 nav.site .dm a[aria-current="page"]{opacity:1;border-left-color:var(--accent)}
 nav.site a:focus-visible,nav.site button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 @media (max-width:640px){
+  nav.site .lf{display:none}
+  nav.site .ls{display:inline}
+  nav.site .dm.mega{min-width:0;grid-template-columns:1fr 1fr}
+  nav.site .dg.tools{grid-column:1/-1}
+  nav.site .dg a{white-space:normal}
   nav.site .in{flex-wrap:wrap;gap:0}
   nav.site .brand{padding:12px 0 8px}
   nav.site .dds{flex:0 0 100%;justify-content:space-between;border-top:1px solid rgba(227,225,214,.12);min-height:42px}
@@ -124,6 +135,7 @@ footer.page{font-size:13px;color:var(--muted);border-top:1px solid var(--line);p
 /* library home */
 .lib-group{display:flex;flex-direction:column;gap:14px}
 .lib-group>h2{font-size:26px}
+.lib-group>h3.sub{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:6px 0 -4px}
 .lib-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:14px}
 .lib-grid>*{min-width:0}
 a.card{display:grid;grid-template-columns:88px 1fr;gap:14px;align-items:start;background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:16px;color:var(--ink);text-decoration:none;transition:border-color .15s,transform .15s}
