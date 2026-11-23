@@ -15,7 +15,7 @@
 <header class="page">
   <div class="eyebrow">Tactics · Power</div>
   <h1>Off-Grid Environment Configurations</h1>
-  <p class="lede">Keeping a home running when the grid is down: knowing your loads, battery backup from a portable power station to a whole-home system, portable and standby generators, the fuels that run them and how long each keeps, connecting it all to the house safely, recharging from solar, and four configurations from a single room to a fully off-grid property.</p>
+  <p class="lede">Keeping a home running when the grid is down: knowing your loads, battery backup from a portable power station to a whole-home system, portable and standby generators, the fuels that run them and how long each keeps, connecting it all to the house safely, recharging from solar, heating and cooling without the grid, and four configurations from a single room to a fully off-grid property.</p>
   <p class="warn">This is a reference, not electrical or fire-code advice. Connecting a generator or battery to house wiring is work for a licensed electrician and usually needs a permit. Generators make carbon monoxide, which kills quietly: never run one indoors, in a garage, or near a window, door, or vent, and keep battery-powered CO alarms in the house. Check your local fire code before storing fuel.</p>
   <nav class="toc" aria-label="Contents">
     <a href="#think"><span>01</span>Three numbers</a>
@@ -25,10 +25,11 @@
     <a href="#fuel"><span>05</span>Fuel types</a>
     <a href="#connect"><span>06</span>Connecting to the house</a>
     <a href="#solar"><span>07</span>Solar and recharging</a>
-    <a href="#safety"><span>08</span>Safety</a>
-    <a href="#configs"><span>09</span>Configurations</a>
-    <a href="#maintain"><span>10</span>Maintenance and testing</a>
-    <a href="#src"><span>11</span>Sources</a>
+    <a href="#climate"><span>08</span>Heating and cooling</a>
+    <a href="#safety"><span>09</span>Safety</a>
+    <a href="#configs"><span>10</span>Configurations</a>
+    <a href="#maintain"><span>11</span>Maintenance and testing</a>
+    <a href="#src"><span>12</span>Sources</a>
   </nav>
 </header>
 
@@ -189,8 +190,51 @@
   <p class="note">Panels and stations from the same brand plug together without adapters. Mixing brands works if the panel's open-circuit voltage stays inside the station's solar input range and you have the right connector (most use MC4 or XT60, some Anderson or DC7909). Two panels wired in series double the voltage: check that against the input limit first.</p>
 </section>
 
+<section id="climate">
+  <h2><span class="n">08</span>Heating and cooling</h2>
+  <p>Heat and cooling are the biggest loads in most homes, and the hardest to run from a battery. A 1,500 W space heater empties a 1 kWh power station in about 40 minutes. The answer off-grid is to stop heating and cooling air with electricity where you can: store heat in mass, use the sun and evaporating water directly, and save electric power for fans, pumps, and the few devices that make heat efficiently.</p>
+
+  <h3>Heating</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Method</th><th>How it works</th><th>Power or fuel</th><th>Watch out for</th></tr></thead>
+    <tbody>
+      <tr><td><b>Wood stove</b></td><td>Burns wood in a sealed firebox; the stove and flue radiate heat. Modern EPA-certified stoves burn cleaner and need less wood.</td><td>Wood; no electricity</td><td>Chimney fires (clean the flue), CO, clearances to walls. Needs a seasoned, stored wood supply.</td></tr>
+      <tr><td><b>Masonry heater / rocket mass heater</b></td><td>A short, very hot fire heats a large mass of brick, stone, or cob, which gives the heat back slowly for 12–24 hours.</td><td>Small amounts of wood</td><td>Heavy; needs a floor that can carry it. Owner-built rocket mass heaters may not meet code or satisfy insurers.</td></tr>
+      <tr><td><b>Sand battery</b></td><td>Surplus solar electricity runs heating elements buried in an insulated bin of sand or crushed stone. The hot sand holds the heat for hours to days, and a fan or water loop draws it out when needed.</td><td>Solar surplus, stored as heat</td><td>Proven at utility scale; home versions are experimental and DIY. See the note below.</td></tr>
+      <tr><td><b>Solar air heater and rock bed</b></td><td>A dark, glazed collector on a south wall heats air; a small fan blows it into the room or through a bed of rock that stores it for the evening.</td><td>Sun, plus a few watts for the fan</td><td>Daytime only unless you add storage. Simple to build; the old, proven way to store solar heat.</td></tr>
+      <tr><td><b>Passive solar</b></td><td>South-facing windows let winter sun onto a dark masonry floor or wall (a Trombe wall), which releases the heat after dark. Overhangs shade the same glass in summer.</td><td>None</td><td>Mostly a design-time choice, but window coverings, thermal curtains, and adding mass help any house.</td></tr>
+      <tr><td><b>Heat pump (mini-split)</b></td><td>Moves heat instead of making it, giving two to four times as much heat as the electricity it uses. Some models run straight from solar panels and a battery (DC or hybrid solar mini-splits).</td><td>Electricity, used efficiently</td><td>Still a large load for a battery; size the battery and solar to it. Efficiency falls in deep cold.</td></tr>
+      <tr><td><b>Indoor-rated propane or kerosene heater</b></td><td>Vent-free heaters made for indoor use, with a low-oxygen shutoff sensor.</td><td>Propane or kerosene</td><td>Only models rated for indoor use. Crack a window, keep a CO alarm in the room, never run one while asleep unless the maker says it's safe to.</td></tr>
+      <tr><td><b>Heat the person, not the house</b></td><td>Close off one room, insulate windows, layer clothing, sleeping bags, hot water bottles. An electric blanket or heated pad draws 50–100 W instead of 1,500 W.</td><td>Little or none</td><td>The cheapest heat there is; start here.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="box"><h4>How much a sand battery holds</h4><p>Sand stores about 0.8 kJ per kg for every degree it's heated. A tonne of sand heated from 20 °C to 200 °C holds roughly 40 kWh of heat, about what a small home needs on a cold day. Getting it in takes a lot of solar: 1 kW of panels puts in roughly 3–5 kWh on a good winter day.</p></div>
+    <div class="box"><h4>Sand battery reality check</h4><p>The idea is proven: a commercial sand battery built by Polar Night Energy in Kankaanpää, Finland, has heated a district heating network since 2022, holding sand at around 500 °C. Home builds are another matter: they need high-temperature insulation, thermal cutoffs on the elements, a fire-safe location, and an electrician for the wiring. Running a heat pump straight from solar usually gets more heat per panel; a sand battery's advantage is storing summer-afternoon surplus as heat without a large electrical battery.</p></div>
+  </div>
+
+  <h3>Cooling</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Method</th><th>How it works</th><th>Power</th><th>Works best</th></tr></thead>
+    <tbody>
+      <tr><td><b>Water over brick or clay (evaporative walls)</b></td><td>Water trickles over porous terracotta, brick, or clay, soaking it. Air drawn through or past the wet surface gives up heat to evaporate the water and comes out cooler. Traditional across the Middle East and India, from clay pots to modern terracotta cooling walls fed by a small pump.</td><td>A small water pump (solar is plenty) or gravity feed, plus a fan if there's no breeze</td><td>Hot, dry climates. In dry air it can cool by 15 °F or more; in humid weather it barely works and adds moisture.</td></tr>
+      <tr><td><b>Evaporative (swamp) cooler</b></td><td>The same principle in a box: a fan pulls air through wet pads.</td><td>50–300 W, some 12 V</td><td>Dry climates; needs a steady water supply and an open window for the air to leave.</td></tr>
+      <tr><td><b>Windcatcher and courtyard</b></td><td>Tall towers catch breezes and push them down into the house, often over water or a cool cellar, while warm air leaves high up (the Persian <i>badgir</i>).</td><td>None</td><td>Design or build-time choice; the principle (high exit, low cool intake) helps any house.</td></tr>
+      <tr><td><b>Night flushing and thermal mass</b></td><td>Open the house wide at night to cool walls and floors, then close it up and shade it in the morning. The cool mass soaks up the day's heat.</td><td>None, or a whole-house fan</td><td>Anywhere nights are cooler than days.</td></tr>
+      <tr><td><b>Shade and reflection</b></td><td>Exterior shades, awnings, trees, reflective roof coatings, and reflective film on sun-facing windows stop heat before it gets in.</td><td>None</td><td>Everywhere; the cheapest cooling there is.</td></tr>
+      <tr><td><b>DC fans</b></td><td>Moving air over skin feels several degrees cooler. A 12 V fan draws 5–30 W.</td><td>Very low</td><td>Everywhere; run all night from a small power station.</td></tr>
+      <tr><td><b>Solar mini-split or small window AC</b></td><td>Real air conditioning for one room. A small window unit draws about 500–800 W; a solar or hybrid mini-split runs partly or fully from panels.</td><td>High; size battery and solar to it</td><td>Humid heat, where evaporative methods don't work; medical need.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="box"><h4>Building a water-over-brick cooler</h4><p>Unglazed terracotta or porous brick, stacked so air passes through or along it; a trough or perforated pipe across the top; a catch basin and a small pump to recirculate. Put it in a breeze or in front of a fan, on the side air comes in from. Top up the water, clean the surface so mineral scale and algae don't block the pores, and keep standing water covered against mosquitoes.</p></div>
+    <div class="box"><h4>Heat is a medical problem</h4><p>Know the signs of heat exhaustion (heavy sweating, weakness, nausea, headache) and heat stroke (confusion, hot skin, collapse: an emergency). Cool the person fast with water and moving air. See <a href="medical.html#environ">Field Medical</a>.</p></div>
+  </div>
+  <p class="warn">Never use a charcoal grill, camp stove, gas oven, or outdoor-only heater to heat a room. They produce carbon monoxide that builds up without warning. Keep battery-powered CO alarms working whenever anything burns inside.</p>
+</section>
+
 <section id="safety">
-  <h2><span class="n">08</span>Safety</h2>
+  <h2><span class="n">09</span>Safety</h2>
   <div class="grid2">
     <div class="box"><h4>Carbon monoxide</h4><p>Run generators outside only, at least 20 feet from the house, with the exhaust pointed away from doors, windows, and vents. Never in a garage, even with the door open. Battery-powered CO alarms on every level, and get to fresh air at the first headache, dizziness, or nausea.</p></div>
     <div class="box"><h4>Refueling</h4><p>Shut the generator off and let it cool before you refuel. Gasoline spilled on a hot engine can ignite.</p></div>
@@ -200,7 +244,7 @@
 </section>
 
 <section id="configs">
-  <h2><span class="n">09</span>Configurations</h2>
+  <h2><span class="n">10</span>Configurations</h2>
   <p>Four setups, from smallest to largest. Each one builds on the one before.</p>
   <div class="tbl"><table>
     <thead><tr><th>Configuration</th><th>Equipment</th><th>Covers</th><th>Limits</th></tr></thead>
@@ -211,11 +255,11 @@
       <tr><td><b>4. Off grid (property)</b></td><td>Solar array sized for winter, a large LiFePO4 bank, a generator as backup charger, propane for cooking and heat, wood heat</td><td>Indefinite operation with careful load management</td><td>Highest cost; needs ongoing attention to loads, weather, and maintenance</td></tr>
     </tbody>
   </table></div>
-  <p class="note">Whatever you choose, pair it with heat and water plans that don't need electricity, and with the communications on the <a href="comms.html">Analogue Comms</a> page.</p>
+  <p class="note">Whatever you choose, pair it with heat, cooling, and water plans that don't need much electricity (see <a href="#climate">Heating and cooling</a>), and with the communications on the <a href="comms.html">Analogue Comms</a> page.</p>
 </section>
 
 <section id="maintain">
-  <h2><span class="n">10</span>Maintenance and testing</h2>
+  <h2><span class="n">11</span>Maintenance and testing</h2>
   <div class="grid2">
     <div class="box"><h4>Monthly</h4><p>Start the generator and run it under load for 20–30 minutes. Check that the power station and batteries are charged. Test the CO alarms.</p></div>
     <div class="box"><h4>Every few months</h4><p>Rotate stored fuel. Top up stabilizer. Charge stored batteries to the level the manufacturer recommends for storage.</p></div>
@@ -225,13 +269,16 @@
 </section>
 
 <section id="src">
-  <h2><span class="n">11</span>Sources</h2>
+  <h2><span class="n">12</span>Sources</h2>
   <ul>
     <li>U.S. Centers for Disease Control and Prevention (CDC): carbon monoxide poisoning prevention and generator safety</li>
     <li>OSHA and the U.S. Consumer Product Safety Commission: portable generator hazards and safe use</li>
     <li>NFPA 70, National Electrical Code: Article 702 (optional standby systems) and transfer equipment; NFPA 30 (flammable and combustible liquids) and NFPA 58 (LP-gas)</li>
     <li>U.S. Energy Information Administration: household electricity consumption and fuel energy content</li>
-    <li>U.S. Department of Energy, Energy Saver: appliance energy use and estimating loads</li>
+    <li>U.S. Department of Energy, Energy Saver: appliance energy use and estimating loads; evaporative coolers, passive solar design, heat pumps, and wood heating</li>
+    <li>U.S. EPA Burn Wise: EPA-certified wood stoves and safe wood burning</li>
+    <li>Polar Night Energy: the Kankaanpää, Finland sand-based thermal storage plant</li>
+    <li>CDC: heat-related illness, and carbon monoxide from heaters and grills</li>
   </ul>
 </section>
 
