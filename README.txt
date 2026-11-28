@@ -17,6 +17,15 @@ Files:
   medical.html               Field Medical (MARCH, hemorrhage, IFAK, CPR, cold and heat)
   comms.html                 Analogue Comms (simplex radio, licensing, field phones, HF)
   offgrid.html               Off-Grid Environment Configurations (batteries, generators, fuel, heating and cooling)
+  water.html, food.html, kits.html, fire-shelter.html   Preparedness: water, food storage, kits and go-bags, fire and shelter
+  cards.html                 Printable one-page cards (bleeding control, family plan, comms plan, water, load sheet)
+  maintenance.html           Firearm cleaning and maintenance
+  search.html                Site search (index in assets/search-index.js)
+  sw.js, manifest.webmanifest, assets/icons/   installable offline app + link-preview image
+
+GENERATED: nav, home cards, link-preview tags, "Updated" dates, search index, sw.js and the extra CSS block are
+rebuilt by ~/Desktop/training-library-tools/build.py (run it before every commit). New pages start in
+training-library-tools/bodies/; videos are listed in training-library-tools/videos.json.
   cover.html                 Cover and Concealment
   calculator.html            Ballistics Calculator (all cartridges; data in assets/ballistics.js)
   armory.html                Armory Planner (local-only kit/ammo/gear planner; self-contained app)

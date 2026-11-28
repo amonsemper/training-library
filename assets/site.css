@@ -223,3 +223,51 @@ a.dl:hover{filter:brightness(1.08)}
 a.dl:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 a.dl svg{width:18px;height:18px}
 @media (max-width:640px){.offline{grid-template-columns:1fr}}
+/* build:extra */
+/* nav search link */
+nav.site .srch{align-self:center;display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:4px;color:var(--navink);opacity:.8;margin-left:-14px}
+nav.site .srch svg{width:17px;height:17px}
+nav.site .srch:hover,nav.site .srch[aria-current="page"]{opacity:1;background:rgba(227,225,214,.08)}
+@media (max-width:640px){nav.site .srch{margin-left:auto;margin-right:-6px}}
+/* last-updated line */
+.updated{margin:-4px 0 6px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+/* utilities */
+.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.small{font-size:14px}.muted{color:var(--muted)}
+/* search page */
+.srchform input{width:100%;font:500 18px var(--body);padding:12px 14px;border:1px solid var(--line);border-radius:4px;background:var(--panel);color:var(--ink)}
+.srchform input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.srch-results{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.srch-results li{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px 16px}
+.srch-results a{display:flex;flex-direction:column;gap:2px;color:var(--ink);text-decoration:none}
+.srch-results a:hover b{color:var(--accent)}
+.srch-results .srch-page{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.srch-results b{font-family:var(--display);font-size:20px;letter-spacing:.02em}
+.srch-results p{margin:6px 0 0;font-size:15px;color:var(--muted)}
+.srch-results mark{background:var(--vis);color:var(--ink);padding:0 1px}
+/* printable cards */
+.pcard{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:18px 20px}
+.pcard-bar{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.pcard-bar h2{margin:0}
+.btn-print{font:600 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--bg);background:var(--accent);border:0;border-radius:4px;padding:9px 14px;cursor:pointer}
+.btn-print:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+table.fill td{height:30px;min-width:60px}
+.pcard-foot{font-size:13px;color:var(--muted);margin-top:10px}
+/* print: plain black on white, no nav or video, one card per page */
+@media print{
+  :root,:root[data-theme]{--bg:#fff;--panel:#fff;--ink:#000;--muted:#333;--line:#999;--accent:#000;--vis:#ddd}
+  body{background:#fff;color:#000;font-size:11.5pt;line-height:1.4}
+  body::before,nav.site,nav.toc,.watch,#videos,.vgrid,.sim,.ctrl,.tabs,.btn-print,.offline,.srchform{display:none!important}
+  a{color:#000;text-decoration:none}
+  .wrap{max-width:none;padding:0}
+  .box,.pcard,.tbl{break-inside:avoid}
+  h2,h3,h4{break-after:avoid}
+  table,th,td{border-color:#999!important}
+  table.fill td{border:1px solid #999!important}
+  .pcard{border:0;padding:0;break-after:page}
+  html[data-print] main > :not(.print-me){display:none!important}
+  html[data-print] .pcard.print-me{break-after:auto}
+  .pcard:last-of-type{break-after:auto}
+  .pcard ~ footer.page{display:none}
+}
+/* /build:extra */

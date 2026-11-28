@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Search</title>
+<!--meta--><meta property="og:type" content="website">
+<meta property="og:site_name" content="Training Library">
+<meta property="og:title" content="Search · Training Library">
+<meta property="og:description" content="Search every page of the Training Library, online or offline.">
+<meta property="og:url" content="https://amonsemper.github.io/training-library/search.html">
+<meta property="og:image" content="https://amonsemper.github.io/training-library/assets/icons/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://amonsemper.github.io/training-library/search.html">
+<link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/icons/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#141a1d">
+<meta name="apple-mobile-web-app-title" content="Training Library"><!--/meta-->
+<meta name="description" content="Search every page of the Training Library, online or offline.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;700;800&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<nav class="site" aria-label="Library"><div class="in"><a class="brand" href="index.html">Training <span>Library</span></a><a class="srch" href="search.html" aria-label="Search the library" aria-current="page"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12.8 12.8 L17.5 17.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></a><div class="dds"><div class="dd fire"><button class="dt" type="button" aria-expanded="false" aria-controls="dd-fire"><span class="lf">Firearm Training</span><span class="ls">Firearms</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="dm mega" id="dd-fire"><div class="dg pro"><span class="dh">Professional</span><a href="rifle.html">Rifle</a><a href="shotgun.html">Shotgun</a><a href="handgun.html">Handgun</a><a href="bolt-rifle.html">Bolt Rifle</a></div><div class="dg def"><span class="dh">Defensive</span><a href="defensive-rifle.html">Rifle</a><a href="defensive-shotgun.html">Shotgun</a><a href="defensive-handgun.html">Handgun</a><a href="defensive-bolt-rifle.html">Bolt Rifle</a></div><div class="dg tools"><span class="dh">Practice &amp; tools</span><a href="drills.html">Drills</a><a href="maintenance.html">Maintenance</a><a href="modifications.html">Modifications</a><a href="calculator.html">Ballistics Calculator</a></div></div></div><span class="sep" aria-hidden="true"></span><div class="dd field"><button class="dt" type="button" aria-expanded="false" aria-controls="dd-field"><span class="lf">Medical &amp; Fieldcraft</span><span class="ls">Med &amp; Field</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="dm" id="dd-field"><a href="medical.html">Field Medical</a><a href="fieldcraft.html">Fieldcraft</a><a href="cover.html">Cover &amp; Concealment</a><a href="scenarios.html">Scenarios</a><a href="cqb.html">CQB Primer</a></div></div><span class="sep" aria-hidden="true"></span><div class="dd prep"><button class="dt" type="button" aria-expanded="false" aria-controls="dd-prep"><span class="lf">Preparedness</span><span class="ls">Prep</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="dm" id="dd-prep"><a href="offgrid.html">Off-Grid Configurations</a><a href="comms.html">Analogue Comms</a><a href="water.html">Water</a><a href="food.html">Food Storage</a><a href="kits.html">Kits &amp; Go-Bags</a><a href="fire-shelter.html">Fire &amp; Shelter</a><a href="cards.html">Printable Cards</a></div></div><span class="sep" aria-hidden="true"></span><div class="dd arm"><a class="dt" href="armory.html">Armory</a></div></div></div></nav>
+<main class="wrap">
+<header class="page">
+  <div class="eyebrow">Training library</div>
+  <h1>Search</h1>
+  <p class="lede">Search every page of the library. Works offline too.</p>
+  <form class="srchform" role="search" onsubmit="return false">
+    <label for="q" class="visually-hidden">Search the library</label>
+    <input id="q" type="search" placeholder="Try tourniquet, MURS, buckshot, generator…" autocomplete="off" autofocus>
+  </form>
+  <p id="srch-count" class="small muted" aria-live="polite"></p>
+</header>
+<ol id="srch-results" class="srch-results"></ol>
+</main>
+<script src="assets/sim.js"></script>
+<script src="assets/search-index.js"></script>
+<script>
+(function () {
+  var IDX = window.SEARCH_INDEX || [], q = document.getElementById("q"), out = document.getElementById("srch-results"), cnt = document.getElementById("srch-count");
+  function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function snippet(text, terms) {
+    var lo = text.toLowerCase(), at = -1;
+    for (var i = 0; i < terms.length && at < 0; i++) at = lo.indexOf(terms[i]);
+    var start = Math.max(0, at - 70), s = (start ? "…" : "") + text.substr(start, 220) + (start + 220 < text.length ? "…" : "");
+    s = esc(s);
+    terms.forEach(function (t) { if (t.length > 1) s = s.replace(new RegExp("(" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "ig"), "<mark>$1</mark>"); });
+    return s;
+  }
+  function run() {
+    var v = q.value.trim().toLowerCase(), terms = v.split(/\s+/).filter(Boolean);
+    try { history.replaceState(null, "", v ? "?q=" + encodeURIComponent(v) : location.pathname); } catch (e) {}
+    if (!terms.length) { out.innerHTML = ""; cnt.textContent = ""; return; }
+    var hits = [];
+    IDX.forEach(function (p) {
+      p.s.forEach(function (s) {
+        var h = s.h.toLowerCase(), x = s.x.toLowerCase(), score = 0, all = true;
+        terms.forEach(function (t) {
+          var inH = h.indexOf(t) >= 0, n = x.split(t).length - 1;
+          if (!inH && !n && p.t.toLowerCase().indexOf(t) < 0) all = false;
+          score += (inH ? 10 : 0) + Math.min(n, 5);
+        });
+        if (all && score) hits.push({ p: p, s: s, score: score });
+      });
+    });
+    hits.sort(function (a, b) { return b.score - a.score; });
+    cnt.textContent = hits.length ? hits.length + " result" + (hits.length === 1 ? "" : "s") : "No results";
+    out.innerHTML = hits.slice(0, 60).map(function (r) {
+      return '<li><a href="' + r.p.u + (r.s.id ? "#" + r.s.id : "") + '"><span class="srch-page">' + esc(r.p.t) + '</span><b>' + esc(r.s.h) + '</b></a><p>' + snippet(r.s.x, terms) + "</p></li>";
+    }).join("");
+  }
+  q.addEventListener("input", run);
+  var m = location.search.match(/[?&]q=([^&]*)/); if (m) { q.value = decodeURIComponent(m[1].replace(/\+/g, " ")); }
+  run();
+})();
+</script>
+<!--sw--><script>if('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) navigator.serviceWorker.register('sw.js');</script><!--/sw-->
+</body>
+</html>
