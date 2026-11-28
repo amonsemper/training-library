@@ -194,7 +194,7 @@ const STEPS=["welcome","goals","lacking","buy","types","calibers","ammo","gear",
 
 /* ---------- state ---------- */
 const uid=()=>Math.random().toString(36).slice(2,10);
-const today=()=>new Date().toISOString().slice(0,10);
+const today=()=>{const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}; // local date, not UTC
 function fresh(){return {v:1,setupDone:false,step:"welcome",example:false,goals:[],lacking:[],buyNext:[],budget:100,getHomeMi:30,
   draft:{types:{},counts:{},ammoRange:{},gear:{}},guns:[],ammo:{},gear:{},costTracking:false,
   plan:{pinned:[],deferred:[],est:{},done:[]},log:[],purchases:[],acc:[],notes:[],list:[],
@@ -263,7 +263,8 @@ function primaryLong(){
   return c.slice().sort((a,b)=>(rank[b.type]-rank[a.type])||(ammoOf(b.caliber).count-ammoOf(a.caliber).count))[0];
 }
 const handguns=()=>active().filter(g=>HAND.includes(g.type));
-const firstHandgun=()=>{const h=handguns(); return h.find(g=>g.primary)||h.slice().sort((a,b)=>ammoOf(b.caliber).count-ammoOf(a.caliber).count)[0]||null;};
+const isRimfire=g=>/\.22\b|22 ?lr|\.17\b|hmr|wmr/i.test(g.caliber||"");
+const firstHandgun=()=>{const h=handguns(); return h.find(g=>g.primary)||h.slice().sort((a,b)=>(isRimfire(a)-isRimfire(b))||(ammoOf(b.caliber).count-ammoOf(a.caliber).count))[0]||null;};
 const defTarget=cal=>isShot(cal)?250:1000;
 function R(id,label,weight,state,detail,fix){return {id,label,weight,state,detail,fix};}
 function ammoState(cal,target){const c=ammoOf(cal).count; return c>=target?"met":c>=target*0.25?"partial":"missing";}
